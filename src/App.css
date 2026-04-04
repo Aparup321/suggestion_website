@@ -1,23 +1,11 @@
-@keyframes slamIn {
+@keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px) rotate(-1deg);
+    transform: translateY(10px) scale(0.98);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) rotate(0deg);
-  }
-}
-
-@keyframes wobble {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-  100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -27,48 +15,85 @@
 }
 
 .hero-banner {
-  background: #fff04a;
-  border: 4px solid #10131a;
-  border-radius: 22px;
-  padding: 28px 32px;
-  box-shadow: 8px 8px 0 #10131a;
-  animation: slamIn 0.6s ease-out;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 32px 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.hero-banner::after {
+.hero-banner::before {
   content: "";
   position: absolute;
-  right: 18px;
-  top: 18px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #f08a5d;
-  box-shadow: -24px 12px 0 #2a7cc7, -44px -6px 0 #9ad66f;
-  animation: wobble 3.2s ease-in-out infinite;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+  pointer-events: none;
 }
 
-.hero-banner > * {
-  position: relative;
-  z-index: 1;
-}
-
+/* Base Glass Card */
 .neo-card {
-  border: 3px solid #10131a;
-  box-shadow: 6px 6px 0 #10131a;
-  border-radius: 18px;
-  background: #fff9df;
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-card:hover {
+  transform: translateY(-2px);
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .neo-button {
-  border: 3px solid #10131a;
-  box-shadow: 3px 3px 0 #10131a;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-radius: 999px;
-  background: #ffffff;
-  transition: transform 0.1s ease;
+  color: #f8fafc;
+  font-weight: 600;
+  transition: all 0.2s ease-out;
+}
+
+.neo-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
+  transform: translateY(-1px);
 }
 
 .neo-button:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 #10131a;
+  transform: scale(0.96);
+}
+
+/* Specific to the routine card stack */
+.stack-card {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.text-gradient {
+  background: var(--tw-gradient-stops, linear-gradient(to right, #38bdf8, #c084fc));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

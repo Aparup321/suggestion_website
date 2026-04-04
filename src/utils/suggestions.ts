@@ -51,7 +51,7 @@ export const buildSuggestions = (
       const lastStudiedMins = minutesSince(now, topic.lastStudied)
       const isRevision = topic.status === "done" && lastStudiedMins > 24 * 60 * 2
       const isContinue = topic.status === "in-progress"
-      const isNew = topic.status === "not-started"
+      // Removed unused isNew
 
       let score = statusWeight[topic.status] * 10 + priorityWeight[topic.priority] * 6
       if (soon !== undefined) score += Math.max(0, 180 - soon) / 6
@@ -91,7 +91,7 @@ export const buildSuggestions = (
       subjectTitle: item.subject.title,
       topicId: item.topic.id,
       topicTitle: item.topic.title,
-      type: item.kind,
+      type: item.kind as any,
       reason,
       nextClassInMinutes: item.soon,
     })

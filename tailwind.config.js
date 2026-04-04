@@ -4,24 +4,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#10131a",
-        slate: "#1a2233",
-        mist: "#e9edf5",
-        ocean: "#2a7cc7",
-        sand: "#f5e7c8",
-        coral: "#f08a5d",
-        lime: "#9ad66f",
-        plum: "#5c466b",
+        ink: "#ffffff",
+        slate: "#94a3b8",
+        mist: "#0f172a",
+        ocean: "#38bdf8",
+        sand: "#1e293b",
+        coral: "#f43f5e",
+        lime: "#4ade80",
+        plum: "#c084fc",
       },
       fontFamily: {
-        display: ["'Bebas Neue'", "sans-serif"],
-        body: ["'Space Grotesk'", "sans-serif"],
+        display: ["'Space Grotesk'", "sans-serif"],
+        body: ["'Inter'", "sans-serif"],
       },
       boxShadow: {
-        lift: "0 12px 30px rgba(16, 19, 26, 0.12)",
+        glow: "0 0 20px rgba(56, 189, 248, 0.4)",
+        glass: "0 8px 32px 0 rgba(0, 0, 0, 0.37)",
       },
       backgroundImage: {
-        "hero-sheen": "radial-gradient(circle at top right, rgba(240, 138, 93, 0.3), transparent 55%)",
+        "hero-sheen": "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0))",
+        "neon-gradient": "linear-gradient(to right, #38bdf8, #c084fc)",
       },
     },
   },
