@@ -1,210 +1,244 @@
 import { useEffect, useMemo, useState } from "react"
-import { Link } from "react-router-dom"
 import { routineEntries } from "../data/routine"
 import { useAppStore } from "../store/useAppStore"
 import { dayOrder, formatTimeRange, getNowDay, getNowMinutes, toMinutes } from "../utils/time"
-import { motion, useMotionValue } from "framer-motion"
-
-const formatDay = (day: string) => day
+import { motion, useMotionValue, AnimatePresence } from "framer-motion"
 
 export const RoutinePage = () => {
+  const view = useAppStore((state) => state.view)
+  const setView = useAppStore((state) => state.setView)
   const setMode = useAppStore((state) => state.setMode)
+  
   const [index, setIndex] = useState(0)
+  const [now, setNow] = useState(() => new Date())
   const dragX = useMotionValue(0)
 
   useEffect(() => {
     setMode("routine")
+    const timer = setInterval(() => setNow(new Date()), 60000)
+    return () => clearInterval(timer)
   }, [setMode])
 
-  const entries = useMemo(() => {
-    return [...routineEntries].sort((a, b) => {
+  // Group entries into "Frames" (Simultaneous classes in one card)
+  const frames = useMemo(() => {
+    const sorted = [...routineEntries].sort((a, b) => {
       const dayDiff = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day)
       if (dayDiff !== 0) return dayDiff
       return toMinutes(a.start) - toMinutes(b.start)
     })
+
+    const result: { day: string; start: string; end: string; entries: typeof routineEntries }[] = []
+    sorted.forEach((entry) => {
+      const last = result[result.length - 1]
+      if (last && last.day === entry.day && last.start === entry.start) {
+        last.entries.push(entry)
+      } else {
+        result.push({ day: entry.day, start: entry.start, end: entry.end, entries: [entry] })
+      }
+    })
+    return result
   }, [])
 
-  useEffect(() => {
-    const today = getNowDay(new Date())
-    const nowMinutes = getNowMinutes(new Date())
-    const startIndex = entries.findIndex(
-      (entry) => entry.day === today && toMinutes(entry.start) >= nowMinutes
-    )
-    if (startIndex >= 0) setIndex(startIndex)
-  }, [entries])
+  const today = getNowDay(now)
+  const todayFrames = useMemo(() => frames.filter((f) => f.day === today), [frames, today])
 
-  const shiftCarousel = (delta: number) => {
+  // Auto-focus on current class in Daily View
+  useEffect(() => {
+    if (view === "daily" && todayFrames.length > 0) {
+      const nowMin = getNowMinutes(now)
+      const currentIndex = todayFrames.findIndex(
+        (f) => nowMin >= toMinutes(f.start) && nowMin <= toMinutes(f.end)
+      )
+      const nextIndex = todayFrames.findIndex((f) => toMinutes(f.start) > nowMin)
+      
+      if (currentIndex >= 0) {
+        setIndex(currentIndex)
+      } else if (nextIndex >= 0) {
+        setIndex(nextIndex)
+      } else {
+        setIndex(todayFrames.length - 1)
+      }
+    }
+  }, [view, todayFrames, now])
+
+  const shiftCarousel = (delta: number, length: number) => {
     setIndex((prev) => {
-      const nextIndex = prev + delta
-      if (nextIndex < 0) return 0
-      if (nextIndex >= entries.length) return entries.length - 1
-      return nextIndex
+      const next = prev + delta
+      return Math.max(0, Math.min(next, length - 1))
     })
-    // Reset drag x visually if needed (usually framer auto-recovers on state change, but to be safe)
     dragX.set(0)
   }
 
-  const handleDragEnd = (_event: any, info: any) => {
+  const handleDragEnd = (_: any, info: any, length: number) => {
     const swipe = info.offset.x
-    const velocity = info.velocity.x
-    const swipeThreshold = 50
-    const velocityThreshold = 400
-
-    if (swipe < -swipeThreshold || velocity < -velocityThreshold) {
-      shiftCarousel(1) // swipe left -> go to next item
-    } else if (swipe > swipeThreshold || velocity > velocityThreshold) {
-      shiftCarousel(-1) // swipe right -> go to prev item
-    }
-    // Regardless of what happens, spring the physical coordinate back to 0 so the active element snaps center.
+    if (swipe < -50) shiftCarousel(1, length)
+    else if (swipe > 50) shiftCarousel(-1, length)
     dragX.stop()
     dragX.set(0)
   }
 
-  if (entries.length === 0) return null
-
-  // We want to calculate the display for each card. We'll render entries around `index` +/- 2.
   return (
     <section className="flex flex-col gap-6 w-full">
-      <div className="flex flex-wrap items-center gap-3 w-full border-b border-white/5 pb-4">
-        <Link
-          to="/"
-          className="neo-button px-5 py-2.5 text-sm flex items-center gap-2"
-        >
-          <span className="text-xl leading-none -mt-1">&larr;</span> Back to Home
-        </Link>
-        <div className="ml-auto text-xs uppercase tracking-widest text-slate-500 font-semibold px-4">
-          Visual Timeline
+      {/* HEADER TOGGLE */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
+        <div className="flex items-center gap-2">
+          <div className="p-1 bg-slate-900/50 rounded-xl border border-white/5 flex gap-1">
+            {(["daily", "weekly"] as const).map((v) => (
+              <button
+                key={v}
+                onClick={() => {
+                  setView(v)
+                  setIndex(0)
+                }}
+                className={`px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
+                  view === v 
+                    ? "bg-ocean text-white shadow-[0_0_15px_rgba(56,189,248,0.3)]" 
+                    : "text-slate-500 hover:text-slate-300"
+                }`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold hidden md:block">
+          {view === "daily" ? `Timeline // ${today}` : "Full Week Schedule"}
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <p className="text-[10px] uppercase tracking-[0.3em] text-ocean font-bold">Class Schedule</p>
-        <h2 className="text-3xl font-display text-white tracking-tight">Timeline View</h2>
-        <p className="text-sm text-slate-400">
-          Swipe the center card to navigate forwards and backwards through your schedule.
-        </p>
-      </div>
-
-      <div className="relative min-h-[460px] flex items-center justify-center p-8 neo-card overflow-hidden w-full mt-2">
-        {/* Background Radial Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-ocean/5 blur-[120px] pointer-events-none rounded-full"></div>
-
-        {/* Carousel Container */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {entries.map((entry, i) => {
-            const diff = i - index
-            
-            // Only render cards close to the index to save DOM
-            if (Math.abs(diff) > 2) return null
-
-            const isActive = diff === 0
-            // Center is 0, Prev is pushed left
-            const baseX = diff * 520
-            const zIndex = 20 - Math.abs(diff)
-            const scale = isActive ? 1 : 0.85
-            const opacity = isActive ? 1 : 0.35
-            const blur = isActive ? "blur(0px)" : Math.abs(diff) === 1 ? "blur(4px)" : "blur(8px)"
-
-            return (
-              <motion.div
-                key={entry.id}
-                className="absolute w-[560px] pointer-events-auto"
-                initial={false}
-                animate={{
-                  x: baseX,
-                  scale,
-                  opacity,
-                  filter: blur,
-                  zIndex
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 250,
-                  damping: 25,
-                  mass: 0.8
-                }}
-                // Only attach drag listeners to the currently active center card
-                drag={isActive ? "x" : false}
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.4}
-                onDragEnd={isActive ? handleDragEnd : undefined}
-                style={{ x: isActive ? dragX : 0 }} // Bind the framer motion drag value live
-              >
-                <div 
-                  className={`p-10 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col gap-8 select-none ${
-                    isActive ? "cursor-grab active:cursor-grabbing border-white/20" : ""
-                  }`}
-                >
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <div className="inline-block bg-white/5 border border-white/10 px-3 py-1 rounded-full">
-                      <span className="text-[10px] uppercase tracking-widest text-ocean font-bold">
-                        {formatDay(entry.day)}
-                      </span>
-                    </div>
-                    <span className="text-[12px] uppercase tracking-[0.1em] text-slate-300 font-medium bg-slate-900/80 px-3 py-1 rounded-md border border-white/5">
-                      {formatTimeRange(entry.start, entry.end)}
-                    </span>
-                  </div>
+      <AnimatePresence mode="wait">
+        {view === "daily" ? (
+          todayFrames.length === 0 ? (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex flex-col items-center justify-center p-20 neo-card text-center gap-4 mt-8"
+            >
+              <div className="text-6xl">🌴</div>
+              <h2 className="text-3xl font-display text-white">Let's chill!</h2>
+              <p className="text-slate-400 max-w-xs">Monday is your off day. No classes scheduled today. Enjoy your holiday!</p>
+            </motion.div>
+          ) : (
+            <motion.div 
+              key="daily"
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              className="relative min-h-[480px] flex items-center justify-center overflow-hidden w-full"
+            >
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                {todayFrames.map((frame, i) => {
+                  const diff = i - index
+                  if (Math.abs(diff) > 2) return null
+                  const isActive = diff === 0
+                  const isPast = diff < 0
+                  const nowMin = getNowMinutes(now)
+                  const isCurrent = nowMin >= toMinutes(frame.start) && nowMin <= toMinutes(frame.end)
                   
-                  <div>
-                    <h3 className="text-3xl font-display text-white tracking-tight leading-tight text-left">
-                      {entry.title}
-                    </h3>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-y-5 gap-x-4">
-                    <div className="flex flex-col text-left">
-                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Room</span>
-                      <span className="font-semibold text-slate-200 text-sm">{entry.room ?? "TBA"}</span>
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Instructor</span>
-                      <span className="font-semibold text-slate-200 text-sm line-clamp-1">{entry.instructor ?? "TBA"}</span>
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Group</span>
-                      <span className="font-semibold text-slate-200 text-sm">{entry.group ?? "All"}</span>
-                    </div>
-                    <div className="flex flex-col text-left">
-                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Type</span>
-                      <span className="font-semibold text-ocean text-sm">{entry.type ?? "Class"}</span>
-                    </div>
-                  </div>
+                  // Check if any entry in the frame is a break
+                  const isBreak = frame.entries.some(e => e.subjectId === "break")
 
-                  <div className="pt-2 flex justify-between items-center text-[10px] uppercase tracking-widest text-slate-500">
-                    <span>Card {i + 1} of {entries.length}</span>
-                    {isActive && (
-                      <span className="text-lime/70 animate-pulse">Swipe &rarr;</span>
-                    )}
+                  return (
+                    <motion.div
+                      key={frame.day + frame.start}
+                      className="absolute w-[580px] pointer-events-auto"
+                      animate={{
+                        x: diff * 600,
+                        scale: isActive ? 1 : 0.85,
+                        opacity: isActive ? 1 : 0.3,
+                        filter: isActive ? "blur(0px)" : "blur(4px)",
+                        zIndex: 20 - Math.abs(diff)
+                      }}
+                      drag={isActive ? "x" : false}
+                      dragConstraints={{ left: 0, right: 0 }}
+                      onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
+                      style={{ x: isActive ? dragX : diff * 600 }}
+                    >
+                      <div className={`p-8 rounded-3xl backdrop-blur-xl border flex flex-col gap-6 shadow-2xl transition-colors ${
+                        isCurrent 
+                          ? isBreak ? "bg-lime/10 border-lime/40 shadow-lime/5" : "bg-ocean/10 border-ocean/40 shadow-ocean/5" 
+                          : isBreak ? "bg-slate-900/40 border-white/5 opacity-80" : "bg-slate-900/60 border-white/10"
+                      }`}>
+                        <div className="flex justify-between items-center border-b border-white/5 pb-4">
+                          <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
+                            isCurrent 
+                              ? isBreak ? "bg-lime text-black" : "bg-ocean text-white" 
+                              : "bg-white/5 text-slate-400"
+                          }`}>
+                            {isBreak ? "Break Mode" : isCurrent ? "Active Now" : isPast ? "Completed" : "Incoming"}
+                          </div>
+                          <span className="font-mono text-sm text-slate-200">{formatTimeRange(frame.start, frame.end)}</span>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-4">
+                          {frame.entries.map((entry, entryIdx) => (
+                            <div key={entry.id} className={`flex flex-col gap-2 ${entryIdx > 0 ? "pt-4 border-t border-white/5" : ""}`}>
+                              <div className="flex justify-between items-start">
+                                <div className="flex items-center gap-3">
+                                  {isBreak && <span className="text-2xl">☕</span>}
+                                  <h3 className={`text-2xl font-display ${isBreak ? "text-lime font-medium" : "text-white"}`}>
+                                    {entry.title}
+                                  </h3>
+                                </div>
+                                {entry.group && <span className="text-[10px] bg-white/5 border border-white/10 px-2 py-1 rounded text-ocean font-bold">{entry.group}</span>}
+                              </div>
+                              
+                              {!isBreak && (
+                                <div className="grid grid-cols-2 gap-4 text-[11px] text-slate-400 uppercase tracking-widest">
+                                  <div><span className="text-slate-600 block mb-1">Room</span> {entry.room}</div>
+                                  <div><span className="text-slate-600 block mb-1">Instructor</span> {entry.instructor || "--"}</div>
+                                </div>
+                              )}
+                              {isBreak && (
+                                <p className="text-sm text-slate-400 italic">Time to recharge and grab a snack.</p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="mt-4 flex justify-between items-center text-[10px] text-slate-500 font-bold tracking-widest uppercase">
+                          <span>Frame {i + 1} / {todayFrames.length}</span>
+                          {isActive && index < todayFrames.length - 1 && <span className="animate-pulse text-ocean">Swipe for next &rarr;</span>}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </motion.div>
+          )
+        ) : (
+          <motion.div 
+            key="weekly"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="grid gap-8"
+          >
+            {dayOrder.map((day) => {
+              const dayFrames = frames.filter(f => f.day === day)
+              if (dayFrames.length === 0) return null
+              return (
+                <div key={day} className="flex flex-col gap-4">
+                  <h3 className="text-xl font-display text-white border-l-4 border-plum pl-4">{day}</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {dayFrames.map(frame => (
+                      <div key={frame.start} className="bg-slate-900/40 border border-white/5 p-5 rounded-2xl flex flex-col gap-3">
+                        <span className="text-[10px] font-mono text-ocean opacity-70">{formatTimeRange(frame.start, frame.end)}</span>
+                        {frame.entries.map(entry => (
+                          <div key={entry.id} className="flex flex-col">
+                            <span className="text-sm font-semibold text-white">{entry.title}</span>
+                            <span className="text-[10px] text-slate-500 uppercase">{entry.room} {entry.group ? `// ${entry.group}` : ""}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
                   </div>
                 </div>
-              </motion.div>
-            )
-          })}
-        </div>
-        
-        {/* Navigation Arrows for clickability over the UI */}
-        <div className="absolute inset-y-0 left-0 w-16 flex items-center justify-center z-50 pointer-events-none">
-          {index > 0 && (
-            <button 
-              onClick={() => shiftCarousel(-1)}
-              className="pointer-events-auto w-10 h-10 rounded-full bg-slate-900/80 border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition-colors shadow-xl -ml-4"
-            >
-              &larr;
-            </button>
-          )}
-        </div>
-        <div className="absolute inset-y-0 right-0 w-16 flex items-center justify-center z-50 pointer-events-none">
-          {index < entries.length - 1 && (
-            <button 
-              onClick={() => shiftCarousel(1)}
-              className="pointer-events-auto w-10 h-10 rounded-full bg-slate-900/80 border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition-colors shadow-xl -mr-4"
-            >
-              &rarr;
-            </button>
-          )}
-        </div>
-      </div>
+              )
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }
