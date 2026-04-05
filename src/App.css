@@ -110,6 +110,25 @@ body {
   padding-bottom: 24px;
 }
 
+.sidebar-container {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .sidebar-container::after {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 80%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--zoro-green), transparent);
+    opacity: 0.3;
+    box-shadow: 0 0 15px var(--zoro-green);
+  }
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 6px;

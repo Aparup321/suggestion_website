@@ -18,9 +18,7 @@ function App() {
   return (
     <div className="page-shell">
       <SlashOverlay />
-      {/* Floating Navigator */}
-      <RightMenu />
-      <div className="mx-auto w-full max-w-4xl pt-8 relative z-10">
+      <div className="mx-auto w-full max-w-6xl px-4 pt-8 relative z-10">
         <div className="hero-banner mb-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 relative z-10">
             <div>
@@ -45,14 +43,21 @@ function App() {
           </div>
         </div>
 
-        <main className="flex flex-col gap-6">
-          <Routes>
-            <Route path="/" element={<RoutinePage />} />
-            <Route path="/routine" element={<RoutinePage />} />
-            <Route path="/syllabus" element={<SyllabusPage />} />
-            <Route path="/suggestion" element={<SuggestionPage />} />
-          </Routes>
-        </main>
+        <div className="flex flex-col md:flex-row gap-8 items-start">
+          <main className="flex-1 w-full min-w-0 order-2 md:order-1">
+            <Routes>
+              <Route path="/" element={<RoutinePage />} />
+              <Route path="/routine" element={<RoutinePage />} />
+              <Route path="/syllabus" element={<SyllabusPage />} />
+              <Route path="/suggestion" element={<SuggestionPage />} />
+            </Routes>
+          </main>
+
+          {/* Main Navigator Sidebar */}
+          <aside className="w-full md:w-72 md:sticky md:top-8 z-[99] order-1 md:order-2 sidebar-container">
+            <RightMenu />
+          </aside>
+        </div>
       </div>
     </div>
   )

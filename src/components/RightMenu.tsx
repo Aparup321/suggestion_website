@@ -14,18 +14,19 @@ export const RightMenu = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="fixed top-6 right-6 z-[999] flex flex-col items-end gap-2">
-      <div className="relative group">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00ef8e]/30 to-[#00703c]/30 rounded-2xl blur-sm opacity-40 group-hover:opacity-100 transition duration-500"></div>
+    <div className="w-full flex flex-col gap-4">
+      <div className="relative group w-full">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00ef8e]/30 to-[#00703c]/30 rounded-2xl blur-sm opacity-20 group-hover:opacity-100 transition duration-500"></div>
 
-        <div className="relative bg-black/95 w-[240px] backdrop-blur-3xl rounded-2xl shadow-2xl border border-[#00ef8e]/20 p-2 flex flex-col gap-1.5">
+        <div className="relative bg-black/40 w-full backdrop-blur-xl rounded-2xl border border-[#00ef8e]/10 p-3 flex flex-col gap-2">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e]/60 font-bold px-2 mb-2">NAV_MATRIX</p>
           {items.map((item) => {
             const isActive = mode === item.id
             return (
               <motion.button
                 key={item.id}
-                whileHover={{ x: -4, scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ x: 6, scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
                 onClick={() => {
                   setMode(item.id)
                   navigate(item.id === "routine" ? "/" : `/${item.id}`)
