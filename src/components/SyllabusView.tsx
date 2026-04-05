@@ -11,23 +11,23 @@ export const SyllabusView = () => {
   const selected = subjects.find((subject) => subject.id === selectedSubjectId)
 
   return (
-    <section className="flex flex-col gap-10 w-full max-w-5xl mx-auto py-4 font-zoro">
+    <section className="flex flex-col gap-12 w-full max-w-5xl mx-auto py-10 px-4 md:px-0 font-zoro">
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
           <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">SANTORYU_PATH.NAV</p>
-          <h1 className="text-4xl font-black tracking-tighter text-white">SYSTEM <span className="text-gradient">MATRIX</span></h1>
-          <p className="text-slate-500 text-sm font-medium font-sans">Monitor study nodes and track module completion status</p>
+          <h1 className="text-4xl font-black tracking-tighter text-white uppercase font-zoro">SYSTEM <span className="text-[#00ef8e]">MATRIX</span></h1>
+          <p className="text-slate-500 text-sm font-medium">Monitor study nodes and track module completion status</p>
         </div>
       </div>
 
       {/* SUBJECT FILTER */}
-      <div className="flex flex-wrap items-center gap-2 px-4 bg-black/40 p-3 rounded-2xl border border-[#00ef8e]/10 mx-4 backdrop-blur-md">
+      <div className="flex flex-wrap items-center gap-2 px-6 bg-black/40 p-4 rounded-2xl border border-[#00ef8e]/10 mx-4 backdrop-blur-md">
         <button
           onClick={() => setSelectedSubject(undefined)}
           className={`px-5 py-2 rounded-xl text-[10px] uppercase font-black tracking-widest transition-all ${
             !selectedSubjectId
-              ? "bg-[#00ef8e]/20 text-[#00ef8e] border border-[#00ef8e]/30 shadow-[0_0_15px_rgba(0,239,142,0.1)]"
+              ? "bg-[#00ef8e]/20 text-[#00ef8e] border border-[#00ef8e]/30 shadow-[0_0_15px_rgba(0,239,142,0.2)]"
               : "text-slate-500 hover:text-[#00ef8e]/60"
           }`}
         >
@@ -39,7 +39,7 @@ export const SyllabusView = () => {
             onClick={() => setSelectedSubject(subject.id)}
             className={`px-5 py-2 rounded-xl text-[10px] uppercase font-black tracking-widest transition-all ${
               selectedSubjectId === subject.id
-                ? "bg-[#00ef8e]/20 text-[#00ef8e] border border-[#00ef8e]/30 shadow-[0_0_15px_rgba(0,239,142,0.1)]"
+                ? "bg-[#00ef8e]/20 text-[#00ef8e] border border-[#00ef8e]/30 shadow-[0_0_15px_rgba(0,239,142,0.2)]"
                 : "text-slate-500 hover:text-[#00ef8e]/60"
             }`}
           >
@@ -56,8 +56,8 @@ export const SyllabusView = () => {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-8"
           >
-            <div className="flex flex-col gap-2 border-l-4 border-[#00ef8e] pl-6">
-              <h3 className="text-3xl font-black text-white tracking-tight leading-none uppercase">{subject.title}</h3>
+            <div className="flex flex-col items-start gap-2 border-l-4 border-[#00ef8e] pl-6">
+              <h3 className="text-3xl font-black text-white tracking-tight leading-none uppercase font-zoro">{subject.title}</h3>
               <div className="flex items-center gap-3">
                 <span className="text-[10px] font-mono text-[#00ef8e]/60 font-bold uppercase tracking-widest">CHAPTER_ID // {subject.code || subject.id}</span>
               </div>
@@ -65,14 +65,14 @@ export const SyllabusView = () => {
 
             <div className="grid gap-6">
               {subject.units.map((unit) => (
-                <div key={unit.id} className="neo-card p-6 md:p-8 space-y-6 relative overflow-hidden group/unit">
+                <div key={unit.id} className="neo-card p-6 md:p-8 space-y-6 relative overflow-visible group/unit">
                   <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none transform group-hover/unit:rotate-12 transition-transform duration-700">
                     <span className="text-8xl font-black italic">⚔️</span>
                   </div>
                   
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 py-4">
                     <div className="h-px flex-1 bg-white/5 group-hover/unit:bg-[#00ef8e]/20 transition-colors"></div>
-                    <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500 font-black">{unit.title}</p>
+                    <p className="text-[11px] uppercase tracking-[0.3em] text-[#00ef8e]/80 font-black px-4">{unit.title}</p>
                     <div className="h-px flex-1 bg-white/5 group-hover/unit:bg-[#00ef8e]/20 transition-colors"></div>
                   </div>
 
@@ -80,22 +80,22 @@ export const SyllabusView = () => {
                     {unit.topics.map((topic) => (
                       <div
                         key={topic.id}
-                        className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-6 rounded-2xl bg-black/40 border border-white/5 hover:border-[#00ef8e]/30 transition-all hover:bg-black/60 group/topic relative overflow-hidden"
+                        className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-6 rounded-2xl bg-black/40 border border-white/5 hover:border-[#00ef8e]/30 transition-all hover:bg-black/60 group/topic relative overflow-visible"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-[#00ef8e]/5 to-transparent opacity-0 group-hover/topic:opacity-100 transition-opacity"></div>
                         
-                        <div className="space-y-4 relative z-10">
+                        <div className="space-y-4 relative z-10 px-2">
                           <div className="flex items-center gap-3">
                             <div className={`w-2 h-2 rounded-full ${
                               topic.priority === "high" ? "bg-amber shadow-[0_0_10px_rgba(245,158,11,0.4)]" :
                               topic.priority === "medium" ? "bg-[#00ef8e]" : "bg-slate-700"
                             }`} />
-                            <span className="text-[9px] font-black text-slate-500 tracking-widest uppercase font-sans">{topic.priority} PRIORITY</span>
+                            <span className="text-[9px] font-black text-slate-500 tracking-widest uppercase">{topic.priority} PRIORITY</span>
                           </div>
                           
                           <div className="space-y-1">
                             <p className="text-lg font-bold text-white group-hover/topic:text-[#00ef8e] transition-colors">{topic.title}</p>
-                            <p className="text-[10px] text-slate-600 font-mono font-bold uppercase tracking-tighter font-sans">
+                            <p className="text-[10px] text-slate-600 font-mono font-bold uppercase tracking-tighter">
                               {topic.lastStudied
                                 ? `LAST_BATTLE: ${new Date(topic.lastStudied).toLocaleString()}`
                                 : "STATUS: UNINITIALIZED"}

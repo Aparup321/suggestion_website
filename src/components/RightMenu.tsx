@@ -31,20 +31,20 @@ export const RightMenu = () => {
                   setMode(item.id)
                   navigate(item.id === "routine" ? "/" : `/${item.id}`)
                 }}
-                className={`text-left px-5 py-4 rounded-xl transition-all flex items-center justify-between gap-4 group/item ${isActive
+                className={`w-full px-5 py-4 rounded-xl transition-all flex items-center gap-4 group/item relative ${isActive
                   ? "bg-[#00ef8e]/10 border border-[#00ef8e]/20 text-white font-bold shadow-[0_0_15px_rgba(0,239,142,0.1)]"
                   : "text-slate-500 hover:text-[#00ef8e]/80"
                   }`}
               >
-                <div className="flex flex-col gap-0.5">
-                  <span className={`text-[10px] tracking-[0.3em] uppercase opacity-40 group-hover/item:opacity-60 transition-opacity`}>
+                <span className={`text-2xl transition-all duration-300 ${isActive ? "text-[#00ef8e] scale-110 drop-shadow-[0_0_8px_#00ef8e]" : "opacity-20 scale-90"}`}>
+                  {isActive ? "⚔" : item.icon}
+                </span>
+                <div className="flex flex-col gap-0.5 text-left">
+                  <span className={`text-[9px] tracking-[0.2em] uppercase opacity-40 group-hover/item:opacity-60 transition-opacity`}>
                     {item.id === "routine" ? "SANTORYU" : "GRAND_LINE"}
                   </span>
-                  <span className="text-sm font-zoro tracking-wider">{item.label}</span>
+                  <span className="text-sm font-zoro tracking-wider uppercase">{item.label}</span>
                 </div>
-                <span className={`text-2xl transition-all duration-300 ${isActive ? "text-[#00ef8e] scale-110 drop-shadow-[0_0_8px_#00ef8e]" : "opacity-20 scale-90"}`}>
-                  {item.icon}
-                </span>
                 {isActive && (
                   <motion.div 
                     layoutId="active-pill"

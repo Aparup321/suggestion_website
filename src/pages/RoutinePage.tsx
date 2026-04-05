@@ -114,7 +114,7 @@ export const RoutinePage = () => {
                 <h2 className="text-4xl font-zoro text-white font-bold tracking-tight">Anchors Aweigh!</h2>
                 <p className="text-slate-400 text-lg max-w-sm mx-auto">Today is a holiday ({today}). No training scheduled for the Zoro style. Rest up, nakama!</p>
               </div>
-              <button onClick={() => setView("weekly")} className="text-[#00ef8e] text-xs font-bold uppercase tracking-[0.3em] bg-[#00ef8e]/10 px-6 py-3 rounded-xl border border-[#00ef8e]/20 hover:bg-[#00ef8e]/20 transition-all">
+              <button onClick={() => setView("weekly")} className="text-[#00ef8e] text-xs font-bold uppercase tracking-[0.3em] bg-[#00ef8e]/10 px-6 py-3 rounded-xl border border-[#00ef8e]/20 hover:bg-[#00ef8e]/20 transition-all font-sans">
                 Preview Weekly Chart
               </button>
             </motion.div>
@@ -149,7 +149,7 @@ export const RoutinePage = () => {
                     onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
                     style={{ x: isActive ? dragX : diff * 520 }}
                   >
-                    <div className={`p-8 rounded-[32px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-hidden ${
+                    <div className={`p-8 rounded-[32px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-visible ${
                       isCurrent 
                         ? isBreak ? "bg-amber/5 border-amber/20" : "bg-[#00ef8e]/10 border-[#00ef8e]/40 shadow-[0_30px_60px_-15px_rgba(0,239,142,0.25)] animate-[haki-pulse_4s_infinite]" 
                         : isPast ? "bg-black/40 border-white/[0.03] grayscale opacity-60" : "bg-black/60 border-white/[0.08]"
@@ -172,7 +172,7 @@ export const RoutinePage = () => {
 
                       <div className="space-y-8">
                         {frame.entries.map((entry, entryIdx) => (
-                          <div key={entry.id} className={`${entryIdx > 0 ? "pt-8 border-t border-white/5" : ""} relative`}>
+                          <div key={entry.id} className={`${entryIdx > 0 ? "pt-8 border-t border-white/5" : ""} relative px-2`}>
                             <div className="flex flex-col gap-4">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="space-y-1">
@@ -190,11 +190,11 @@ export const RoutinePage = () => {
                               {!isBreak && (
                                 <div className="grid grid-cols-2 gap-6 pt-2">
                                   <div className="space-y-1 text-left">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Training Grounds</span>
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-left">Training Grounds</span>
                                     <p className="text-slate-300 text-xs font-semibold">{entry.room}</p>
                                   </div>
                                   <div className="space-y-1 text-right">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Sword Master</span>
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-right">Sword Master</span>
                                     <p className="text-slate-300 text-xs font-semibold truncate">{entry.instructor || "Common"}</p>
                                   </div>
                                 </div>
@@ -230,23 +230,23 @@ export const RoutinePage = () => {
               const isToday = day === today
 
               return (
-                <div key={day} className={`relative flex flex-col gap-6 pl-8 border-l-2 transition-colors ${isToday ? "border-[#00ef8e]" : "border-white/5"}`}>
+                <div key={day} className={`relative flex flex-col gap-6 pl-8 border-l-2 ml-4 transition-colors ${isToday ? "border-[#00ef8e]" : "border-white/5"}`}>
                   <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full ring-4 ${isToday ? "bg-[#00ef8e] ring-[#00ef8e]/20" : "bg-slate-800 ring-slate-950"}`} />
                   <div className="flex items-center gap-4">
                     <h3 className={`text-2xl font-zoro font-black italic tracking-tighter ${isToday ? "text-[#00ef8e]" : "text-slate-200"}`}>{day}</h3>
                     {isToday && <span className="bg-[#00ef8e]/10 text-[#00ef8e] text-[10px] px-2 py-0.5 rounded border border-[#00ef8e]/20 font-black">ACTIVE</span>}
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
                     {dayFrames.map(frame => (
-                      <div key={frame.start} className="neo-card p-5 space-y-4 hover:border-[#00ef8e]/40 group/card transition-all">
-                        <div className="flex justify-between items-center gap-2">
+                      <div key={frame.start} className="neo-card p-6 space-y-4 hover:border-[#00ef8e]/40 group/card transition-all overflow-visible">
+                        <div className="flex justify-between items-center gap-2 w-full">
                           <span className="text-[10px] font-mono text-[#00ef8e] font-bold">{formatTimeRange(frame.start, frame.end)}</span>
                         </div>
-                        <div className="space-y-3">
+                        <div className="space-y-3 w-full">
                           {frame.entries.map(entry => (
-                            <div key={entry.id} className="flex flex-col gap-1 first:pt-0 pt-3 border-t border-white/5 first:border-0">
+                            <div key={entry.id} className="flex flex-col gap-1 first:pt-0 pt-3 border-t border-white/5 first:border-0 px-1">
                               <span className="text-sm font-bold text-white group-hover/card:text-[#00ef8e] transition-colors">{entry.title}</span>
-                              <div className="flex items-center justify-between">
+                              <div className="flex items-center justify-between w-full">
                                 <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">{entry.room}</span>
                                 {entry.group && <span className="text-[8px] text-[#00ef8e]/60 font-bold">{entry.group}</span>}
                               </div>

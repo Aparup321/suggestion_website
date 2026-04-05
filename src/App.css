@@ -41,7 +41,29 @@ body {
   box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
-  overflow: hidden;
+  overflow: visible; 
+  padding: 2rem 1.5rem; /* Increased vertical padding and consistent horizontal */
+}
+
+.neo-card-inner {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.text-right-aligned {
+  text-align: right !important;
+}
+
+.flex-right-aligned {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+}
+
+.justify-end-auto {
+  justify-content: flex-end !important;
 }
 
 .neo-card::before {
@@ -118,13 +140,13 @@ body {
   .sidebar-container::after {
     content: '';
     position: absolute;
-    left: -1rem;
+    left: -2rem;
     top: 50%;
     transform: translateY(-50%);
-    height: 80%;
+    height: 85%;
     width: 1px;
     background: linear-gradient(to bottom, transparent, var(--zoro-green), transparent);
-    opacity: 0.3;
+    opacity: 0.4;
     box-shadow: 0 0 15px var(--zoro-green);
   }
 }
@@ -137,8 +159,9 @@ body {
 
 @media (min-width: 768px) {
   #zoro-main-layout {
-    flex-direction: row-reverse !important;
+    flex-direction: row !important; /* Back to normal: content left, sidebar right */
     align-items: flex-start !important;
+    gap: 4rem !important;
   }
   #zoro-sidebar {
     width: 300px !important;
