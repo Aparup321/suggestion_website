@@ -2,12 +2,11 @@
   --slate-950: #020617;
   --slate-900: #0f172a;
   --slate-800: #1e293b;
-  --ocean: #38bdf8;
-  --plum: #c084fc;
-  --emerald: #10b981;
-  --amber: #f59e0b;
-  --glass: rgba(15, 23, 42, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --zoro-green: #00ef8e;
+  --zoro-dark: #00703c;
+  --steel: #e2e8f0;
+  --glass: rgba(10, 10, 10, 0.7);
+  --glass-border: rgba(0, 239, 142, 0.1);
 }
 
 * {
@@ -15,10 +14,7 @@
 }
 
 body {
-  background-color: var(--slate-950);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.05) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(192, 132, 252, 0.05) 0px, transparent 50%);
+  background-color: var(--zoro-black);
   color: #f8fafc;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -38,24 +34,47 @@ body {
 
 .neo-card {
   background: var(--glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.neo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 239, 142, 0.05),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.neo-card:hover::before {
+  left: 100%;
 }
 
 .neo-card:hover {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(15, 23, 42, 0.8);
-  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.6);
+  border-color: var(--zoro-green);
+  background: rgba(10, 10, 10, 0.85);
+  box-shadow: 0 20px 50px -12px rgba(0, 239, 142, 0.15);
+  transform: translateY(-4px);
 }
 
 .neo-button {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   color: #94a3b8;
   font-weight: 600;
@@ -64,22 +83,31 @@ body {
 }
 
 .neo-button.active {
-  background: rgba(56, 189, 248, 0.1);
-  border-color: var(--ocean);
-  color: var(--ocean);
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+  background: rgba(0, 239, 142, 0.08);
+  border-color: var(--zoro-green);
+  color: var(--zoro-green);
+  box-shadow: 0 0 20px rgba(0, 239, 142, 0.2);
+  animation: haki-pulse 3s infinite;
 }
 
 .neo-button:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.08);
-  color: #f1f5f9;
+  background: rgba(0, 239, 142, 0.05);
+  color: #fff;
+  border-color: rgba(0, 239, 142, 0.3);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--ocean), var(--plum));
+  background: linear-gradient(135deg, var(--zoro-green), var(--steel));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  font-weight: 800;
+}
+
+.hero-banner {
+  position: relative;
+  border-bottom: 1px solid rgba(0, 239, 142, 0.1);
+  padding-bottom: 24px;
 }
 
 /* Scrollbar Styling */
@@ -87,12 +115,13 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.1);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--zoro-green);
   border-radius: 10px;
+  opacity: 0.5;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--zoro-dark);
 }

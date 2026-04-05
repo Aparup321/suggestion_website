@@ -74,13 +74,13 @@ export const RoutinePage = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
-          <h1 className="text-4xl font-black tracking-tight text-white flex items-center gap-3">
-            ROUTINE <span className="text-ocean text-xs font-mono font-medium tracking-[0.4em] bg-ocean/10 px-3 py-1 rounded-full border border-ocean/20">CORE.CMD</span>
+          <h1 className="text-4xl font-zoro font-black tracking-tight text-white flex items-center gap-3">
+            SANTORYU <span className="text-[#00ef8e] text-[10px] font-mono font-medium tracking-[0.4em] bg-[#00ef8e]/10 px-3 py-1 rounded-full border border-[#00ef8e]/20">WANO.KUNI</span>
           </h1>
-          <p className="text-slate-500 text-sm font-medium">Automatic Class Management System for Section C</p>
+          <p className="text-slate-500 text-sm font-medium">Three-Sword Style Class Management for Section C</p>
         </div>
         
-        <div className="flex bg-slate-900/80 p-1.5 rounded-2xl border border-white/5 shadow-inner self-start md:self-end">
+        <div className="flex bg-black/80 p-1.5 rounded-2xl border border-white/5 shadow-inner self-start md:self-end">
           {(["daily", "weekly"] as const).map((v) => (
             <button
               key={v}
@@ -90,7 +90,7 @@ export const RoutinePage = () => {
               }}
               className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
                 view === v 
-                  ? "bg-ocean/20 text-ocean shadow-[0_0_20px_rgba(56,189,248,0.15)] ring-1 ring-ocean/30" 
+                  ? "bg-[#00ef8e]/20 text-[#00ef8e] shadow-[0_0_20px_rgba(0,239,142,0.15)] ring-1 ring-[#00ef8e]/30" 
                   : "text-slate-500 hover:text-slate-300"
               }`}
             >
@@ -105,17 +105,17 @@ export const RoutinePage = () => {
           isHoliday ? (
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-              className="neo-card p-16 text-center space-y-6 mt-12 bg-gradient-to-br from-slate-900/60 to-slate-950/80 mx-4"
+              className="neo-card p-16 text-center space-y-6 mt-12 bg-gradient-to-br from-black/60 to-black/80 mx-4 border-[#00ef8e]/10"
             >
-              <div className="w-24 h-24 bg-plum/10 rounded-full flex items-center justify-center mx-auto ring-1 ring-plum/20">
-                <span className="text-5xl">🏝️</span>
+              <div className="w-24 h-24 bg-[#00ef8e]/10 rounded-full flex items-center justify-center mx-auto ring-1 ring-[#00ef8e]/20">
+                <span className="text-5xl">⚓</span>
               </div>
               <div className="space-y-2">
-                <h2 className="text-4xl font-display text-white font-bold tracking-tight">Let's chill!</h2>
-                <p className="text-slate-400 text-lg max-w-sm mx-auto">Today is a holiday ({today}). No classes scheduled. Time to recharge your battery!</p>
+                <h2 className="text-4xl font-zoro text-white font-bold tracking-tight">Anchors Aweigh!</h2>
+                <p className="text-slate-400 text-lg max-w-sm mx-auto">Today is a holiday ({today}). No training scheduled for the Zoro style. Rest up, nakama!</p>
               </div>
-              <button onClick={() => setView("weekly")} className="text-plum text-xs font-bold uppercase tracking-[0.3em] bg-plum/10 px-6 py-3 rounded-xl border border-plum/20 hover:bg-plum/20 transition-all">
-                Preview Weekly Calendar
+              <button onClick={() => setView("weekly")} className="text-[#00ef8e] text-xs font-bold uppercase tracking-[0.3em] bg-[#00ef8e]/10 px-6 py-3 rounded-xl border border-[#00ef8e]/20 hover:bg-[#00ef8e]/20 transition-all">
+                Preview Weekly Chart
               </button>
             </motion.div>
           ) : (
@@ -149,17 +149,23 @@ export const RoutinePage = () => {
                     onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
                     style={{ x: isActive ? dragX : diff * 520 }}
                   >
-                    <div className={`p-8 rounded-[32px] backdrop-blur-2xl border-2 transition-all duration-700 ${
+                    <div className={`p-8 rounded-[32px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-hidden ${
                       isCurrent 
-                        ? isBreak ? "bg-amber/5 border-amber/20" : "bg-ocean/10 border-ocean/30 shadow-[0_30px_60px_-15px_rgba(56,189,248,0.25)]" 
-                        : isPast ? "bg-slate-900/40 border-white/[0.03] grayscale opacity-60" : "bg-slate-900/60 border-white/[0.08]"
+                        ? isBreak ? "bg-amber/5 border-amber/20" : "bg-[#00ef8e]/10 border-[#00ef8e]/40 shadow-[0_30px_60px_-15px_rgba(0,239,142,0.25)] animate-[haki-pulse_4s_infinite]" 
+                        : isPast ? "bg-black/40 border-white/[0.03] grayscale opacity-60" : "bg-black/60 border-white/[0.08]"
                     }`}>
+                      {isCurrent && !isBreak && (
+                        <div className="absolute top-0 right-0 p-4 opacity-20 transform rotate-12">
+                          <span className="text-6xl">⚔️</span>
+                        </div>
+                      )}
+                      
                       <div className="flex justify-between items-center mb-10">
                         <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${
                           isBreak ? "bg-amber/20 text-amber" : 
-                          isCurrent ? "bg-ocean text-white" : "bg-white/5 text-slate-500"
+                          isCurrent ? "bg-[#00ef8e] text-black" : "bg-white/5 text-slate-500"
                         }`}>
-                          {isBreak ? "RECHARGE" : isCurrent ? "ACTIVE NOW" : isPast ? "COMPLETED" : "INCOMING"}
+                          {isBreak ? "SAKE BREAK" : isCurrent ? "ENMA AWAKENED" : isPast ? "DEFEATED" : "INCOMING"}
                         </div>
                         <span className="font-mono text-sm font-bold text-slate-300 opacity-80">{formatTimeRange(frame.start, frame.end)}</span>
                       </div>
@@ -170,22 +176,25 @@ export const RoutinePage = () => {
                             <div className="flex flex-col gap-4">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="space-y-1">
-                                  <h3 className={`text-2xl font-bold tracking-tight leading-none ${isBreak ? "text-amber" : "text-white"}`}>
-                                    {isBreak && <span className="mr-3">☕</span>}{entry.title}
+                                  <h3 className={`text-2xl font-zoro font-bold tracking-tight leading-none ${isBreak ? "text-amber" : "text-white"}`}>
+                                    {isBreak && <span className="mr-3">🍶</span>}{entry.title}
                                   </h3>
-                                  <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-widest">{entry.subjectId.toUpperCase()}</p>
+                                  <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-widest flex items-center gap-2">
+                                    <span className="w-2 h-[1px] bg-slate-600"></span>
+                                    {entry.subjectId.toUpperCase()}
+                                  </p>
                                 </div>
-                                {entry.group && <span className="text-[10px] bg-sky-500/10 text-sky-400 px-3 py-1 rounded-lg border border-sky-500/20 font-black">{entry.group}</span>}
+                                {entry.group && <span className="text-[10px] bg-[#00ef8e]/10 text-[#00ef8e] px-3 py-1 rounded-lg border border-[#00ef8e]/20 font-black">{entry.group}</span>}
                               </div>
 
                               {!isBreak && (
                                 <div className="grid grid-cols-2 gap-6 pt-2">
-                                  <div className="space-y-1">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Room</span>
+                                  <div className="space-y-1 text-left">
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Training Grounds</span>
                                     <p className="text-slate-300 text-xs font-semibold">{entry.room}</p>
                                   </div>
                                   <div className="space-y-1 text-right">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Instructor</span>
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Sword Master</span>
                                     <p className="text-slate-300 text-xs font-semibold truncate">{entry.instructor || "Common"}</p>
                                   </div>
                                 </div>
@@ -198,10 +207,10 @@ export const RoutinePage = () => {
                       <div className="mt-12 flex items-center justify-between">
                         <div className="flex gap-1.5">
                           {todayFrames.map((_, dotIdx) => (
-                            <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === index ? "w-8 bg-ocean" : "w-1.5 bg-white/10"}`} />
+                            <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === index ? "w-8 bg-[#00ef8e]" : "w-1.5 bg-white/10"}`} />
                           ))}
                         </div>
-                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">SEQ // {index + 1}</span>
+                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">SLICE // {index + 1}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -221,25 +230,25 @@ export const RoutinePage = () => {
               const isToday = day === today
 
               return (
-                <div key={day} className={`relative flex flex-col gap-6 pl-8 border-l-2 transition-colors ${isToday ? "border-ocean" : "border-white/5"}`}>
-                  <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full ring-4 ${isToday ? "bg-ocean ring-ocean/20" : "bg-slate-800 ring-slate-950"}`} />
+                <div key={day} className={`relative flex flex-col gap-6 pl-8 border-l-2 transition-colors ${isToday ? "border-[#00ef8e]" : "border-white/5"}`}>
+                  <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full ring-4 ${isToday ? "bg-[#00ef8e] ring-[#00ef8e]/20" : "bg-slate-800 ring-slate-950"}`} />
                   <div className="flex items-center gap-4">
-                    <h3 className={`text-2xl font-black italic tracking-tighter ${isToday ? "text-ocean" : "text-slate-200"}`}>{day}</h3>
-                    {isToday && <span className="bg-ocean/10 text-ocean text-[10px] px-2 py-0.5 rounded border border-ocean/20 font-black">TODAY</span>}
+                    <h3 className={`text-2xl font-zoro font-black italic tracking-tighter ${isToday ? "text-[#00ef8e]" : "text-slate-200"}`}>{day}</h3>
+                    {isToday && <span className="bg-[#00ef8e]/10 text-[#00ef8e] text-[10px] px-2 py-0.5 rounded border border-[#00ef8e]/20 font-black">ACTIVE</span>}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {dayFrames.map(frame => (
-                      <div key={frame.start} className="neo-card p-5 space-y-4 hover:border-ocean/20">
+                      <div key={frame.start} className="neo-card p-5 space-y-4 hover:border-[#00ef8e]/40 group/card transition-all">
                         <div className="flex justify-between items-center gap-2">
-                          <span className="text-[10px] font-mono text-ocean font-bold">{formatTimeRange(frame.start, frame.end)}</span>
+                          <span className="text-[10px] font-mono text-[#00ef8e] font-bold">{formatTimeRange(frame.start, frame.end)}</span>
                         </div>
                         <div className="space-y-3">
                           {frame.entries.map(entry => (
                             <div key={entry.id} className="flex flex-col gap-1 first:pt-0 pt-3 border-t border-white/5 first:border-0">
-                              <span className="text-sm font-bold text-white group-hover:text-ocean transition-colors">{entry.title}</span>
+                              <span className="text-sm font-bold text-white group-hover/card:text-[#00ef8e] transition-colors">{entry.title}</span>
                               <div className="flex items-center justify-between">
                                 <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">{entry.room}</span>
-                                {entry.group && <span className="text-[8px] text-ocean/60 font-bold">{entry.group}</span>}
+                                {entry.group && <span className="text-[8px] text-[#00ef8e]/60 font-bold">{entry.group}</span>}
                               </div>
                             </div>
                           ))}

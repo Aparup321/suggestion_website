@@ -1,13 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Cinzel:wght@700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --zoro-emerald: #00ef8e;
+  --zoro-forest: #00703c;
+  --zoro-black: #0a0a0a;
+  --zoro-steel: #e2e8f0;
+  --haki-green: rgba(0, 239, 142, 0.4);
+  --haki-purple: rgba(168, 85, 247, 0.3);
+  
   color-scheme: dark;
   font-family: "Inter", sans-serif;
-  background-color: #030712; 
+  background-color: var(--zoro-black);
   color: #f8fafc;
 }
 
@@ -18,17 +25,41 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #030712;
-  /* Glowing orbs background */
+  background-color: var(--zoro-black);
+  /* Zoro Background with Dark Gradients */
   background-image: 
-    radial-gradient(circle at 15% 50%, rgba(192, 132, 252, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.1) 0%, transparent 40%),
-    linear-gradient(#030712, #030712);
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.9)),
+    url('/zoro-bg.webp');
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, .font-display {
   font-family: "Space Grotesk", sans-serif;
+}
+
+.font-zoro {
+  font-family: "Cinzel", serif;
+}
+
+@keyframes slash {
+  0% { transform: translateX(-100%) skewX(-45deg); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(200%) skewX(-45deg); opacity: 0; }
+}
+
+@keyframes haki-pulse {
+  0% { box-shadow: 0 0 15px var(--haki-green); }
+  50% { box-shadow: 0 0 30px var(--haki-purple), 0 0 10px var(--haki-green); }
+  100% { box-shadow: 0 0 15px var(--haki-green); }
+}
+
+@keyframes green-glow {
+  0%, 100% { text-shadow: 0 0 10px var(--zoro-emerald); }
+  50% { text-shadow: 0 0 25px var(--zoro-emerald), 0 0 5px #fff; }
 }
 
 #root {
