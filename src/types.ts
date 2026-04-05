@@ -23,7 +23,7 @@ export type Subject = {
 
 export type RoutineEntry = {
   id: string
-  day: "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT"
+  day: "SUN" | "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT"
   start: string
   end: string
   subjectId: string

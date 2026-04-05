@@ -1,6 +1,7 @@
 import type { RoutineEntry } from "../types"
 
 export const dayOrder: Array<RoutineEntry["day"]> = [
+  "SUN",
   "MON",
   "TUE",
   "WED",
@@ -21,6 +22,7 @@ export const getNowMinutes = (date: Date) => date.getHours() * 60 + date.getMinu
 export const getNowDay = (date: Date): RoutineEntry["day"] => {
   const day = date.getDay()
   const map: Record<number, RoutineEntry["day"]> = {
+    0: "SUN",
     1: "MON",
     2: "TUE",
     3: "WED",
@@ -28,7 +30,7 @@ export const getNowDay = (date: Date): RoutineEntry["day"] => {
     5: "FRI",
     6: "SAT",
   }
-  return map[day] ?? "MON"
+  return map[day] ?? "SUN"
 }
 
 export const formatTimeRange = (start: string, end: string) => `${start} - ${end}`

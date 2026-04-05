@@ -1,99 +1,97 @@
+:root {
+  --slate-950: #020617;
+  --slate-900: #0f172a;
+  --slate-800: #1e293b;
+  --ocean: #38bdf8;
+  --plum: #c084fc;
+  --emerald: #10b981;
+  --amber: #f59e0b;
+  --glass: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--slate-950);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(192, 132, 252, 0.05) 0px, transparent 50%);
+  color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  0% { opacity: 0; transform: translateY(10px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .page-shell {
   min-height: 100vh;
-  padding: 32px 16px 64px;
+  padding: 24px 16px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.hero-banner {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 32px 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-banner::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
-  pointer-events: none;
-}
-
-/* Base Glass Card */
 .neo-card {
-  background: rgba(30, 41, 59, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .neo-card:hover {
-  transform: translateY(-2px);
-  background: rgba(30, 41, 59, 0.5);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
 .neo-button {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border-radius: 999px;
-  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #94a3b8;
   font-weight: 600;
-  transition: all 0.2s ease-out;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
 }
 
-.neo-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
-  transform: translateY(-1px);
+.neo-button.active {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: var(--ocean);
+  color: var(--ocean);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
 }
 
-.neo-button:active {
-  transform: scale(0.96);
-}
-
-/* Specific to the routine card stack */
-.stack-card {
-  position: absolute;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-  z-index: 1;
+.neo-button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
 }
 
 .text-gradient {
-  background: var(--tw-gradient-stops, linear-gradient(to right, #38bdf8, #c084fc));
+  background: linear-gradient(135deg, var(--ocean), var(--plum));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
 }

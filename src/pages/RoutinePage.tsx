@@ -19,7 +19,6 @@ export const RoutinePage = () => {
     return () => clearInterval(timer)
   }, [setMode])
 
-  // Group entries into "Frames" (Simultaneous classes in one card)
   const frames = useMemo(() => {
     const sorted = [...routineEntries].sort((a, b) => {
       const dayDiff = dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day)
@@ -41,8 +40,8 @@ export const RoutinePage = () => {
 
   const today = getNowDay(now)
   const todayFrames = useMemo(() => frames.filter((f) => f.day === today), [frames, today])
+  const isHoliday = today === "SUN" || today === "MON" || todayFrames.length === 0
 
-  // Auto-focus on current class in Daily View
   useEffect(() => {
     if (view === "daily" && todayFrames.length > 0) {
       const nowMin = getNowMinutes(now)
@@ -51,21 +50,14 @@ export const RoutinePage = () => {
       )
       const nextIndex = todayFrames.findIndex((f) => toMinutes(f.start) > nowMin)
       
-      if (currentIndex >= 0) {
-        setIndex(currentIndex)
-      } else if (nextIndex >= 0) {
-        setIndex(nextIndex)
-      } else {
-        setIndex(todayFrames.length - 1)
-      }
+      if (currentIndex >= 0) setIndex(currentIndex)
+      else if (nextIndex >= 0) setIndex(nextIndex)
+      else setIndex(todayFrames.length - 1)
     }
   }, [view, todayFrames, now])
 
   const shiftCarousel = (delta: number, length: number) => {
-    setIndex((prev) => {
-      const next = prev + delta
-      return Math.max(0, Math.min(next, length - 1))
-    })
+    setIndex((prev) => Math.max(0, Math.min(prev + delta, length - 1)))
     dragX.set(0)
   }
 
@@ -78,158 +70,180 @@ export const RoutinePage = () => {
   }
 
   return (
-    <section className="flex flex-col gap-6 w-full">
-      {/* HEADER TOGGLE */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-4">
-        <div className="flex items-center gap-2">
-          <div className="p-1 bg-slate-900/50 rounded-xl border border-white/5 flex gap-1">
-            {(["daily", "weekly"] as const).map((v) => (
-              <button
-                key={v}
-                onClick={() => {
-                  setView(v)
-                  setIndex(0)
-                }}
-                className={`px-4 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${
-                  view === v 
-                    ? "bg-ocean text-white shadow-[0_0_15px_rgba(56,189,248,0.3)]" 
-                    : "text-slate-500 hover:text-slate-300"
-                }`}
-              >
-                {v}
-              </button>
-            ))}
-          </div>
+    <section className="flex flex-col gap-8 w-full max-w-5xl mx-auto py-4">
+      {/* HEADER SECTION */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
+        <div className="space-y-1">
+          <h1 className="text-4xl font-black tracking-tight text-white flex items-center gap-3">
+            ROUTINE <span className="text-ocean text-xs font-mono font-medium tracking-[0.4em] bg-ocean/10 px-3 py-1 rounded-full border border-ocean/20">CORE.CMD</span>
+          </h1>
+          <p className="text-slate-500 text-sm font-medium">Automatic Class Management System for Section C</p>
         </div>
-        <div className="text-[10px] uppercase tracking-[0.3em] text-slate-500 font-bold hidden md:block">
-          {view === "daily" ? `Timeline // ${today}` : "Full Week Schedule"}
+        
+        <div className="flex bg-slate-900/80 p-1.5 rounded-2xl border border-white/5 shadow-inner self-start md:self-end">
+          {(["daily", "weekly"] as const).map((v) => (
+            <button
+              key={v}
+              onClick={() => {
+                setView(v)
+                setIndex(0)
+              }}
+              className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
+                view === v 
+                  ? "bg-ocean/20 text-ocean shadow-[0_0_20px_rgba(56,189,248,0.15)] ring-1 ring-ocean/30" 
+                  : "text-slate-500 hover:text-slate-300"
+              }`}
+            >
+              {v}
+            </button>
+          ))}
         </div>
       </div>
 
       <AnimatePresence mode="wait">
         {view === "daily" ? (
-          todayFrames.length === 0 ? (
+          isHoliday ? (
             <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="flex flex-col items-center justify-center p-20 neo-card text-center gap-4 mt-8"
+              initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+              className="neo-card p-16 text-center space-y-6 mt-12 bg-gradient-to-br from-slate-900/60 to-slate-950/80 mx-4"
             >
-              <div className="text-6xl">🌴</div>
-              <h2 className="text-3xl font-display text-white">Let's chill!</h2>
-              <p className="text-slate-400 max-w-xs">Monday is your off day. No classes scheduled today. Enjoy your holiday!</p>
+              <div className="w-24 h-24 bg-plum/10 rounded-full flex items-center justify-center mx-auto ring-1 ring-plum/20">
+                <span className="text-5xl">🏝️</span>
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-4xl font-display text-white font-bold tracking-tight">Let's chill!</h2>
+                <p className="text-slate-400 text-lg max-w-sm mx-auto">Today is a holiday ({today}). No classes scheduled. Time to recharge your battery!</p>
+              </div>
+              <button onClick={() => setView("weekly")} className="text-plum text-xs font-bold uppercase tracking-[0.3em] bg-plum/10 px-6 py-3 rounded-xl border border-plum/20 hover:bg-plum/20 transition-all">
+                Preview Weekly Calendar
+              </button>
             </motion.div>
           ) : (
             <motion.div 
-              key="daily"
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-              className="relative min-h-[480px] flex items-center justify-center overflow-hidden w-full"
+              key="daily-carousel"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="relative min-h-[520px] flex items-center justify-center overflow-visible px-4"
             >
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                {todayFrames.map((frame, i) => {
-                  const diff = i - index
-                  if (Math.abs(diff) > 2) return null
-                  const isActive = diff === 0
-                  const isPast = diff < 0
-                  const nowMin = getNowMinutes(now)
-                  const isCurrent = nowMin >= toMinutes(frame.start) && nowMin <= toMinutes(frame.end)
-                  
-                  // Check if any entry in the frame is a break
-                  const isBreak = frame.entries.some(e => e.subjectId === "break")
+              {todayFrames.map((frame, i) => {
+                const diff = i - index
+                if (Math.abs(diff) > 2) return null
+                const isActive = diff === 0
+                const nowMin = getNowMinutes(now)
+                const isCurrent = nowMin >= toMinutes(frame.start) && nowMin <= toMinutes(frame.end)
+                const isPast = nowMin > toMinutes(frame.end)
+                const isBreak = frame.entries.some(e => e.subjectId === "break")
 
-                  return (
-                    <motion.div
-                      key={frame.day + frame.start}
-                      className="absolute w-[580px] pointer-events-auto"
-                      animate={{
-                        x: diff * 600,
-                        scale: isActive ? 1 : 0.85,
-                        opacity: isActive ? 1 : 0.3,
-                        filter: isActive ? "blur(0px)" : "blur(4px)",
-                        zIndex: 20 - Math.abs(diff)
-                      }}
-                      drag={isActive ? "x" : false}
-                      dragConstraints={{ left: 0, right: 0 }}
-                      onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
-                      style={{ x: isActive ? dragX : diff * 600 }}
-                    >
-                      <div className={`p-8 rounded-3xl backdrop-blur-xl border flex flex-col gap-6 shadow-2xl transition-colors ${
-                        isCurrent 
-                          ? isBreak ? "bg-lime/10 border-lime/40 shadow-lime/5" : "bg-ocean/10 border-ocean/40 shadow-ocean/5" 
-                          : isBreak ? "bg-slate-900/40 border-white/5 opacity-80" : "bg-slate-900/60 border-white/10"
-                      }`}>
-                        <div className="flex justify-between items-center border-b border-white/5 pb-4">
-                          <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
-                            isCurrent 
-                              ? isBreak ? "bg-lime text-black" : "bg-ocean text-white" 
-                              : "bg-white/5 text-slate-400"
-                          }`}>
-                            {isBreak ? "Break Mode" : isCurrent ? "Active Now" : isPast ? "Completed" : "Incoming"}
-                          </div>
-                          <span className="font-mono text-sm text-slate-200">{formatTimeRange(frame.start, frame.end)}</span>
+                return (
+                  <motion.div
+                    key={frame.day + frame.start}
+                    className="absolute w-full max-w-[500px]"
+                    animate={{
+                      x: diff * 520,
+                      scale: isActive ? 1 : 0.85,
+                      opacity: isActive ? 1 : 0.4,
+                      filter: isActive ? "blur(0px)" : "blur(4px)",
+                      zIndex: isActive ? 50 : 20 - Math.abs(diff)
+                    }}
+                    drag={isActive ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
+                    style={{ x: isActive ? dragX : diff * 520 }}
+                  >
+                    <div className={`p-8 rounded-[32px] backdrop-blur-2xl border-2 transition-all duration-700 ${
+                      isCurrent 
+                        ? isBreak ? "bg-amber/5 border-amber/20" : "bg-ocean/10 border-ocean/30 shadow-[0_30px_60px_-15px_rgba(56,189,248,0.25)]" 
+                        : isPast ? "bg-slate-900/40 border-white/[0.03] grayscale opacity-60" : "bg-slate-900/60 border-white/[0.08]"
+                    }`}>
+                      <div className="flex justify-between items-center mb-10">
+                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${
+                          isBreak ? "bg-amber/20 text-amber" : 
+                          isCurrent ? "bg-ocean text-white" : "bg-white/5 text-slate-500"
+                        }`}>
+                          {isBreak ? "RECHARGE" : isCurrent ? "ACTIVE NOW" : isPast ? "COMPLETED" : "INCOMING"}
                         </div>
+                        <span className="font-mono text-sm font-bold text-slate-300 opacity-80">{formatTimeRange(frame.start, frame.end)}</span>
+                      </div>
 
-                        <div className="grid grid-cols-1 gap-4">
-                          {frame.entries.map((entry, entryIdx) => (
-                            <div key={entry.id} className={`flex flex-col gap-2 ${entryIdx > 0 ? "pt-4 border-t border-white/5" : ""}`}>
-                              <div className="flex justify-between items-start">
-                                <div className="flex items-center gap-3">
-                                  {isBreak && <span className="text-2xl">☕</span>}
-                                  <h3 className={`text-2xl font-display ${isBreak ? "text-lime font-medium" : "text-white"}`}>
-                                    {entry.title}
+                      <div className="space-y-8">
+                        {frame.entries.map((entry, entryIdx) => (
+                          <div key={entry.id} className={`${entryIdx > 0 ? "pt-8 border-t border-white/5" : ""} relative`}>
+                            <div className="flex flex-col gap-4">
+                              <div className="flex items-start justify-between gap-4">
+                                <div className="space-y-1">
+                                  <h3 className={`text-2xl font-bold tracking-tight leading-none ${isBreak ? "text-amber" : "text-white"}`}>
+                                    {isBreak && <span className="mr-3">☕</span>}{entry.title}
                                   </h3>
+                                  <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-widest">{entry.subjectId.toUpperCase()}</p>
                                 </div>
-                                {entry.group && <span className="text-[10px] bg-white/5 border border-white/10 px-2 py-1 rounded text-ocean font-bold">{entry.group}</span>}
+                                {entry.group && <span className="text-[10px] bg-sky-500/10 text-sky-400 px-3 py-1 rounded-lg border border-sky-500/20 font-black">{entry.group}</span>}
                               </div>
-                              
+
                               {!isBreak && (
-                                <div className="grid grid-cols-2 gap-4 text-[11px] text-slate-400 uppercase tracking-widest">
-                                  <div><span className="text-slate-600 block mb-1">Room</span> {entry.room}</div>
-                                  <div><span className="text-slate-600 block mb-1">Instructor</span> {entry.instructor || "--"}</div>
+                                <div className="grid grid-cols-2 gap-6 pt-2">
+                                  <div className="space-y-1">
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Room</span>
+                                    <p className="text-slate-300 text-xs font-semibold">{entry.room}</p>
+                                  </div>
+                                  <div className="space-y-1 text-right">
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase">Instructor</span>
+                                    <p className="text-slate-300 text-xs font-semibold truncate">{entry.instructor || "Common"}</p>
+                                  </div>
                                 </div>
-                              )}
-                              {isBreak && (
-                                <p className="text-sm text-slate-400 italic">Time to recharge and grab a snack.</p>
                               )}
                             </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-12 flex items-center justify-between">
+                        <div className="flex gap-1.5">
+                          {todayFrames.map((_, dotIdx) => (
+                            <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === index ? "w-8 bg-ocean" : "w-1.5 bg-white/10"}`} />
                           ))}
                         </div>
-
-                        <div className="mt-4 flex justify-between items-center text-[10px] text-slate-500 font-bold tracking-widest uppercase">
-                          <span>Frame {i + 1} / {todayFrames.length}</span>
-                          {isActive && index < todayFrames.length - 1 && <span className="animate-pulse text-ocean">Swipe for next &rarr;</span>}
-                        </div>
+                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">SEQ // {index + 1}</span>
                       </div>
-                    </motion.div>
-                  )
-                })}
-              </div>
+                    </div>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           )
         ) : (
           <motion.div 
-            key="weekly"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="grid gap-8"
+            key="weekly-timeline"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
+            className="space-y-12 px-4 pb-20"
           >
             {dayOrder.map((day) => {
               const dayFrames = frames.filter(f => f.day === day)
               if (dayFrames.length === 0) return null
+              const isToday = day === today
+
               return (
-                <div key={day} className="flex flex-col gap-4">
-                  <h3 className="text-xl font-display text-white border-l-4 border-plum pl-4">{day}</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div key={day} className={`relative flex flex-col gap-6 pl-8 border-l-2 transition-colors ${isToday ? "border-ocean" : "border-white/5"}`}>
+                  <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full ring-4 ${isToday ? "bg-ocean ring-ocean/20" : "bg-slate-800 ring-slate-950"}`} />
+                  <div className="flex items-center gap-4">
+                    <h3 className={`text-2xl font-black italic tracking-tighter ${isToday ? "text-ocean" : "text-slate-200"}`}>{day}</h3>
+                    {isToday && <span className="bg-ocean/10 text-ocean text-[10px] px-2 py-0.5 rounded border border-ocean/20 font-black">TODAY</span>}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {dayFrames.map(frame => (
-                      <div key={frame.start} className="bg-slate-900/40 border border-white/5 p-5 rounded-2xl flex flex-col gap-3">
-                        <span className="text-[10px] font-mono text-ocean opacity-70">{formatTimeRange(frame.start, frame.end)}</span>
-                        {frame.entries.map(entry => (
-                          <div key={entry.id} className="flex flex-col">
-                            <span className="text-sm font-semibold text-white">{entry.title}</span>
-                            <span className="text-[10px] text-slate-500 uppercase">{entry.room} {entry.group ? `// ${entry.group}` : ""}</span>
-                          </div>
-                        ))}
+                      <div key={frame.start} className="neo-card p-5 space-y-4 hover:border-ocean/20">
+                        <div className="flex justify-between items-center gap-2">
+                          <span className="text-[10px] font-mono text-ocean font-bold">{formatTimeRange(frame.start, frame.end)}</span>
+                        </div>
+                        <div className="space-y-3">
+                          {frame.entries.map(entry => (
+                            <div key={entry.id} className="flex flex-col gap-1 first:pt-0 pt-3 border-t border-white/5 first:border-0">
+                              <span className="text-sm font-bold text-white group-hover:text-ocean transition-colors">{entry.title}</span>
+                              <div className="flex items-center justify-between">
+                                <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">{entry.room}</span>
+                                {entry.group && <span className="text-[8px] text-ocean/60 font-bold">{entry.group}</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     ))}
                   </div>
