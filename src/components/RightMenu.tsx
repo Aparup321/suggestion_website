@@ -14,35 +14,27 @@ export const RightMenu = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="fixed top-8 right-8 z-[100] flex flex-col items-end gap-3">
-      {/* 3 Dashes Hamburger Icon */}
-      <div className="flex flex-col gap-1.5 items-end pr-2 pb-1 opacity-70">
-        <div className="w-8 h-[3px] bg-gradient-to-r from-ocean to-plum rounded-full"></div>
-        <div className="w-6 h-[3px] bg-gradient-to-r from-ocean to-plum rounded-full"></div>
-        <div className="w-10 h-[3px] bg-gradient-to-r from-ocean to-plum rounded-full"></div>
-      </div>
-
+    <div className="fixed top-6 right-6 z-[999] flex flex-col items-end gap-2" style={{ left: 'auto', right: '24px' }}>
       <div className="relative group">
-        {/* Subtle glowing color-graded backdrop for the menu */}
-        <div className="absolute -inset-1 bg-gradient-to-b from-ocean/20 to-plum/20 rounded-3xl blur-md opacity-50 group-hover:opacity-75 transition duration-500"></div>
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-ocean/30 to-plum/30 rounded-2xl blur-sm opacity-40 group-hover:opacity-100 transition duration-500"></div>
 
-        <div className="relative bg-slate-900/70 w-[260px] backdrop-blur-2xl rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.7)] border border-white/10 p-3 flex flex-col gap-2">
+        <div className="relative bg-slate-950/95 w-[240px] backdrop-blur-3xl rounded-2xl shadow-2xl border border-white/10 p-2 flex flex-col gap-1.5">
           {items.map((item) => (
             <motion.button
               key={item.id}
-              whileHover={{ scale: 1.02, x: -4 }}
+              whileHover={{ x: -2, scale: 1.01 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => {
                 setMode(item.id)
                 navigate(item.id === "routine" ? "/" : `/${item.id}`)
               }}
-              className={`text-left px-5 py-4 rounded-2xl transition-all flex items-center justify-between gap-4 ${mode === item.id
-                ? "bg-gradient-to-r from-ocean/20 to-plum/20 border border-ocean/40 shadow-[0_0_20px_rgba(56,189,248,0.2)] text-white font-semibold"
-                : "bg-white/5 border border-transparent text-slate-300 hover:bg-white/10 hover:text-white"
+              className={`text-left px-6 py-4 rounded-xl transition-all flex items-center justify-between gap-4 ${mode === item.id
+                ? "bg-white/10 border border-white/10 text-white font-black"
+                : "text-slate-500 hover:text-slate-200"
                 }`}
             >
-              <span className="text-lg font-display tracking-widest">{item.label}</span>
-              <span className={`text-xl ${mode === item.id ? "text-gradient opacity-100" : "opacity-50"}`}>
+              <span className="text-sm uppercase tracking-[0.2em]">{item.label}</span>
+              <span className={`text-xl ${mode === item.id ? "text-ocean opacity-100" : "opacity-30"}`}>
                 {item.icon}
               </span>
             </motion.button>

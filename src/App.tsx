@@ -18,7 +18,6 @@ function App() {
     <div className="page-shell">
       {/* Floating Navigator */}
       <RightMenu />
-
       <div className="mx-auto w-full max-w-4xl pt-8 relative z-10">
         <div className="hero-banner mb-10">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 relative z-10">

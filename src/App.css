@@ -33,6 +33,7 @@ body {
   padding: 24px 16px 80px;
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
 }
 
 .neo-card {
