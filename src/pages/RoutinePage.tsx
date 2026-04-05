@@ -3,26 +3,14 @@ import { Link } from "react-router-dom"
 import { routineEntries } from "../data/routine"
 import { useAppStore } from "../store/useAppStore"
 import { dayOrder, formatTimeRange, getNowDay, getNowMinutes, toMinutes } from "../utils/time"
-import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion"
+import { motion, useMotionValue } from "framer-motion"
 
 const formatDay = (day: string) => day
 
 export const RoutinePage = () => {
   const setMode = useAppStore((state) => state.setMode)
   const [index, setIndex] = useState(0)
-  const [likes, setLikes] = useState(0)
-  const [passes, setPasses] = useState(0)
-  const [streak, setStreak] = useState(0)
-  
-  const controls = useAnimation()
-  const x = useMotionValue(0)
-  
-  // Left swipe = Study (Like), Right swipe = Pass
-  const rotate = useTransform(x, [-200, 200], [-10, 10])
-  
-  // Opacities for the stamps based on drag distance
-  const studyOpacity = useTransform(x, [-100, -20], [1, 0])
-  const passOpacity = useTransform(x, [20, 100], [0, 1])
+  const dragX = useMotionValue(0)
 
   useEffect(() => {
     setMode("routine")
@@ -45,196 +33,177 @@ export const RoutinePage = () => {
     if (startIndex >= 0) setIndex(startIndex)
   }, [entries])
 
-  const clampIndex = (next: number) => {
-    if (next < 0) return entries.length - 1
-    if (next >= entries.length) return 0
-    return next
-  }
-
-  const applyDecision = async (delta: number, action: "like" | "pass", exitX: number) => {
-    await controls.start({ 
-      x: exitX, 
-      opacity: 0, 
-      rotate: exitX > 0 ? 20 : -20,
-      transition: { duration: 0.3, ease: "easeOut" } 
+  const shiftCarousel = (delta: number) => {
+    setIndex((prev) => {
+      const nextIndex = prev + delta
+      if (nextIndex < 0) return 0
+      if (nextIndex >= entries.length) return entries.length - 1
+      return nextIndex
     })
-    
-    setIndex((prev) => clampIndex(prev + delta))
-    if (action === "like") {
-      setLikes((value) => value + 1)
-      setStreak((value) => value + 1)
-    } else {
-      setPasses((value) => value + 1)
-      setStreak(0)
-    }
-
-    controls.set({ x: 0, opacity: 1, rotate: 0 })
-    x.set(0)
+    // Reset drag x visually if needed (usually framer auto-recovers on state change, but to be safe)
+    dragX.set(0)
   }
 
   const handleDragEnd = (_event: any, info: any) => {
     const swipe = info.offset.x
     const velocity = info.velocity.x
-    const swipeThreshold = 80
-    const velocityThreshold = 500
+    const swipeThreshold = 50
+    const velocityThreshold = 400
 
     if (swipe < -swipeThreshold || velocity < -velocityThreshold) {
-      applyDecision(1, "like", -600) // swipe left -> study
+      shiftCarousel(1) // swipe left -> go to next item
     } else if (swipe > swipeThreshold || velocity > velocityThreshold) {
-      applyDecision(-1, "pass", 600) // swipe right -> pass
-    } else {
-      controls.start({ x: 0, rotate: 0, transition: { type: "spring", stiffness: 300, damping: 20 } })
+      shiftCarousel(-1) // swipe right -> go to prev item
     }
+    // Regardless of what happens, spring the physical coordinate back to 0 so the active element snaps center.
+    dragX.stop()
+    dragX.set(0)
   }
 
-  const current = entries[index]
-  const next = entries[clampIndex(index + 1)]
+  if (entries.length === 0) return null
 
-  if (!current) return null
-
+  // We want to calculate the display for each card. We'll render entries around `index` +/- 2.
   return (
     <section className="flex flex-col gap-6 w-full">
-      <div className="flex flex-wrap items-center gap-3 w-full">
+      <div className="flex flex-wrap items-center gap-3 w-full border-b border-white/5 pb-4">
         <Link
           to="/"
-          className="neo-button px-5 py-2.5 text-sm"
+          className="neo-button px-5 py-2.5 text-sm flex items-center gap-2"
         >
-          &larr; Back to Home
+          <span className="text-xl leading-none -mt-1">&larr;</span> Back to Home
         </Link>
-        <div className="ml-auto flex items-center gap-3">
-          <div className="neo-card px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-300">
-            Study <span className="text-white font-bold ml-1">{likes}</span>
-          </div>
-          <div className="neo-card px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-300">
-            Pass <span className="text-white font-bold ml-1">{passes}</span>
-          </div>
-          <div className="neo-card px-4 py-2 text-xs uppercase tracking-[0.2em] text-lime shadow-[0_0_15px_rgba(74,222,128,0.2)] border-lime/30">
-            Streak <span className="text-white font-bold ml-1">{streak}</span>
-          </div>
+        <div className="ml-auto text-xs uppercase tracking-widest text-slate-500 font-semibold px-4">
+          Visual Timeline
         </div>
       </div>
 
-      <div className="neo-card p-6 flex flex-wrap items-center gap-3">
-        <div>
-          <p className="text-[10px] uppercase tracking-widest text-ocean font-bold mb-1">Interactive Mode</p>
-          <h2 className="text-3xl font-display text-white tracking-tight">Class Match</h2>
-          <p className="text-sm text-slate-400 mt-1">
-            Swipe left to commit to studying. Swipe right to pass.
-          </p>
-        </div>
-        <div className="ml-auto flex items-center gap-3">
-          <button
-            className="neo-button px-5 py-2.5 text-sm hover:text-coral hover:border-coral/50"
-            onClick={() => applyDecision(-1, "pass", 600)}
-          >
-            Skip Class
-          </button>
-          <button
-            className="neo-button px-5 py-2.5 text-sm hover:text-lime hover:border-lime/50"
-            onClick={() => applyDecision(1, "like", -600)}
-          >
-            Study Now
-          </button>
-        </div>
+      <div className="flex flex-col gap-2">
+        <p className="text-[10px] uppercase tracking-[0.3em] text-ocean font-bold">Class Schedule</p>
+        <h2 className="text-3xl font-display text-white tracking-tight">Timeline View</h2>
+        <p className="text-sm text-slate-400">
+          Swipe the center card to navigate forwards and backwards through your schedule.
+        </p>
       </div>
 
-      <div className="relative min-h-[440px] flex items-center justify-center p-8 neo-card overflow-hidden">
-        {/* Background Radial Glow inside the card */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-ocean/10 blur-[100px] pointer-events-none rounded-full"></div>
+      <div className="relative min-h-[460px] flex items-center justify-center p-8 neo-card overflow-hidden w-full mt-2">
+        {/* Background Radial Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-ocean/5 blur-[120px] pointer-events-none rounded-full"></div>
 
-        {/* Background Hint Strings */}
-        <div className="absolute left-8 top-8 text-[11px] uppercase tracking-[0.3em] text-slate-500 font-semibold select-none">
-          &larr; Swipe Left to Study
-        </div>
-        <div className="absolute right-8 top-8 text-[11px] uppercase tracking-[0.3em] text-slate-500 font-semibold select-none">
-          Swipe Right to Pass &rarr;
-        </div>
-
-        {/* The Next Card (underneath) */}
-        {next && (
-          <div className="absolute w-[calc(100%-4rem)] max-w-xl z-0">
-            <div className="stack-card scale-[0.94] translate-y-6 opacity-40">
-              <div className="p-8">
-                <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-4 mb-4">
-                  <span className="text-[11px] uppercase tracking-[0.2em] text-slate-400">
-                    {formatDay(next.day)}
-                  </span>
-                  <span className="text-[11px] uppercase tracking-[0.2em] text-slate-400 text-right">
-                    {formatTimeRange(next.start, next.end)}
-                  </span>
-                </div>
-                <h3 className="text-3xl font-display text-white tracking-tight">{next.title}</h3>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* The Top Card (Draggable) */}
-        <motion.div
-           className="absolute w-[calc(100%-4rem)] max-w-xl z-10 cursor-grab active:cursor-grabbing"
-           style={{ x, rotate }}
-           drag="x"
-           dragConstraints={{ left: 0, right: 0 }}
-           dragElastic={0.8}
-           onDragEnd={handleDragEnd}
-           animate={controls}
-        >
-          <div className="neo-card p-8 min-h-[280px] bg-slate-900/60 transition-none hover:transform-none hover:shadow-glass hover:bg-slate-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-white/10 backdrop-blur-xl">
-             
-             {/* Stamps */}
-             <motion.div 
-                className="absolute top-8 right-8 z-20 pointer-events-none"
-                style={{ opacity: studyOpacity }}
-             >
-                <div className="border-[3px] border-lime text-lime text-3xl font-display px-6 py-2 rounded-xl rotate-[15deg] uppercase tracking-widest bg-slate-900/40 backdrop-blur-sm shadow-[0_0_20px_rgba(74,222,128,0.2)]">
-                   Study
-                </div>
-             </motion.div>
-
-             <motion.div 
-                className="absolute top-8 left-8 z-20 pointer-events-none"
-                style={{ opacity: passOpacity }}
-             >
-                <div className="border-[3px] border-coral text-coral text-3xl font-display px-6 py-2 rounded-xl -rotate-[15deg] uppercase tracking-widest bg-slate-900/40 backdrop-blur-sm shadow-[0_0_20px_rgba(244,63,94,0.2)]">
-                   Pass
-                </div>
-             </motion.div>
-
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 pb-4 mb-4">
-              <span className="text-[11px] uppercase tracking-[0.2em] text-ocean font-semibold">
-                {formatDay(current.day)}
-              </span>
-              <span className="text-[11px] uppercase tracking-[0.2em] text-slate-400 font-medium">
-                {formatTimeRange(current.start, current.end)}
-              </span>
-            </div>
+        {/* Carousel Container */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          {entries.map((entry, i) => {
+            const diff = i - index
             
-            <h3 className="text-3xl font-display text-white tracking-tight mb-5">{current.title}</h3>
-            
-            <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm text-slate-300">
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider">Room</span>
-                <span className="font-medium text-white">{current.room ?? "TBA"}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider">Instructor</span>
-                <span className="font-medium text-white line-clamp-1">{current.instructor ?? "TBA"}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider">Group</span>
-                <span className="font-medium text-white">{current.group ?? "All"}</span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider">Type</span>
-                <span className="font-medium text-ocean">{current.type ?? "Class"}</span>
-              </div>
-            </div>
+            // Only render cards close to the index to save DOM
+            if (Math.abs(diff) > 2) return null
 
-            <div className="mt-8 pt-4 border-t border-white/5 flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-slate-500">
-              Card {index + 1} of {entries.length}
-            </div>
-          </div>
-        </motion.div>
+            const isActive = diff === 0
+            // Center is 0, Prev is pushed left
+            const baseX = diff * 520
+            const zIndex = 20 - Math.abs(diff)
+            const scale = isActive ? 1 : 0.85
+            const opacity = isActive ? 1 : 0.35
+            const blur = isActive ? "blur(0px)" : Math.abs(diff) === 1 ? "blur(4px)" : "blur(8px)"
+
+            return (
+              <motion.div
+                key={entry.id}
+                className="absolute w-[560px] pointer-events-auto"
+                initial={false}
+                animate={{
+                  x: baseX,
+                  scale,
+                  opacity,
+                  filter: blur,
+                  zIndex
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 250,
+                  damping: 25,
+                  mass: 0.8
+                }}
+                // Only attach drag listeners to the currently active center card
+                drag={isActive ? "x" : false}
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.4}
+                onDragEnd={isActive ? handleDragEnd : undefined}
+                style={{ x: isActive ? dragX : 0 }} // Bind the framer motion drag value live
+              >
+                <div 
+                  className={`p-10 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.6)] flex flex-col gap-8 select-none ${
+                    isActive ? "cursor-grab active:cursor-grabbing border-white/20" : ""
+                  }`}
+                >
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div className="inline-block bg-white/5 border border-white/10 px-3 py-1 rounded-full">
+                      <span className="text-[10px] uppercase tracking-widest text-ocean font-bold">
+                        {formatDay(entry.day)}
+                      </span>
+                    </div>
+                    <span className="text-[12px] uppercase tracking-[0.1em] text-slate-300 font-medium bg-slate-900/80 px-3 py-1 rounded-md border border-white/5">
+                      {formatTimeRange(entry.start, entry.end)}
+                    </span>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-3xl font-display text-white tracking-tight leading-tight text-left">
+                      {entry.title}
+                    </h3>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-y-5 gap-x-4">
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Room</span>
+                      <span className="font-semibold text-slate-200 text-sm">{entry.room ?? "TBA"}</span>
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Instructor</span>
+                      <span className="font-semibold text-slate-200 text-sm line-clamp-1">{entry.instructor ?? "TBA"}</span>
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Group</span>
+                      <span className="font-semibold text-slate-200 text-sm">{entry.group ?? "All"}</span>
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Type</span>
+                      <span className="font-semibold text-ocean text-sm">{entry.type ?? "Class"}</span>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex justify-between items-center text-[10px] uppercase tracking-widest text-slate-500">
+                    <span>Card {i + 1} of {entries.length}</span>
+                    {isActive && (
+                      <span className="text-lime/70 animate-pulse">Swipe &rarr;</span>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+        
+        {/* Navigation Arrows for clickability over the UI */}
+        <div className="absolute inset-y-0 left-0 w-16 flex items-center justify-center z-50 pointer-events-none">
+          {index > 0 && (
+            <button 
+              onClick={() => shiftCarousel(-1)}
+              className="pointer-events-auto w-10 h-10 rounded-full bg-slate-900/80 border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition-colors shadow-xl -ml-4"
+            >
+              &larr;
+            </button>
+          )}
+        </div>
+        <div className="absolute inset-y-0 right-0 w-16 flex items-center justify-center z-50 pointer-events-none">
+          {index < entries.length - 1 && (
+            <button 
+              onClick={() => shiftCarousel(1)}
+              className="pointer-events-auto w-10 h-10 rounded-full bg-slate-900/80 border border-white/10 text-white flex items-center justify-center hover:bg-white/10 transition-colors shadow-xl -mr-4"
+            >
+              &rarr;
+            </button>
+          )}
+        </div>
       </div>
     </section>
   )
