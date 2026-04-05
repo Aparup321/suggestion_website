@@ -236,4 +236,61 @@ export const subjects: Subject[] = [
       },
     ],
   },
+  {
+    id: "spm",
+    title: "Software Project Management",
+    code: "MCA20408A",
+    units: [
+      {
+        id: "spm-u1",
+        title: "Unit 1: Agile and Waterfall",
+        topics: [
+          {
+            id: "spm-1",
+            title: "Estimations",
+            status: "not-started",
+            priority: "medium",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "cs",
+    title: "Cyber Security",
+    code: "MCA20408B",
+    units: [
+      {
+        id: "cs-u1",
+        title: "Unit 1: Basics",
+        topics: [
+          {
+            id: "cs-1",
+            title: "Network Security",
+            status: "not-started",
+            priority: "medium",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "mooc",
+    title: "MOOC",
+    code: "MCA20408C",
+    units: [
+      {
+        id: "mooc-u1",
+        title: "Unit 1: Online Course",
+        topics: [
+          {
+            id: "mooc-1",
+            title: "General Progress",
+            status: "not-started",
+            priority: "low",
+          },
+        ],
+      },
+    ],
+  },
 ]

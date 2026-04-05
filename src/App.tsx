@@ -1,4 +1,4 @@
-import { LeftMenu } from "./components/LeftMenu"
+import { RightMenu } from "./components/RightMenu"
 import { useEffect, useState } from "react"
 import { Route, Routes } from "react-router-dom"
 import { RoutinePage } from "./pages/RoutinePage"
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="page-shell">
       {/* Floating Navigator */}
-      <LeftMenu />
+      <RightMenu />
 
       <div className="mx-auto w-full max-w-4xl pt-8 relative z-10">
         <div className="hero-banner mb-10">
