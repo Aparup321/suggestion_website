@@ -18,8 +18,8 @@ function App() {
   return (
     <div className="page-shell">
       <SlashOverlay />
-      <div className="mx-auto w-full max-w-6xl px-4 pt-8 relative z-10">
-        <div className="hero-banner mb-10">
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-8 pt-8 relative z-10">
+        <div className="hero-banner mb-10 pr-4 md:pr-0">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 relative z-10">
             <div>
               <p className="text-xs uppercase tracking-widest text-[#00ef8e] font-bold mb-2 flex items-center gap-2">
@@ -43,8 +43,13 @@ function App() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-8 items-start">
-          <main className="flex-1 w-full min-w-0 order-2 md:order-1">
+        <div id="zoro-main-layout">
+          {/* Main Navigator Sidebar */}
+          <aside id="zoro-sidebar" className="z-[99] sidebar-container order-1 md:order-2">
+            <RightMenu />
+          </aside>
+
+          <main id="zoro-content" className="order-2 md:order-1">
             <Routes>
               <Route path="/" element={<RoutinePage />} />
               <Route path="/routine" element={<RoutinePage />} />
@@ -52,11 +57,6 @@ function App() {
               <Route path="/suggestion" element={<SuggestionPage />} />
             </Routes>
           </main>
-
-          {/* Main Navigator Sidebar */}
-          <aside className="w-full md:w-72 md:sticky md:top-8 z-[99] order-1 md:order-2 sidebar-container">
-            <RightMenu />
-          </aside>
         </div>
       </div>
     </div>
