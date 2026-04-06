@@ -15,8 +15,8 @@ export const SyllabusView = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">SANTORYU_PATH.NAV</p>
-          <h1 className="text-4xl font-black tracking-tighter text-white uppercase font-zoro">SYSTEM <span className="text-[#00ef8e]">MATRIX</span></h1>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">SYLLABUS_TRACKER.NAV</p>
+          <h1 className="text-4xl font-black tracking-tighter text-white uppercase font-zoro">SYLLABUS <span className="text-[#00ef8e]">MATRIX</span></h1>
           <p className="text-slate-500 text-sm font-medium">Monitor study nodes and track module completion status</p>
         </div>
       </div>
@@ -31,7 +31,7 @@ export const SyllabusView = () => {
               : "text-slate-500 hover:text-[#00ef8e]/60"
           }`}
         >
-          LOGBOOK
+          MODULES
         </button>
         {subjects.map((subject) => (
           <button
@@ -59,7 +59,7 @@ export const SyllabusView = () => {
             <div className="flex flex-col items-start gap-2 border-l-4 border-[#00ef8e] pl-6">
               <h3 className="text-3xl font-black text-white tracking-tight leading-none uppercase font-zoro">{subject.title}</h3>
               <div className="flex items-center gap-3">
-                <span className="text-[10px] font-mono text-[#00ef8e]/60 font-bold uppercase tracking-widest">CHAPTER_ID // {subject.code || subject.id}</span>
+                <span className="text-[10px] font-mono text-[#00ef8e]/60 font-bold uppercase tracking-widest">COURSE_CODE // {subject.code || subject.id}</span>
               </div>
             </div>
 
@@ -97,8 +97,8 @@ export const SyllabusView = () => {
                             <p className="text-lg font-bold text-white group-hover/topic:text-[#00ef8e] transition-colors">{topic.title}</p>
                             <p className="text-[10px] text-slate-600 font-mono font-bold uppercase tracking-tighter">
                               {topic.lastStudied
-                                ? `LAST_BATTLE: ${new Date(topic.lastStudied).toLocaleString()}`
-                                : "STATUS: UNINITIALIZED"}
+                                ? `LAST_STUDIED: ${new Date(topic.lastStudied).toLocaleString()}`
+                                : "STATUS: NOT_STARTED"}
                             </p>
                           </div>
                         </div>
@@ -128,7 +128,7 @@ export const SyllabusView = () => {
                             onClick={() => markStudiedNow(subject.id, topic.id)}
                             className="px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest bg-[#00ef8e]/10 text-[#00ef8e] ring-1 ring-[#00ef8e]/20 hover:bg-[#00ef8e]/20 hover:shadow-[0_0_15px_rgba(0,239,142,0.3)] transition-all font-sans"
                           >
-                            Mark Conquered
+                            Mark Completed
                           </button>
                         </div>
                       </div>

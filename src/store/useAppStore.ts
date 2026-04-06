@@ -21,7 +21,26 @@ const loadSubjects = (): Subject[] => {
   const stored = localStorage.getItem("study-subjects")
   if (!stored) return defaultSubjects
   try {
-    return JSON.parse(stored) as Subject[]
+    const subjects = JSON.parse(stored) as Subject[]
+    // Modernization: If Research Methodology exists but has old structure, replace it.
+    const rmIndex = subjects.findIndex(s => s.id === "rme")
+    if (rmIndex !== -1) {
+      const rmSubject = subjects[rmIndex]
+      const freshRM = defaultSubjects.find(s => s.id === "rme")
+      // If freshRM exists and the stored one is old (fewer modules), update it
+      if (freshRM && rmSubject.units.length < freshRM.units.length) {
+        subjects[rmIndex] = freshRM
+        saveSubjects(subjects)
+      }
+    } else {
+      // If RM is missing entirely from storage, add it.
+      const freshRM = defaultSubjects.find(s => s.id === "rme")
+      if (freshRM) {
+        subjects.unshift(freshRM)
+        saveSubjects(subjects)
+      }
+    }
+    return subjects
   } catch {
     return defaultSubjects
   }

@@ -8,7 +8,7 @@ export const RoutinePage = () => {
   const view = useAppStore((state) => state.view)
   const setView = useAppStore((state) => state.setView)
   const setMode = useAppStore((state) => state.setMode)
-  
+
   const [index, setIndex] = useState(0)
   const [now, setNow] = useState(() => new Date())
   const dragX = useMotionValue(0)
@@ -49,7 +49,7 @@ export const RoutinePage = () => {
         (f) => nowMin >= toMinutes(f.start) && nowMin <= toMinutes(f.end)
       )
       const nextIndex = todayFrames.findIndex((f) => toMinutes(f.start) > nowMin)
-      
+
       if (currentIndex >= 0) setIndex(currentIndex)
       else if (nextIndex >= 0) setIndex(nextIndex)
       else setIndex(todayFrames.length - 1)
@@ -75,11 +75,11 @@ export const RoutinePage = () => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
           <h1 className="text-4xl font-zoro font-black tracking-tight text-white flex items-center gap-3">
-            SANTORYU <span className="text-[#00ef8e] text-[10px] font-mono font-medium tracking-[0.4em] bg-[#00ef8e]/10 px-3 py-1 rounded-full border border-[#00ef8e]/20">WANO.KUNI</span>
+            ROUTINE <span className="text-[#00ef8e] text-[10px] font-mono font-medium tracking-[0.4em] bg-[#00ef8e]/10 px-3 py-1 rounded-full border border-[#00ef8e]/20">SECTION.C</span>
           </h1>
-          <p className="text-slate-500 text-sm font-medium">Three-Sword Style Class Management for Section C</p>
+          <p className="text-slate-500 text-sm font-medium">Academic Class Management Dashboard</p>
         </div>
-        
+
         <div className="flex bg-black/80 p-1.5 rounded-2xl border border-white/5 shadow-inner self-start md:self-end">
           {(["daily", "weekly"] as const).map((v) => (
             <button
@@ -88,11 +88,10 @@ export const RoutinePage = () => {
                 setView(v)
                 setIndex(0)
               }}
-              className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
-                view === v 
-                  ? "bg-[#00ef8e]/20 text-[#00ef8e] shadow-[0_0_20px_rgba(0,239,142,0.15)] ring-1 ring-[#00ef8e]/30" 
+              className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${view === v
+                  ? "bg-[#00ef8e]/20 text-[#00ef8e] shadow-[0_0_20px_rgba(0,239,142,0.15)] ring-1 ring-[#00ef8e]/30"
                   : "text-slate-500 hover:text-slate-300"
-              }`}
+                }`}
             >
               {v}
             </button>
@@ -103,7 +102,7 @@ export const RoutinePage = () => {
       <AnimatePresence mode="wait">
         {view === "daily" ? (
           isHoliday ? (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
               className="neo-card p-16 text-center space-y-6 mt-12 bg-gradient-to-br from-black/60 to-black/80 mx-4 border-[#00ef8e]/10"
             >
@@ -111,15 +110,15 @@ export const RoutinePage = () => {
                 <span className="text-5xl">⚓</span>
               </div>
               <div className="space-y-2">
-                <h2 className="text-4xl font-zoro text-white font-bold tracking-tight">Anchors Aweigh!</h2>
-                <p className="text-slate-400 text-lg max-w-sm mx-auto">Today is a holiday ({today}). No training scheduled for the Zoro style. Rest up, nakama!</p>
+                <h2 className="text-4xl font-zoro text-white font-bold tracking-tight">No Classes Scheduled</h2>
+                <p className="text-slate-400 text-lg max-w-sm mx-auto">Today is a holiday ({today}). No training or classes are currently active. Enjoy your rest!</p>
               </div>
               <button onClick={() => setView("weekly")} className="text-[#00ef8e] text-xs font-bold uppercase tracking-[0.3em] bg-[#00ef8e]/10 px-6 py-3 rounded-xl border border-[#00ef8e]/20 hover:bg-[#00ef8e]/20 transition-all font-sans">
                 Preview Weekly Chart
               </button>
             </motion.div>
           ) : (
-            <motion.div 
+            <motion.div
               key="daily-carousel"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               className="relative min-h-[520px] flex items-center justify-center overflow-visible px-4"
@@ -149,23 +148,21 @@ export const RoutinePage = () => {
                     onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
                     style={{ x: isActive ? dragX : diff * 520 }}
                   >
-                    <div className={`p-8 rounded-[32px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-visible ${
-                      isCurrent 
-                        ? isBreak ? "bg-amber/5 border-amber/20" : "bg-[#00ef8e]/10 border-[#00ef8e]/40 shadow-[0_30px_60px_-15px_rgba(0,239,142,0.25)] animate-[haki-pulse_4s_infinite]" 
+                    <div className={`p-8 rounded-[32px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-visible ${isCurrent
+                        ? isBreak ? "bg-amber/5 border-amber/20" : "bg-[#00ef8e]/10 border-[#00ef8e]/40 shadow-[0_30px_60px_-15px_rgba(0,239,142,0.25)] animate-[haki-pulse_4s_infinite]"
                         : isPast ? "bg-black/40 border-white/[0.03] grayscale opacity-60" : "bg-black/60 border-white/[0.08]"
-                    }`}>
+                      }`}>
                       {isCurrent && !isBreak && (
                         <div className="absolute top-0 right-0 p-4 opacity-20 transform rotate-12">
                           <span className="text-6xl">⚔️</span>
                         </div>
                       )}
-                      
+
                       <div className="flex justify-between items-center mb-10">
-                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${
-                          isBreak ? "bg-amber/20 text-amber" : 
-                          isCurrent ? "bg-[#00ef8e] text-black" : "bg-white/5 text-slate-500"
-                        }`}>
-                          {isBreak ? "SAKE BREAK" : isCurrent ? "ENMA AWAKENED" : isPast ? "DEFEATED" : "INCOMING"}
+                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${isBreak ? "bg-amber/20 text-amber" :
+                            isCurrent ? "bg-[#00ef8e] text-black" : "bg-white/5 text-slate-500"
+                          }`}>
+                          {isBreak ? "BREAK TIME" : isCurrent ? "ONGOING" : isPast ? "COMPLETED" : "UPCOMING"}
                         </div>
                         <span className="font-mono text-sm font-bold text-slate-300 opacity-80">{formatTimeRange(frame.start, frame.end)}</span>
                       </div>
@@ -190,11 +187,11 @@ export const RoutinePage = () => {
                               {!isBreak && (
                                 <div className="grid grid-cols-2 gap-6 pt-2">
                                   <div className="space-y-1 text-left">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-left">Training Grounds</span>
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-left">Location</span>
                                     <p className="text-slate-300 text-xs font-semibold">{entry.room}</p>
                                   </div>
                                   <div className="space-y-1 text-right">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-right">Sword Master</span>
+                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-right">Instructor</span>
                                     <p className="text-slate-300 text-xs font-semibold truncate">{entry.instructor || "Common"}</p>
                                   </div>
                                 </div>
@@ -210,7 +207,7 @@ export const RoutinePage = () => {
                             <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === index ? "w-8 bg-[#00ef8e]" : "w-1.5 bg-white/10"}`} />
                           ))}
                         </div>
-                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">SLICE // {index + 1}</span>
+                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">ITEM // {index + 1}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -219,7 +216,7 @@ export const RoutinePage = () => {
             </motion.div>
           )
         ) : (
-          <motion.div 
+          <motion.div
             key="weekly-timeline"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
             className="space-y-12 px-4 pb-20"

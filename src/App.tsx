@@ -24,19 +24,19 @@ function App() {
             <div className="flex flex-col items-start px-2">
               <p className="text-xs uppercase tracking-[0.3em] text-[#00ef8e] font-bold mb-2 flex items-center gap-2">
                 <span className="w-8 h-[1px] bg-[#00ef8e]"></span>
-                Grand Line Protocol Initialized
+                System Environment Active
               </p>
               <h1 className="text-4xl md:text-6xl font-zoro font-bold tracking-tighter mb-2">
-                Haki <span className="text-gradient">Command</span>
+                Zoro <span className="text-gradient">Dashboard</span>
               </h1>
               <p className="text-sm md:text-base text-slate-300 max-w-xl font-light italic opacity-80">
-                "I will be the world's greatest swordsman!" — Routine is the blade, Syllabus is the path.
+                Precision Class Management & Routine Engine — Optimized for Section C.
               </p>
             </div>
             <div className="neo-card px-8 py-6 text-sm text-white font-medium inline-flex flex-col items-start gap-1 border-l-4 border-l-[#00ef8e] border-r-0">
               <div className="flex items-center gap-3">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00ef8e] animate-pulse shadow-[0_0_10px_#00ef8e]"></div>
-                <span className="opacity-60 text-[10px] tracking-widest font-mono">NEW_WORLD_STD</span> 
+                <span className="opacity-60 text-[10px] tracking-widest font-mono">SYSTEM_CLOCK</span> 
               </div>
               <span className="font-mono text-3xl font-black tracking-tighter">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>

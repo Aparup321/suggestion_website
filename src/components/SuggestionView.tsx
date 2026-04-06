@@ -12,9 +12,9 @@ const badgeStyles = {
 }
 
 const label = {
-  "study-now": "Sword Play",
-  continue: "Training",
-  revise: "Mastery",
+  "study-now": "Focus Study",
+  continue: "Active Study",
+  revise: "Revision",
 }
 
 export const SuggestionView = () => {
@@ -36,9 +36,9 @@ export const SuggestionView = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">STRATEGY_MASTERY.ZEN</p>
-          <h1 className="text-4xl font-black tracking-tighter text-white uppercase font-zoro">FOCUS <span className="text-[#00ef8e]">TARGETS</span></h1>
-          <p className="text-slate-500 text-sm font-medium">Sword-sharp directives generated from schedule urgency and logic</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">STUDY_PRIORITY.LOG</p>
+          <h1 className="text-4xl font-black tracking-tighter text-white uppercase font-zoro">FOCUS <span className="text-[#00ef8e]">OBJECTIVES</span></h1>
+          <p className="text-slate-500 text-sm font-medium">Data-driven priority targets generated from schedule urgency and logic</p>
         </div>
       </div>
 
@@ -77,7 +77,7 @@ export const SuggestionView = () => {
             to="/syllabus"
             className="px-4 py-2 rounded-xl text-[10px] uppercase font-black tracking-widest text-[#00ef8e]/60 border border-[#00ef8e]/20 hover:border-[#00ef8e]/60 hover:text-[#00ef8e] transition-all font-sans"
           >
-            Sword Manual
+            Syllabus Viewer
           </Link>
         </div>
 
@@ -90,8 +90,8 @@ export const SuggestionView = () => {
               >
                 <span className="text-4xl font-zoro">⚔️</span>
                 <p className="text-slate-500 text-sm font-mono tracking-widest uppercase">
-                  [ NO TARGETS ACQUIRED ] <br className="mb-2" /> 
-                  Initialize training in Syllabus to generate objectives
+                  [ NO DATA RECORDED ] <br className="mb-2" /> 
+                  Update your progress in the Syllabus section to generate objectives
                 </p>
               </motion.div>
             ) : (
@@ -119,7 +119,7 @@ export const SuggestionView = () => {
                       <div className="space-y-4 relative z-10 px-2 flex-1">
                         <div className="flex items-center gap-4 w-full">
                           <span className="text-[10px] font-black text-[#00ef8e] tracking-tighter uppercase px-2 py-1 bg-[#00ef8e]/10 rounded border border-[#00ef8e]/20 whitespace-nowrap">
-                            SLICE // 0{index + 1}
+                            STEP // 0{index + 1}
                           </span>
                           <span className="text-[11px] uppercase font-black tracking-[0.2em] text-slate-400 border-l border-white/10 pl-4">
                             {item.subjectTitle}
