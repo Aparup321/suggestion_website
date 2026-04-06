@@ -5,18 +5,6 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 
-const badgeStyles = {
-  "study-now": "bg-amber/10 text-amber ring-1 ring-amber/20 shadow-[0_0_15px_rgba(245,158,11,0.1)]",
-  continue: "bg-[#00ef8e]/10 text-[#00ef8e] ring-1 ring-[#00ef8e]/20 shadow-[0_0_15px_rgba(0,239,142,0.1)]",
-  revise: "bg-[#00703c]/10 text-[#00ef8e] ring-1 ring-[#00703c]/20 shadow-[0_0_15px_rgba(0,112,60,0.1)]",
-}
-
-const label = {
-  "study-now": "Focus Study",
-  continue: "Active Study",
-  revise: "Revision",
-}
-
 export const SuggestionView = () => {
   const subjects = useAppStore((state) => state.subjects)
   const selectedSubjectId = useAppStore((state) => state.selectedSubjectId)
@@ -36,9 +24,9 @@ export const SuggestionView = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">STUDY_PRIORITY.LOG</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">STUDY_FOCUS.LOG</p>
           <h1 className="text-4xl font-black tracking-tighter text-white uppercase font-zoro">FOCUS <span className="text-[#00ef8e]">OBJECTIVES</span></h1>
-          <p className="text-slate-500 text-sm font-medium">Data-driven priority targets generated from schedule urgency and logic</p>
+          <p className="text-slate-500 text-sm font-medium">Data-driven focus targets generated from schedule urgency and logic</p>
         </div>
       </div>
 
@@ -110,12 +98,6 @@ export const SuggestionView = () => {
                     <div className="neo-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-8 transition-all hover:border-[#00ef8e]/40 hover:bg-black/80 overflow-visible group/card relative">
                       <div className="absolute inset-0 bg-gradient-to-r from-[#00ef8e]/5 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
                       
-                      <div className="shrink-0 relative z-10 px-2 lg:px-4">
-                        <div className={`px-5 py-2.5 rounded-xl text-[10px] uppercase font-black tracking-[0.2em] transition-all group-hover:scale-105 ${badgeStyles[item.type]}`}>
-                          {label[item.type]}
-                        </div>
-                      </div>
-
                       <div className="space-y-4 relative z-10 px-2 flex-1">
                         <div className="flex items-center gap-4 w-full">
                           <span className="text-[10px] font-black text-[#00ef8e] tracking-tighter uppercase px-2 py-1 bg-[#00ef8e]/10 rounded border border-[#00ef8e]/20 whitespace-nowrap">
