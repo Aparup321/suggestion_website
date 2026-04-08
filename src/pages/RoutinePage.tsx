@@ -148,7 +148,7 @@ export const RoutinePage = () => {
                     onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
                     style={{ x: isActive ? dragX : diff * 520 }}
                   >
-                    <div className={`p-8 rounded-[32px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-visible ${isCurrent
+                    <div className={`p-8 md:p-12 rounded-3xl md:rounded-[48px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-visible ${isCurrent
                         ? isBreak ? "bg-amber/5 border-amber/20" : "bg-[#00ef8e]/10 border-[#00ef8e]/40 shadow-[0_30px_60px_-15px_rgba(0,239,142,0.25)] animate-[haki-pulse_4s_infinite]"
                         : isPast ? "bg-black/40 border-white/[0.03] grayscale opacity-60" : "bg-black/60 border-white/[0.08]"
                       }`}>
@@ -158,13 +158,13 @@ export const RoutinePage = () => {
                         </div>
                       )}
 
-                      <div className="flex justify-between items-center mb-10">
+                      <div className="flex justify-between items-center mb-10 px-2 md:px-4">
                         <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${isBreak ? "bg-amber/20 text-amber" :
                             isCurrent ? "bg-[#00ef8e] text-black" : "bg-white/5 text-slate-500"
                           }`}>
                           {isBreak ? "BREAK TIME" : isCurrent ? "ONGOING" : isPast ? "COMPLETED" : "UPCOMING"}
                         </div>
-                        <span className="font-mono text-sm font-bold text-slate-300 opacity-80">{formatTimeRange(frame.start, frame.end)}</span>
+                        <span className="font-mono text-xs md:text-sm font-bold text-slate-300 opacity-80">{formatTimeRange(frame.start, frame.end)}</span>
                       </div>
 
                       <div className="space-y-8">
@@ -173,7 +173,7 @@ export const RoutinePage = () => {
                             <div className="flex flex-col gap-4">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="space-y-1">
-                                  <h3 className={`text-2xl font-zoro font-bold tracking-tight leading-none ${isBreak ? "text-amber" : "text-white"}`}>
+                                  <h3 className={`text-2xl font-zoro font-bold tracking-tight leading-tight ${isBreak ? "text-amber" : "text-white"}`}>
                                     {isBreak && <span className="mr-3">🍶</span>}{entry.title}
                                   </h3>
                                   <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-widest flex items-center gap-2">
@@ -185,16 +185,16 @@ export const RoutinePage = () => {
                               </div>
 
                               {!isBreak && (
-                                <div className="grid grid-cols-2 gap-6 pt-2">
-                                  <div className="space-y-1 text-left">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-left">Location</span>
-                                    <p className="text-slate-300 text-xs font-semibold">{entry.room}</p>
+                                  <div className="flex flex-wrap justify-between gap-x-6 gap-y-2 pt-2 border-t border-white/5 mt-2">
+                                    <div className="space-y-0.5">
+                                      <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase block">Location</span>
+                                      <p className="text-slate-300 text-xs font-semibold">{entry.room}</p>
+                                    </div>
+                                    <div className="space-y-0.5 text-right">
+                                      <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase block">Instructor</span>
+                                      <p className="text-slate-300 text-xs font-semibold">{entry.instructor || "Common"}</p>
+                                    </div>
                                   </div>
-                                  <div className="space-y-1 text-right">
-                                    <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase text-right">Instructor</span>
-                                    <p className="text-slate-300 text-xs font-semibold truncate">{entry.instructor || "Common"}</p>
-                                  </div>
-                                </div>
                               )}
                             </div>
                           </div>
