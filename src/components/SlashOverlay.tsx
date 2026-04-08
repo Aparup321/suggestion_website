@@ -32,23 +32,23 @@ export const SlashOverlay = () => {
             initial={{ x: '-120%', y: '120%', scaleX: 3, opacity: 1 }}
             animate={{ x: '120%', y: '-120%', opacity: 0.8 }}
             transition={{ duration: 0.35, ease: "circOut" }}
-            className="absolute w-[300%] h-6 bg-white blur-[1px] shadow-[0_0_60px_#00ef8e] transform -rotate-45"
+            className="absolute w-[300%] h-6 bg-white blur-[1px] shadow-[0_0_60px_var(--neo-luffy-red)] transform -rotate-45"
           />
           
-          {/* Emerald trail */}
+          {/* Luffy Red trail */}
           <motion.div
             initial={{ x: '-120%', y: '120%', scaleX: 2, opacity: 0.5 }}
             animate={{ x: '120%', y: '-120%', opacity: 0 }}
             transition={{ duration: 0.5, ease: "circOut", delay: 0.05 }}
-            className="absolute w-[250%] h-20 bg-[#00ef8e] blur-[40px] transform -rotate-45"
+            className="absolute w-[250%] h-20 bg-[var(--neo-luffy-red)] blur-[40px] transform -rotate-45"
           />
 
-          {/* Secondary smaller cuts */}
+          {/* Secondary Yellow cuts */}
           <motion.div
             initial={{ x: '-120%', y: '80%', scaleX: 2, opacity: 0.7 }}
             animate={{ x: '120%', y: '-160%', opacity: 0 }}
             transition={{ duration: 0.4, ease: "circOut", delay: 0.1 }}
-            className="absolute w-[200%] h-2 bg-white blur-[1px] shadow-[0_0_30px_#00ef8e] transform -rotate-40"
+            className="absolute w-[200%] h-2 bg-white blur-[1px] shadow-[0_0_30px_var(--neo-hat-yellow)] transform -rotate-40"
           />
         </motion.div>
       )}

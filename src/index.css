@@ -5,10 +5,10 @@
 @tailwind utilities;
 
 :root {
-  --neo-emerald: #00ef8e;
-  --neo-blue: #0047ff;
-  --neo-purple: #a855f7;
-  --neo-pink: #ff00e5;
+  --neo-luffy-red: #ff3131;
+  --neo-hat-yellow: #f9d71c;
+  --neo-luffy-blue: #2563eb;
+  --neo-luffy-tan: #e5ba73;
   --neo-black: #000000;
   --neo-dark: #0a0a0a;
   --neo-surface: #121212;
@@ -42,18 +42,18 @@ body {
 .mesh-gradient {
   background-color: var(--neo-surface);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(0, 239, 142, 0.15) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, rgba(0, 71, 255, 0.15) 0, transparent 50%), 
-    radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0, transparent 50%), 
-    radial-gradient(at 0% 100%, rgba(255, 0, 229, 0.15) 0, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(255, 49, 49, 0.15) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, rgba(249, 215, 28, 0.15) 0, transparent 50%), 
+    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.15) 0, transparent 50%), 
+    radial-gradient(at 0% 100%, rgba(229, 186, 115, 0.15) 0, transparent 50%);
 }
 
-.mesh-gradient-emerald {
-  background: linear-gradient(135deg, #00ef8e 0%, #00703c 100%);
+.mesh-gradient-luffy {
+  background: linear-gradient(135deg, var(--neo-luffy-red) 0%, #991b1b 100%);
 }
 
 .mesh-gradient-vibrant {
-  background: linear-gradient(135deg, #00ef8e -20%, #0047ff 50%, #a855f7 120%);
+  background: linear-gradient(135deg, var(--neo-luffy-red) -20%, var(--neo-hat-yellow) 50%, var(--neo-luffy-blue) 120%);
 }
 
 h1, h2, h3, h4, .font-display {
@@ -87,7 +87,7 @@ h1, h2, h3, h4, .font-display {
 
 /* Neo-Brutalist Button Utility */
 .brutalist-button {
-  background-color: var(--neo-emerald);
+  background-color: var(--neo-luffy-red);
   color: var(--neo-black);
   border: 3px solid var(--neo-black);
   box-shadow: 4px 4px 0px 0px var(--neo-black);

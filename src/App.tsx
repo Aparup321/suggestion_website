@@ -22,21 +22,21 @@ function App() {
         <div className="hero-banner mb-16">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 relative z-10">
             <div className="flex flex-col items-start px-2">
-              <p className="text-xs uppercase tracking-[0.4em] text-[#00ef8e] font-black mb-4 flex items-center gap-4">
-                <span className="w-12 h-1 bg-[#00ef8e]"></span>
-                System Environment Active
+              <p className="text-xs uppercase tracking-[0.4em] text-[var(--neo-luffy-red)] font-black mb-4 flex items-center gap-4">
+                <span className="w-12 h-1 bg-[var(--neo-luffy-red)]"></span>
+                Study Dashboard Active
               </p>
               <h1 className="text-5xl md:text-8xl font-black italic tracking-tighter mb-4 text-white uppercase leading-none">
-                ZORO <span className="text-[#00ef8e] border-b-8 border-black">DASHBOARD</span>
+                STRAW HAT <span className="text-[var(--neo-hat-yellow)] border-b-8 border-black">DASHBOARD</span>
               </h1>
               <p className="text-sm md:text-lg text-slate-400 max-w-2xl font-black uppercase tracking-widest opacity-80">
-                Precision Class Management & Routine Engine // SEC_C.V2
+                Modern Study Tracker // SECTION_C.V2
               </p>
             </div>
             <div className="neo-card !py-8 !px-10 bg-black mesh-gradient-vibrant border-black border-[6px] shadow-[12px_12px_0px_0px_#000] text-black">
               <div className="flex items-center gap-4 mb-2">
                 <div className="w-4 h-4 bg-black border-2 border-white shadow-[2px_2px_0px_0px_#000]"></div>
-                <span className="text-[12px] tracking-[0.4em] font-black uppercase text-black/60">SYSTEM_CLOCK</span> 
+                <span className="text-[12px] tracking-[0.4em] font-black uppercase text-black/60">CURRENT_TIME</span> 
               </div>
               <span className="font-black text-6xl md:text-7xl tracking-tighter leading-none italic text-black">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>

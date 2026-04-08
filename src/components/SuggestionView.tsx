@@ -20,36 +20,36 @@ export const SuggestionView = () => {
   const suggestions = buildSuggestions(subjects, routineEntries, now, selectedSubjectId)
 
   return (
-    <section className="flex flex-col gap-12 w-full max-w-5xl mx-auto py-10 px-4 md:px-0 font-zoro">
+    <section className="flex flex-col gap-12 w-full max-w-5xl mx-auto py-10 px-4 md:px-0">
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e] font-bold">STUDY_FOCUS.LOG</p>
-          <h1 className="text-4xl font-black tracking-tighter text-white uppercase font-zoro">FOCUS <span className="text-[#00ef8e]">OBJECTIVES</span></h1>
-          <p className="text-slate-500 text-sm font-medium">Data-driven focus targets generated from schedule urgency and logic</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--neo-luffy-red)] font-black">GRAND_LINE_GOALS.LOG</p>
+          <h1 className="text-4xl font-black tracking-tighter text-white uppercase italic">STRATEGY <span className="text-[var(--neo-hat-yellow)]">MAP</span></h1>
+          <p className="text-slate-500 text-sm font-black uppercase tracking-widest">Calculated island targets for maximum pirate efficiency</p>
         </div>
       </div>
 
       {/* FILTER BUTTONS */}
-      <div className="flex flex-wrap items-center gap-2 px-6 bg-black/40 p-4 rounded-2xl border border-[#00ef8e]/10 mx-4 backdrop-blur-md">
+      <div className="flex flex-wrap items-center gap-3 px-6 bg-black p-6 border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mx-4">
         <button
           onClick={() => setSelectedSubject(undefined)}
-          className={`px-5 py-2 rounded-xl text-[10px] uppercase font-black tracking-widest transition-all ${
+          className={`px-5 py-3 border-2 font-black text-[10px] uppercase tracking-widest transition-all ${
             !selectedSubjectId
-              ? "bg-[#00ef8e]/20 text-[#00ef8e] border border-[#00ef8e]/30 shadow-[0_0_15px_rgba(0,239,142,0.15)]"
-              : "text-slate-500 hover:text-[#00ef8e]/60"
+              ? "bg-[var(--neo-luffy-red)] text-black border-black shadow-[4px_4px_0px_0px_#000]"
+              : "bg-white/5 text-slate-500 border-white/10 hover:border-[var(--neo-luffy-red)] hover:text-[var(--neo-luffy-red)]"
           }`}
         >
-          ALL_CHAPTERS
+          ALL_ISLANDS
         </button>
         {subjects.map((subject) => (
           <button
             key={subject.id}
             onClick={() => setSelectedSubject(subject.id)}
-            className={`px-5 py-2 rounded-xl text-[10px] uppercase font-black tracking-widest transition-all ${
+            className={`px-5 py-3 border-2 font-black text-[10px] uppercase tracking-widest transition-all ${
               selectedSubjectId === subject.id
-                ? "bg-[#00ef8e]/20 text-[#00ef8e] border border-[#00ef8e]/30 shadow-[0_0_15px_rgba(0,239,142,0.15)]"
-                : "text-slate-500 hover:text-[#00ef8e]/60"
+                ? "bg-[var(--neo-luffy-red)] text-black border-black shadow-[4px_4px_0px_0px_#000]"
+                : "bg-white/5 text-slate-500 border-white/10 hover:border-[var(--neo-luffy-red)] hover:text-[var(--neo-luffy-red)]"
             }`}
           >
             {subject.code || subject.id}
@@ -59,13 +59,13 @@ export const SuggestionView = () => {
 
       <div className="px-4 pb-20">
         <div className="flex flex-row items-center gap-4 mb-8">
-          <h3 className="text-xl font-bold text-white tracking-tight leading-none uppercase font-zoro">ACTIVE DIRECTIVES</h3>
-          <div className="h-px flex-1 bg-white/5"></div>
+          <h3 className="text-xl font-black text-white tracking-tight leading-none uppercase italic">ACTIVE DIRECTIVES</h3>
+          <div className="h-1 flex-1 bg-black"></div>
           <Link
             to="/syllabus"
-            className="px-4 py-2 rounded-xl text-[10px] uppercase font-black tracking-widest text-[#00ef8e]/60 border border-[#00ef8e]/20 hover:border-[#00ef8e]/60 hover:text-[#00ef8e] transition-all font-sans"
+            className="px-6 py-2 bg-black border-2 border-black text-[10px] uppercase font-black tracking-widest text-[var(--neo-hat-yellow)] shadow-[4px_4px_0px_0px_var(--neo-luffy-red)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
           >
-            Syllabus Viewer
+            Log Pose Matrix
           </Link>
         </div>
 
@@ -74,12 +74,14 @@ export const SuggestionView = () => {
             {suggestions.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="neo-card p-20 text-center space-y-4 border-[#00ef8e]/10"
+                className="brutalist-card p-20 text-center space-y-6"
               >
-                <span className="text-4xl font-zoro">⚔️</span>
-                <p className="text-slate-500 text-sm font-mono tracking-widest uppercase">
+                <div className="w-20 h-20 bg-[var(--neo-hat-yellow)] border-4 border-black flex items-center justify-center mx-auto shadow-[6px_6px_0px_0px_#000]">
+                  <span className="text-4xl">☠️</span>
+                </div>
+                <p className="text-slate-500 text-sm font-black tracking-widest uppercase">
                   [ NO DATA RECORDED ] <br className="mb-2" /> 
-                  Update your progress in the Syllabus section to generate objectives
+                  Update your Log Pose in the Modules section to generate island targets
                 </p>
               </motion.div>
             ) : (
@@ -93,33 +95,31 @@ export const SuggestionView = () => {
                   <Link
                     to="/syllabus"
                     onClick={() => setSelectedSubject(item.subjectId)}
-                    className="group relative block"
+                    className="group block"
                   >
-                    <div className="neo-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-8 transition-all hover:border-[#00ef8e]/40 hover:bg-black/80 overflow-visible group/card relative">
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#00ef8e]/5 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
+                    <div className="brutalist-card p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-8 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
                       
-                      <div className="space-y-4 relative z-10 px-2 flex-1">
+                      <div className="space-y-4 relative z-10 flex-1">
                         <div className="flex items-center gap-4 w-full">
-                          <span className="text-[10px] font-black text-[#00ef8e] tracking-tighter uppercase px-2 py-1 bg-[#00ef8e]/10 rounded border border-[#00ef8e]/20 whitespace-nowrap">
-                            STEP // 0{index + 1}
+                          <span className="text-[10px] font-black text-black tracking-tighter uppercase px-3 py-1 bg-[var(--neo-luffy-red)] border-2 border-black shadow-[3px_3px_0px_0px_#000] whitespace-nowrap">
+                            TARGET // 0{index + 1}
                           </span>
-                          <span className="text-[11px] uppercase font-black tracking-[0.2em] text-slate-400 border-l border-white/10 pl-4">
+                          <span className="text-[11px] uppercase font-black tracking-[0.2em] text-[var(--neo-hat-yellow)] border-l-4 border-black pl-4">
                             {item.subjectTitle}
                           </span>
                         </div>
-                        <div className="space-y-1">
-                          <p className="text-2xl font-black text-white group-hover/card:text-[#00ef8e] transition-colors tracking-tight uppercase font-zoro">
+                        <div className="space-y-2">
+                          <p className="text-3xl font-black text-white group-hover:text-[var(--neo-luffy-red)] transition-colors tracking-tighter uppercase italic leading-none">
                             {item.topicTitle}
                           </p>
-                          <p className="text-sm text-slate-500 font-medium max-w-2xl group-hover/card:text-slate-400 transition-colors tracking-tight">
+                          <p className="text-sm text-slate-400 font-black uppercase tracking-tight max-w-2xl leading-relaxed">
                             {item.reason}
                           </p>
                         </div>
                       </div>
 
-                      <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none">
-                        <div className="absolute top-0 left-0 w-64 h-64 bg-[#00ef8e]/5 blur-[80px] rounded-full -translate-x-1/2 -translate-y-1/2" />
-                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-white/5 blur-[80px] rounded-full translate-x-1/2 translate-y-1/2" />
+                      <div className="w-16 h-16 border-4 border-black bg-black flex items-center justify-center shadow-[4px_4px_0px_0px_var(--neo-luffy-red)] group-hover:bg-[var(--neo-luffy-red)] transition-all">
+                        <span className="text-2xl group-hover:scale-125 transition-transform">👒</span>
                       </div>
                     </div>
                   </Link>

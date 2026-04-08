@@ -42,26 +42,26 @@ export const RoutineView = () => {
     <section className="flex flex-col gap-8 w-full max-w-5xl mx-auto py-10 px-4 md:px-0 font-zoro">
       <div className="flex flex-col md:flex-row-reverse md:items-center justify-between gap-6 px-4">
         <div className="flex flex-col items-end gap-3 w-full">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-[#00ef8e]/60 font-bold">
-            Live routine dashboard
-            <span className="inline-flex h-2 w-2 rounded-full bg-[#00ef8e] shadow-[0_0_10px_#00ef8e] animate-pulse"></span>
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.4em] text-[var(--neo-luffy-red)]/60 font-black">
+            Live Grand Line Navigator
+            <span className="inline-flex h-2 w-2 rounded-full bg-[var(--neo-luffy-red)] shadow-[0_0_10px_var(--neo-luffy-red)] animate-pulse"></span>
           </div>
           {nextClass && (
-            <div className="neo-card px-4 py-2 text-[10px] uppercase font-black tracking-widest bg-[#00ef8e]/10 text-[#00ef8e] border border-[#00ef8e]/20">
-              Next class in {Math.max(0, Math.round(nextClass.minutes))} min // {nextClass.entry.title}
+            <div className="neo-card px-4 py-2 text-[10px] uppercase font-black tracking-widest bg-[var(--neo-luffy-red)]/10 text-[var(--neo-luffy-red)] border border-[var(--neo-luffy-red)]/20 shadow-[4px_4px_0px_0px_var(--neo-hat-yellow)]">
+              Next island in {Math.max(0, Math.round(nextClass.minutes))} min // {nextClass.entry.title}
             </div>
           )}
         </div>
         
-        <div className="flex items-center gap-2 p-1 bg-black/40 backdrop-blur-xl rounded-2xl border border-white/5 mx-auto md:mx-0">
+        <div className="flex bg-black p-2 border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mx-auto md:mx-0">
           {(["daily", "weekly"] as const).map((item) => (
             <button
               key={item}
               onClick={() => setView(item)}
-              className={`px-6 py-2 rounded-xl text-[10px] uppercase font-black tracking-widest transition-all ${
+              className={`px-8 py-2 text-[10px] uppercase font-black tracking-widest transition-all ${
                 view === item 
-                  ? "bg-[#00ef8e]/20 text-[#00ef8e] border border-[#00ef8e]/30 shadow-[0_0_15px_rgba(0,239,142,0.1)]" 
-                  : "text-slate-500 hover:text-slate-300"
+                  ? "bg-[var(--neo-luffy-red)] text-black border-2 border-black shadow-[3px_3px_0px_0px_#000]" 
+                  : "text-slate-500 hover:text-white"
               }`}
             >
               {item}
@@ -72,9 +72,9 @@ export const RoutineView = () => {
 
       {view === "daily" ? (
         <div className="space-y-8 px-4">
-          <div className="flex flex-col items-end border-r-4 border-[#00ef8e] pr-6 text-right">
-            <h3 className="text-3xl font-black text-white tracking-tight leading-none uppercase">{dayLabel(todayLabel)}</h3>
-            <p className="text-[10px] font-mono text-slate-500 mt-2 uppercase tracking-widest font-bold">System Time: {now.toLocaleTimeString()}</p>
+          <div className="flex flex-col items-start border-l-[12px] border-[var(--neo-luffy-red)] pl-8 mb-12">
+            <h3 className="text-4xl font-black text-white tracking-tighter leading-none uppercase italic">{dayLabel(todayLabel)}</h3>
+            <p className="text-[10px] font-mono text-[var(--neo-hat-yellow)] mt-2 uppercase tracking-widest font-black">PIRATE_TIME: {now.toLocaleTimeString()}</p>
           </div>
           
           <div className="grid gap-6">
@@ -84,27 +84,30 @@ export const RoutineView = () => {
                 const isActive = nowMinutes >= toMinutes(entry.start) && nowMinutes <= toMinutes(entry.end)
                 return (
                   <div key={entry.id} className="flex flex-col gap-3 group/entry">
-                    <div className="flex flex-col md:flex-row-reverse md:items-center justify-between gap-6 neo-card p-6 md:p-8 hover:bg-black/60 transition-all border-white/5 hover:border-[#00ef8e]/30 relative overflow-visible">
-                      <div className={`absolute top-0 right-0 bottom-0 w-1 transition-all duration-500 ${isActive ? "bg-[#00ef8e] shadow-[0_0_15px_#00ef8e]" : "bg-white/5"}`}></div>
+                    <div className={`brutalist-card p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-8 transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-none overflow-visible relative ${isActive ? "mesh-gradient-luffy" : "bg-black mesh-gradient"}`}>
+                      <div className={`absolute top-0 left-0 bottom-0 w-2 transition-all duration-500 ${isActive ? "bg-[var(--neo-hat-yellow)]" : "bg-black"}`}></div>
                       
-                      <div className="text-right space-y-2 flex-1">
-                        <p className="text-[10px] font-mono font-bold text-[#00ef8e] tracking-widest uppercase opacity-60">
-                          {formatTimeRange(entry.start, entry.end)}
-                        </p>
-                        <p className="text-2xl font-black text-white group-hover/entry:text-[#00ef8e] transition-colors uppercase tracking-tight">
+                      <div className="space-y-4 flex-1">
+                        <div className="flex items-center gap-4">
+                           <p className={`text-[10px] font-black tracking-widest uppercase ${isActive ? "text-black" : "text-[var(--neo-luffy-red)]"}`}>
+                            {formatTimeRange(entry.start, entry.end)}
+                          </p>
+                          {isActive && <span className="text-[9px] bg-black text-[var(--neo-hat-yellow)] px-2 py-0.5 border border-[var(--neo-hat-yellow)] font-black">ACTIVE</span>}
+                        </div>
+                        <p className={`text-3xl font-black transition-colors uppercase italic tracking-tighter leading-none ${isActive ? "text-black" : "text-white group-hover/entry:text-[var(--neo-luffy-red)]"}`}>
                           {entry.title}
                         </p>
-                        <div className="flex items-center justify-end gap-3 text-[10px] text-slate-500 font-bold uppercase tracking-tighter">
-                          <span>{entry.instructor}</span>
-                          <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                        <div className={`flex items-center gap-4 text-[11px] font-black uppercase tracking-tight ${isActive ? "text-black/60" : "text-slate-500"}`}>
                           <span>{entry.room}</span>
+                          <span className="w-1.5 h-1.5 bg-current"></span>
+                          <span>{entry.instructor}</span>
                         </div>
                       </div>
                       
                       {entry.group && (
                         <div className="flex md:flex-col items-center justify-end gap-2 shrink-0">
-                          <span className="text-[10px] font-black text-slate-600 tracking-widest uppercase">SECTION</span>
-                          <span className="px-3 py-1 rounded bg-white/5 border border-white/10 text-[11px] font-black text-white/80">
+                          <span className={`text-[10px] font-black tracking-widest uppercase ${isActive ? "text-black/40" : "text-slate-600"}`}>SHIP</span>
+                          <span className="px-4 py-1 bg-black border-2 border-black text-[11px] font-black text-white shadow-[4px_4px_0px_0px_var(--neo-hat-yellow)]">
                             {entry.group}
                           </span>
                         </div>
@@ -116,31 +119,31 @@ export const RoutineView = () => {
           </div>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
           {grouped.map((item) => (
             <div
               key={item.day}
-              className="neo-card p-6 space-y-6 flex flex-col items-end text-right border-white/5 overflow-visible"
+              className="brutalist-card p-8 space-y-8 flex flex-col"
             >
-              <div className="w-full flex items-center justify-end gap-3">
-                <h3 className="text-xl font-black text-white/90 tracking-widest uppercase">{item.day}</h3>
-                <div className="h-px flex-1 bg-white/5"></div>
+              <div className="w-full flex items-center gap-4">
+                <h3 className="text-2xl font-black text-white tracking-widest uppercase italic">{item.day}</h3>
+                <div className="h-1 flex-1 bg-black"></div>
               </div>
               
-              <div className="w-full space-y-4">
+              <div className="w-full space-y-6">
                 {item.entries.length === 0 ? (
-                  <p className="text-[10px] text-slate-600 font-mono italic tracking-widest uppercase">[ STANDBY MODE ]</p>
+                  <p className="text-[10px] text-slate-500 font-black tracking-widest uppercase">[ SHORE_LEAVE ]</p>
                 ) : (
                   item.entries.map((entry) => (
                     <div
                       key={entry.id}
-                      className="group/item relative pr-4 text-right"
+                      className="group/item relative pl-6 space-y-1"
                     >
-                      <div className="absolute right-0 top-0 bottom-0 w-0.5 bg-[#00ef8e]/20 group-hover/item:bg-[#00ef8e] transition-colors"></div>
-                      <p className="text-[9px] font-mono font-bold text-[#00ef8e]/40 group-hover/item:text-[#00ef8e]/60 tracking-tighter uppercase transition-colors">
+                      <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-black group-hover/item:bg-[var(--neo-luffy-red)] transition-colors"></div>
+                      <p className="text-[10px] font-black text-[var(--neo-luffy-red)]/60 group-hover/item:text-[var(--neo-luffy-red)] tracking-widest uppercase transition-colors">
                         {formatTimeRange(entry.start, entry.end)}
                       </p>
-                      <p className="text-sm font-bold text-slate-300 group-hover/item:text-white transition-colors tracking-tight uppercase">
+                      <p className="text-base font-black text-slate-300 group-hover/item:text-white transition-colors tracking-tight uppercase leading-tight">
                         {entry.title}
                       </p>
                     </div>
