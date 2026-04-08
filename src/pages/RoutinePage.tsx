@@ -104,7 +104,7 @@ export const RoutinePage = () => {
           isHoliday ? (
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="neo-card p-20 text-center space-y-8 mt-12 bg-black mx-4 border-black shadow-[16px_16px_0px_0px_#00ef8e]"
+              className="neo-card p-20 text-center space-y-8 mt-12 bg-black mesh-gradient mx-4 border-black shadow-[16px_16px_0px_0px_#00ef8e]"
             >
               <div className="w-32 h-32 bg-[#00ef8e] border-4 border-black flex items-center justify-center mx-auto shadow-[8px_8px_0px_0px_#000]">
                 <span className="text-7xl">⚓</span>
@@ -149,8 +149,8 @@ export const RoutinePage = () => {
                     style={{ x: isActive ? dragX : diff * 550 }}
                   >
                     <div className={`p-10 md:p-14 border-[6px] transition-all duration-300 relative overflow-visible ${isCurrent
-                        ? isBreak ? "bg-amber-400 border-black shadow-[12px_12px_0px_0px_#000]" : "bg-[#00ef8e] border-black shadow-[15px_15px_0px_0px_#000]"
-                        : isPast ? "bg-[#1a1a1a] border-black/40 grayscale opacity-60 shadow-none" : "bg-[#1a1a1a] border-black shadow-[10px_10px_0px_0px_#000]"
+                        ? isBreak ? "bg-amber-400 border-black shadow-[12px_12px_0px_0px_#000] mesh-gradient" : "bg-black mesh-gradient-emerald border-black shadow-[15px_15px_0px_0px_#000]"
+                        : isPast ? "bg-[#0a0a0a] border-black/40 grayscale opacity-60 shadow-none" : "bg-black mesh-gradient border-black shadow-[10px_10px_0px_0px_#000]"
                       }`}>
                       
                       <div className="flex justify-between items-center mb-12">
@@ -232,7 +232,7 @@ export const RoutinePage = () => {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                     {dayFrames.map(frame => (
-                      <div key={frame.start} className="bg-[#1a1a1a] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all">
+                      <div key={frame.start} className="bg-black mesh-gradient border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all">
                         <div className="flex justify-between items-center mb-6">
                           <span className="text-sm font-black text-[#00ef8e] bg-black px-3 py-1 border border-[#00ef8e]">{formatTimeRange(frame.start, frame.end)}</span>
                         </div>

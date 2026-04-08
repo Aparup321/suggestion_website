@@ -33,12 +33,12 @@ function App() {
                 Precision Class Management & Routine Engine // SEC_C.V2
               </p>
             </div>
-            <div className="neo-card !py-8 !px-10 bg-[#00ef8e] border-black border-[6px] shadow-[12px_12px_0px_0px_#000] text-black">
+            <div className="neo-card !py-8 !px-10 bg-black mesh-gradient-vibrant border-black border-[6px] shadow-[12px_12px_0px_0px_#000] text-black">
               <div className="flex items-center gap-4 mb-2">
                 <div className="w-4 h-4 bg-black border-2 border-white shadow-[2px_2px_0px_0px_#000]"></div>
-                <span className="text-[12px] tracking-[0.4em] font-black uppercase">SYSTEM_CLOCK</span> 
+                <span className="text-[12px] tracking-[0.4em] font-black uppercase text-black/60">SYSTEM_CLOCK</span> 
               </div>
-              <span className="font-black text-6xl md:text-7xl tracking-tighter leading-none italic">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              <span className="font-black text-6xl md:text-7xl tracking-tighter leading-none italic text-black">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
           </div>
         </div>
