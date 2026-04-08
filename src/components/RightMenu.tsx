@@ -1,6 +1,5 @@
 import { useAppStore } from "../store/useAppStore"
 import { useNavigate } from "react-router-dom"
-import { motion } from "framer-motion"
 
 const items = [
   { id: "routine", label: "Routine", icon: "⚔" },
@@ -14,44 +13,34 @@ export const RightMenu = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="w-full flex flex-col gap-4">
-      <div className="relative group w-full">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#00ef8e]/30 to-[#00703c]/30 rounded-2xl blur-sm opacity-20 group-hover:opacity-100 transition duration-500"></div>
-
-        <div className="relative bg-black/40 w-full backdrop-blur-xl rounded-2xl border border-[#00ef8e]/10 p-3 flex flex-col gap-2">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[#00ef8e]/60 font-bold px-2 mb-2">MAIN NAVIGATION</p>
+    <div className="w-full flex flex-col gap-6">
+      <div className="neo-card w-full !p-4 border-[4px]">
+        <p className="text-[11px] uppercase tracking-[0.4em] text-[#00ef8e] font-black px-2 mb-4">SYSTEM_DRIVES</p>
+        <div className="flex flex-col gap-4">
           {items.map((item) => {
             const isActive = mode === item.id
             return (
-              <motion.button
+              <button
                 key={item.id}
-                whileHover={{ x: 6, scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
                 onClick={() => {
                   setMode(item.id)
                   navigate(item.id === "routine" ? "/" : `/${item.id}`)
                 }}
-                className={`w-full px-5 py-4 rounded-xl transition-all flex items-center gap-4 group/item relative ${isActive
-                  ? "bg-[#00ef8e]/10 border border-[#00ef8e]/20 text-white font-bold shadow-[0_0_15px_rgba(0,239,142,0.1)]"
-                  : "text-slate-500 hover:text-[#00ef8e]/80"
+                className={`w-full px-5 py-4 transition-all flex items-center gap-4 group/item relative border-[3px] shadow-[4px_4px_0px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none ${isActive
+                  ? "bg-[#00ef8e] border-black text-black font-black"
+                  : "bg-black/20 border-black/40 text-slate-500 hover:text-white hover:border-[#00ef8e]"
                   }`}
               >
-                <span className={`text-2xl transition-all duration-300 ${isActive ? "text-[#00ef8e] scale-110 drop-shadow-[0_0_8px_#00ef8e]" : "opacity-20 scale-90"}`}>
-                  {isActive ? "⚔" : item.icon}
+                <span className={`text-2xl transition-all duration-300 ${isActive ? "text-black scale-110" : "opacity-40 group-hover/item:opacity-100"}`}>
+                  {item.icon}
                 </span>
                 <div className="flex flex-col gap-0.5 text-left">
-                  <span className={`text-[9px] tracking-[0.2em] uppercase opacity-40 group-hover/item:opacity-60 transition-opacity`}>
-                    {item.id === "routine" ? "VIEW_SCHEDULE" : "DATA_PORTAL"}
+                  <span className={`text-[9px] tracking-[0.2em] uppercase ${isActive ? "opacity-60" : "opacity-40"}`}>
+                    {item.id === "routine" ? "CORE_SCHEDULE" : "DATA_STREAM"}
                   </span>
-                  <span className="text-sm font-zoro tracking-wider uppercase">{item.label}</span>
+                  <span className="text-base font-zoro tracking-wider uppercase leading-none">{item.label}</span>
                 </div>
-                {isActive && (
-                  <motion.div 
-                    layoutId="active-pill"
-                    className="absolute left-0 w-1 h-8 bg-[#00ef8e] rounded-full shadow-[0_0_10px_#00ef8e]"
-                  />
-                )}
-              </motion.button>
+              </button>
             )
           })}
         </div>

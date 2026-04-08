@@ -313,17 +313,64 @@ export const subjects: Subject[] = [
     id: "spm",
     title: "Software Project Management",
     code: "MCA20408A",
+    objective: "To understand the fundamental principles of software project management, including project planning, estimation, risk management, and team organization, and to apply these principles to manage projects effectively within constraints.",
+    prerequisites: ["Software Engineering Fundamentals", "Management Principles"],
+    outcomes: [
+      "CO1: Apply project management concepts and techniques to software development projects.",
+      "CO2: Perform cost-benefit analysis and strategic assessment for project selection.",
+      "CO3: Estimate software effort using various models like COCOMO and Function Point analysis.",
+      "CO4: Develop activity plans and manage risks using tools like PERT and CPM.",
+      "CO5: Understand resource allocation and team management strategies."
+    ],
     units: [
       {
         id: "spm-u1",
-        title: "Unit 1: Agile and Waterfall",
+        title: "Module 1: Introduction and Software Project Planning [9H]",
         topics: [
-          {
-            id: "spm-1",
-            title: "Estimations",
-            status: "not-started",
-            priority: "medium",
-          },
+          { id: "spm-1-1", title: "Introduction to Software Project Management", status: "not-started", priority: "medium" },
+          { id: "spm-1-2", title: "Project Evaluation and Programme Management", status: "not-started", priority: "medium" },
+          { id: "spm-1-3", title: "An Overview of Project Planning", status: "not-started", priority: "medium" },
+          { id: "spm-1-4", title: "Selection of an Appropriate Project Approach", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "spm-u2",
+        title: "Module 2: Project Evaluation and Programme Management [9H]",
+        topics: [
+          { id: "spm-2-1", title: "Strategic Assessment and Technical Assessment", status: "not-started", priority: "medium" },
+          { id: "spm-2-2", title: "Cost-Benefit Analysis and Cash Flow Forecasting", status: "not-started", priority: "medium" },
+          { id: "spm-2-3", title: "Cost-benefit Evaluation Techniques", status: "not-started", priority: "medium" },
+          { id: "spm-2-4", title: "Risk Evaluation", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "spm-u3",
+        title: "Module 3: Software Effort Estimation [9H]",
+        topics: [
+          { id: "spm-3-1", title: "Problems with Over- and Under-Estimates", status: "not-started", priority: "medium" },
+          { id: "spm-3-2", title: "Software Effort Estimation Techniques", status: "not-started", priority: "medium" },
+          { id: "spm-3-3", title: "Albrecht Function Point Analysis", status: "not-started", priority: "medium" },
+          { id: "spm-3-4", title: "COCOMO Model & Expert Judgment", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "spm-u4",
+        title: "Module 4: Activity Planning and Risk Management [9H]",
+        topics: [
+          { id: "spm-4-1", title: "Objectives of Activity Planning", status: "not-started", priority: "medium" },
+          { id: "spm-4-2", title: "Project Schedules and Sequencing", status: "not-started", priority: "medium" },
+          { id: "spm-4-3", title: "Network Planning Models (PERT/CPM)", status: "not-started", priority: "medium" },
+          { id: "spm-4-4", title: "Risk Management: Identification, Analysis, and Mitigation", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "spm-u5",
+        title: "Module 5: Resource Allocation and Monitoring [9H]",
+        topics: [
+          { id: "spm-5-1", title: "Nature of Resources & Identifying Requirements", status: "not-started", priority: "medium" },
+          { id: "spm-5-2", title: "Scheduling Resources & Creating Critical Paths", status: "not-started", priority: "medium" },
+          { id: "spm-5-3", title: "Monitoring and Control & Visualizing Progress", status: "not-started", priority: "medium" },
+          { id: "spm-5-4", title: "Managing People and Organizing Teams", status: "not-started", priority: "medium" },
         ],
       },
     ],

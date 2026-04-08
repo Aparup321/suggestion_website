@@ -74,13 +74,13 @@ export const RoutinePage = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
-          <h1 className="text-4xl font-zoro font-black tracking-tight text-white flex items-center gap-3">
-            ROUTINE <span className="text-[#00ef8e] text-[10px] font-mono font-medium tracking-[0.4em] bg-[#00ef8e]/10 px-3 py-1 rounded-full border border-[#00ef8e]/20">SECTION.C</span>
+          <h1 className="text-5xl font-black italic tracking-tighter text-white flex items-center gap-4">
+            ROUTINE <span className="text-[#00ef8e] text-xs font-black tracking-[0.4em] bg-black px-4 py-2 border-2 border-black shadow-[4px_4px_0px_0px_#00ef8e]">SEC.C</span>
           </h1>
-          <p className="text-slate-500 text-sm font-medium">Academic Class Management Dashboard</p>
+          <p className="text-slate-500 text-sm font-black uppercase tracking-widest">Academic Class Management Dashboard</p>
         </div>
 
-        <div className="flex bg-black/80 p-1.5 rounded-2xl border border-white/5 shadow-inner self-start md:self-end">
+        <div className="flex bg-black p-2 border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] self-start md:self-end">
           {(["daily", "weekly"] as const).map((v) => (
             <button
               key={v}
@@ -88,9 +88,9 @@ export const RoutinePage = () => {
                 setView(v)
                 setIndex(0)
               }}
-              className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${view === v
-                  ? "bg-[#00ef8e]/20 text-[#00ef8e] shadow-[0_0_20px_rgba(0,239,142,0.15)] ring-1 ring-[#00ef8e]/30"
-                  : "text-slate-500 hover:text-slate-300"
+              className={`px-8 py-3 text-xs font-black uppercase tracking-widest transition-all ${view === v
+                  ? "bg-[#00ef8e] text-black border-2 border-black shadow-[3px_3px_0px_0px_#000]"
+                  : "text-slate-500 hover:text-white"
                 }`}
             >
               {v}
@@ -103,17 +103,17 @@ export const RoutinePage = () => {
         {view === "daily" ? (
           isHoliday ? (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-              className="neo-card p-16 text-center space-y-6 mt-12 bg-gradient-to-br from-black/60 to-black/80 mx-4 border-[#00ef8e]/10"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="neo-card p-20 text-center space-y-8 mt-12 bg-black mx-4 border-black shadow-[16px_16px_0px_0px_#00ef8e]"
             >
-              <div className="w-24 h-24 bg-[#00ef8e]/10 rounded-full flex items-center justify-center mx-auto ring-1 ring-[#00ef8e]/20">
-                <span className="text-5xl">⚓</span>
+              <div className="w-32 h-32 bg-[#00ef8e] border-4 border-black flex items-center justify-center mx-auto shadow-[8px_8px_0px_0px_#000]">
+                <span className="text-7xl">⚓</span>
               </div>
-              <div className="space-y-2">
-                <h2 className="text-4xl font-zoro text-white font-bold tracking-tight">No Classes Scheduled</h2>
-                <p className="text-slate-400 text-lg max-w-sm mx-auto">Today is a holiday ({today}). No training or classes are currently active. Enjoy your rest!</p>
+              <div className="space-y-4">
+                <h2 className="text-5xl font-black text-white italic tracking-tighter uppercase">No Classes Scheduled</h2>
+                <p className="text-slate-400 text-xl font-bold max-w-sm mx-auto uppercase">Today is a holiday ({today}). No training. Experience the void.</p>
               </div>
-              <button onClick={() => setView("weekly")} className="text-[#00ef8e] text-xs font-bold uppercase tracking-[0.3em] bg-[#00ef8e]/10 px-6 py-3 rounded-xl border border-[#00ef8e]/20 hover:bg-[#00ef8e]/20 transition-all font-sans">
+              <button onClick={() => setView("weekly")} className="bg-[#00ef8e] text-black text-sm font-black uppercase tracking-[0.3em] px-10 py-5 border-4 border-black shadow-[8px_8px_0px_0px_#000] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
                 Preview Weekly Chart
               </button>
             </motion.div>
@@ -121,7 +121,7 @@ export const RoutinePage = () => {
             <motion.div
               key="daily-carousel"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="relative min-h-[520px] flex items-center justify-center overflow-visible px-4"
+              className="relative min-h-[550px] flex items-center justify-center overflow-visible px-4"
             >
               {todayFrames.map((frame, i) => {
                 const diff = i - index
@@ -135,64 +135,59 @@ export const RoutinePage = () => {
                 return (
                   <motion.div
                     key={frame.day + frame.start}
-                    className="absolute w-full max-w-[500px]"
+                    className="absolute w-full max-w-[520px]"
                     animate={{
-                      x: diff * 520,
+                      x: diff * 550,
                       scale: isActive ? 1 : 0.85,
-                      opacity: isActive ? 1 : 0.4,
-                      filter: isActive ? "blur(0px)" : "blur(4px)",
+                      opacity: isActive ? 1 : 0.3,
+                      filter: isActive ? "blur(0px)" : "blur(2px)",
                       zIndex: isActive ? 50 : 20 - Math.abs(diff)
                     }}
                     drag={isActive ? "x" : false}
                     dragConstraints={{ left: 0, right: 0 }}
                     onDragEnd={(e, info) => handleDragEnd(e, info, todayFrames.length)}
-                    style={{ x: isActive ? dragX : diff * 520 }}
+                    style={{ x: isActive ? dragX : diff * 550 }}
                   >
-                    <div className={`p-8 md:p-12 rounded-3xl md:rounded-[48px] backdrop-blur-3xl border-2 transition-all duration-700 relative overflow-visible ${isCurrent
-                        ? isBreak ? "bg-amber/5 border-amber/20" : "bg-[#00ef8e]/10 border-[#00ef8e]/40 shadow-[0_30px_60px_-15px_rgba(0,239,142,0.25)] animate-[haki-pulse_4s_infinite]"
-                        : isPast ? "bg-black/40 border-white/[0.03] grayscale opacity-60" : "bg-black/60 border-white/[0.08]"
+                    <div className={`p-10 md:p-14 border-[6px] transition-all duration-300 relative overflow-visible ${isCurrent
+                        ? isBreak ? "bg-amber-400 border-black shadow-[12px_12px_0px_0px_#000]" : "bg-[#00ef8e] border-black shadow-[15px_15px_0px_0px_#000]"
+                        : isPast ? "bg-[#1a1a1a] border-black/40 grayscale opacity-60 shadow-none" : "bg-[#1a1a1a] border-black shadow-[10px_10px_0px_0px_#000]"
                       }`}>
-                      {isCurrent && !isBreak && (
-                        <div className="absolute top-0 right-0 p-4 opacity-20 transform rotate-12">
-                          <span className="text-6xl">⚔️</span>
-                        </div>
-                      )}
-
-                      <div className="flex justify-between items-center mb-10 px-2 md:px-4">
-                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] ${isBreak ? "bg-amber/20 text-amber" :
-                            isCurrent ? "bg-[#00ef8e] text-black" : "bg-white/5 text-slate-500"
+                      
+                      <div className="flex justify-between items-center mb-12">
+                        <div className={`px-6 py-2 border-4 border-black text-xs font-black uppercase tracking-[0.2em] shadow-[4px_4px_0px_0px_#000] ${isBreak ? "bg-white text-black" :
+                            isCurrent ? "bg-white text-black" : "bg-black text-slate-500"
                           }`}>
-                          {isBreak ? "BREAK TIME" : isCurrent ? "ONGOING" : isPast ? "COMPLETED" : "UPCOMING"}
+                          {isBreak ? "BREAK" : isCurrent ? "ACTIVE" : isPast ? "DONE" : "NEXT"}
                         </div>
-                        <span className="font-mono text-xs md:text-sm font-bold text-slate-300 opacity-80">{formatTimeRange(frame.start, frame.end)}</span>
+                        <span className={`font-black text-sm md:text-base border-b-4 ${isCurrent ? "border-black text-black" : "border-[#00ef8e] text-[#00ef8e]"}`}>{formatTimeRange(frame.start, frame.end)}</span>
                       </div>
 
-                      <div className="space-y-8">
+                      <div className="space-y-10">
                         {frame.entries.map((entry, entryIdx) => (
-                          <div key={entry.id} className={`${entryIdx > 0 ? "pt-8 border-t border-white/5" : ""} relative px-2`}>
-                            <div className="flex flex-col gap-4">
+                          <div key={entry.id} className={`${entryIdx > 0 ? "pt-10 border-t-4 border-black/10" : ""} relative`}>
+                            <div className="flex flex-col gap-6">
                               <div className="flex items-start justify-between gap-4">
-                                <div className="space-y-1">
-                                  <h3 className={`text-2xl font-zoro font-bold tracking-tight leading-tight ${isBreak ? "text-amber" : "text-white"}`}>
-                                    {isBreak && <span className="mr-3">🍶</span>}{entry.title}
+                                <div className="space-y-2">
+                                  <h3 className={`text-3xl font-black leading-none uppercase italic ${isCurrent ? "text-black" : "text-white"}`}>
+                                    {entry.title}
                                   </h3>
-                                  <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-widest flex items-center gap-2">
-                                    <span className="w-2 h-[1px] bg-slate-600"></span>
-                                    {entry.subjectId.toUpperCase()}
+                                  <p className={`text-[12px] font-black uppercase tracking-widest flex items-center gap-3 ${isCurrent ? "text-black/60" : "text-[#00ef8e]"}`}>
+                                    <span className={`w-4 h-1 ${isCurrent ? "bg-black/40" : "bg-[#00ef8e]"}`}></span>
+                                    {entry.subjectId}
                                   </p>
                                 </div>
-                                {entry.group && <span className="text-[10px] bg-[#00ef8e]/10 text-[#00ef8e] px-3 py-1 rounded-lg border border-[#00ef8e]/20 font-black">{entry.group}</span>}
+                                {entry.group && <span className="text-[12px] bg-black text-white px-4 py-1 border-2 border-black font-black uppercase">{entry.group}</span>}
                               </div>
 
                               {!isBreak && (
-                                  <div className="flex flex-wrap justify-between gap-x-6 gap-y-2 pt-2 border-t border-white/5 mt-2">
-                                    <div className="space-y-0.5">
-                                      <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase block">Location</span>
-                                      <p className="text-slate-300 text-xs font-semibold">{entry.room}</p>
+                                  <div className={`grid grid-cols-2 gap-8 pt-4 border-t-2 ${isCurrent ? "border-black/20" : "border-white/10"}`}>
+                                    <div className="space-y-1">
+                                      <span className={`text-[10px] font-black tracking-widest uppercase block ${isCurrent ? "text-black/40" : "text-slate-600"}`}>Loc</span>
+                                      <p className={`text-base font-black italic uppercase ${isCurrent ? "text-black" : "text-slate-300"}`}>{entry.room}</p>
                                     </div>
-                                    <div className="space-y-0.5 text-right">
-                                      <span className="text-[9px] font-black text-slate-600 tracking-widest uppercase block">Instructor</span>
-                                      <p className="text-slate-300 text-xs font-semibold">{entry.instructor || "Common"}</p>
+                                    <div className="space-y-1 text-right">
+                                      <span className={`text-[10px] font-black tracking-widest uppercase block ${isCurrent ? "text-black/40" : "text-slate-600"}`}>Inst</span>
+                                      <p className={`text-base font-black italic uppercase ${isCurrent ? "text-black" : "text-slate-300"}`}>{entry.instructor || "COMMON"}</p>
                                     </div>
                                   </div>
                               )}
@@ -201,13 +196,13 @@ export const RoutinePage = () => {
                         ))}
                       </div>
 
-                      <div className="mt-12 flex items-center justify-between">
-                        <div className="flex gap-1.5">
+                      <div className="mt-14 flex items-center justify-between">
+                        <div className="flex gap-2">
                           {todayFrames.map((_, dotIdx) => (
-                            <div key={dotIdx} className={`h-1.5 rounded-full transition-all duration-300 ${dotIdx === index ? "w-8 bg-[#00ef8e]" : "w-1.5 bg-white/10"}`} />
+                            <div key={dotIdx} className={`h-4 border-2 border-black transition-all ${dotIdx === index ? "w-12 bg-white" : "w-4 bg-black/20"}`} />
                           ))}
                         </div>
-                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">ITEM // {index + 1}</span>
+                        <span className={`text-xs font-black uppercase tracking-widest ${isCurrent ? "text-black" : "text-slate-600"}`}>FRAME_{index + 1}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -218,8 +213,8 @@ export const RoutinePage = () => {
         ) : (
           <motion.div
             key="weekly-timeline"
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
-            className="space-y-12 px-4 pb-20"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="space-y-16 px-4 pb-24"
           >
             {dayOrder.map((day) => {
               const dayFrames = frames.filter(f => f.day === day)
@@ -227,25 +222,27 @@ export const RoutinePage = () => {
               const isToday = day === today
 
               return (
-                <div key={day} className={`relative flex flex-col gap-6 pl-8 border-l-2 ml-4 transition-colors ${isToday ? "border-[#00ef8e]" : "border-white/5"}`}>
-                  <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full ring-4 ${isToday ? "bg-[#00ef8e] ring-[#00ef8e]/20" : "bg-slate-800 ring-slate-950"}`} />
-                  <div className="flex items-center gap-4">
-                    <h3 className={`text-2xl font-zoro font-black italic tracking-tighter ${isToday ? "text-[#00ef8e]" : "text-slate-200"}`}>{day}</h3>
-                    {isToday && <span className="bg-[#00ef8e]/10 text-[#00ef8e] text-[10px] px-2 py-0.5 rounded border border-[#00ef8e]/20 font-black">ACTIVE</span>}
+                <div key={day} className={`relative flex flex-col gap-8 pl-12 border-l-[8px] ml-4 ${isToday ? "border-[#00ef8e]" : "border-black"}`}>
+                  <div className={`absolute -left-[24px] top-0 w-10 h-10 border-4 border-black shadow-[4px_4px_0px_0px_#000] flex items-center justify-center ${isToday ? "bg-[#00ef8e]" : "bg-[#1a1a1a]"}`}>
+                    <div className="w-2 h-2 bg-black"></div>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+                  <div className="flex items-center gap-6">
+                    <h3 className={`text-4xl font-black italic tracking-tighter uppercase ${isToday ? "text-[#00ef8e]" : "text-white"}`}>{day}</h3>
+                    {isToday && <span className="bg-black text-[#00ef8e] text-xs px-4 py-1 border-2 border-[#00ef8e] font-black shadow-[4px_4px_0px_0px_#00ef8e]">TODAY</span>}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                     {dayFrames.map(frame => (
-                      <div key={frame.start} className="neo-card p-6 space-y-4 hover:border-[#00ef8e]/40 group/card transition-all overflow-visible">
-                        <div className="flex justify-between items-center gap-2 w-full">
-                          <span className="text-[10px] font-mono text-[#00ef8e] font-bold">{formatTimeRange(frame.start, frame.end)}</span>
+                      <div key={frame.start} className="bg-[#1a1a1a] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all">
+                        <div className="flex justify-between items-center mb-6">
+                          <span className="text-sm font-black text-[#00ef8e] bg-black px-3 py-1 border border-[#00ef8e]">{formatTimeRange(frame.start, frame.end)}</span>
                         </div>
-                        <div className="space-y-3 w-full">
+                        <div className="space-y-6">
                           {frame.entries.map(entry => (
-                            <div key={entry.id} className="flex flex-col gap-1 first:pt-0 pt-3 border-t border-white/5 first:border-0 px-1">
-                              <span className="text-sm font-bold text-white group-hover/card:text-[#00ef8e] transition-colors">{entry.title}</span>
-                              <div className="flex items-center justify-between w-full">
-                                <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">{entry.room}</span>
-                                {entry.group && <span className="text-[8px] text-[#00ef8e]/60 font-bold">{entry.group}</span>}
+                            <div key={entry.id} className="flex flex-col gap-2 pt-4 border-t-2 border-black/20 first:pt-0 first:border-0">
+                              <span className="text-xl font-black text-white uppercase italic leading-tight">{entry.title}</span>
+                              <div className="flex items-center justify-between">
+                                <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{entry.room}</span>
+                                {entry.group && <span className="text-[10px] text-[#00ef8e] font-black border border-[#00ef8e] px-2 uppercase">{entry.group}</span>}
                               </div>
                             </div>
                           ))}

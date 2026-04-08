@@ -33,103 +33,60 @@ body {
 }
 
 .neo-card {
-  background: var(--glass);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--neo-surface);
+  border: 4px solid var(--neo-border);
+  border-radius: 0px; /* Sharp corners for Brutalism */
+  box-shadow: 8px 8px 0px 0px var(--neo-black);
+  transition: all 0.1s ease;
   position: relative;
   overflow: visible; 
-  padding: 2rem 1.5rem; /* Increased vertical padding and consistent horizontal */
-}
-
-.neo-card-inner {
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.text-right-aligned {
-  text-align: right !important;
-}
-
-.flex-right-aligned {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-}
-
-.justify-end-auto {
-  justify-content: flex-end !important;
-}
-
-.neo-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(0, 239, 142, 0.05),
-    transparent
-  );
-  transition: 0.5s;
-}
-
-.neo-card:hover::before {
-  left: 100%;
+  padding: 2rem 1.5rem;
 }
 
 .neo-card:hover {
-  border-color: var(--zoro-green);
-  background: rgba(10, 10, 10, 0.85);
-  box-shadow: 0 20px 50px -12px rgba(0, 239, 142, 0.15);
-  transform: translateY(-4px);
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0px 0px var(--neo-black);
+  border-color: var(--neo-emerald);
 }
 
 .neo-button {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  background: var(--neo-surface);
+  border: 2px solid var(--neo-black);
+  border-radius: 4px;
   color: #94a3b8;
-  font-weight: 600;
+  font-weight: 800;
+  text-transform: uppercase;
   padding: 8px 16px;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
+  box-shadow: 2px 2px 0px 0px var(--neo-black);
 }
 
 .neo-button.active {
-  background: rgba(0, 239, 142, 0.08);
-  border-color: var(--zoro-green);
-  color: var(--zoro-green);
-  box-shadow: 0 0 20px rgba(0, 239, 142, 0.2);
-  animation: haki-pulse 3s infinite;
+  background: var(--neo-emerald);
+  border-color: var(--neo-black);
+  color: var(--neo-black);
+  box-shadow: 4px 4px 0px 0px var(--neo-black);
+  transform: translate(-2px, -2px);
 }
 
 .neo-button:hover:not(.active) {
-  background: rgba(0, 239, 142, 0.05);
+  background: #2a2a2a;
   color: #fff;
-  border-color: rgba(0, 239, 142, 0.3);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px 0px var(--neo-black);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, var(--zoro-green), var(--steel));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 800;
+  color: var(--neo-emerald);
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .hero-banner {
   position: relative;
-  border-bottom: 1px solid rgba(0, 239, 142, 0.1);
-  padding-bottom: 24px;
+  border-bottom: 4px solid var(--neo-black);
+  padding-bottom: 32px;
+  margin-bottom: 48px;
 }
 
 .sidebar-container {

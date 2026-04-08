@@ -27,16 +27,26 @@ const loadSubjects = (): Subject[] => {
     if (rmIndex !== -1) {
       const rmSubject = subjects[rmIndex]
       const freshRM = defaultSubjects.find(s => s.id === "rme")
-      // If freshRM exists and the stored one is old (fewer modules), update it
       if (freshRM && rmSubject.units.length < freshRM.units.length) {
         subjects[rmIndex] = freshRM
         saveSubjects(subjects)
       }
+    }
+    
+    // Modernization: If Cyber Security exists but has old structure, replace it.
+    const csIndex = subjects.findIndex(s => s.id === "cs")
+    if (csIndex !== -1) {
+      const csSubject = subjects[csIndex]
+      const freshCS = defaultSubjects.find(s => s.id === "cs")
+      if (freshCS && csSubject.units.length < freshCS.units.length) {
+        subjects[csIndex] = freshCS
+        saveSubjects(subjects)
+      }
     } else {
-      // If RM is missing entirely from storage, add it.
-      const freshRM = defaultSubjects.find(s => s.id === "rme")
-      if (freshRM) {
-        subjects.unshift(freshRM)
+      // If CS is missing entirely
+      const freshCS = defaultSubjects.find(s => s.id === "cs")
+      if (freshCS) {
+        subjects.push(freshCS)
         saveSubjects(subjects)
       }
     }

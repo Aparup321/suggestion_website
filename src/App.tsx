@@ -18,32 +18,32 @@ function App() {
   return (
     <div className="page-shell">
       <SlashOverlay />
-      <div className="mx-auto w-full max-w-6xl px-4 md:px-8 pt-8 relative z-10">
-        <div className="hero-banner mb-10 pr-4 md:pr-0">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 relative z-10">
+      <div className="mx-auto w-full max-w-7xl px-4 md:px-12 pt-12 relative z-10">
+        <div className="hero-banner mb-16">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-10 relative z-10">
             <div className="flex flex-col items-start px-2">
-              <p className="text-xs uppercase tracking-[0.3em] text-[#00ef8e] font-bold mb-2 flex items-center gap-2">
-                <span className="w-8 h-[1px] bg-[#00ef8e]"></span>
+              <p className="text-xs uppercase tracking-[0.4em] text-[#00ef8e] font-black mb-4 flex items-center gap-4">
+                <span className="w-12 h-1 bg-[#00ef8e]"></span>
                 System Environment Active
               </p>
-              <h1 className="text-4xl md:text-6xl font-zoro font-bold tracking-tighter mb-2">
-                Zoro <span className="text-gradient">Dashboard</span>
+              <h1 className="text-5xl md:text-8xl font-black italic tracking-tighter mb-4 text-white uppercase leading-none">
+                ZORO <span className="text-[#00ef8e] border-b-8 border-black">DASHBOARD</span>
               </h1>
-              <p className="text-sm md:text-base text-slate-300 max-w-xl font-light italic opacity-80">
-                Precision Class Management & Routine Engine — Optimized for Section C.
+              <p className="text-sm md:text-lg text-slate-400 max-w-2xl font-black uppercase tracking-widest opacity-80">
+                Precision Class Management & Routine Engine // SEC_C.V2
               </p>
             </div>
-            <div className="neo-card px-8 py-6 text-sm text-white font-medium inline-flex flex-col items-start gap-1 border-l-4 border-l-[#00ef8e] border-r-0">
-              <div className="flex items-center gap-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#00ef8e] animate-pulse shadow-[0_0_10px_#00ef8e]"></div>
-                <span className="opacity-60 text-[10px] tracking-widest font-mono">SYSTEM_CLOCK</span> 
+            <div className="neo-card !py-8 !px-10 bg-[#00ef8e] border-black border-[6px] shadow-[12px_12px_0px_0px_#000] text-black">
+              <div className="flex items-center gap-4 mb-2">
+                <div className="w-4 h-4 bg-black border-2 border-white shadow-[2px_2px_0px_0px_#000]"></div>
+                <span className="text-[12px] tracking-[0.4em] font-black uppercase">SYSTEM_CLOCK</span> 
               </div>
-              <span className="font-mono text-3xl font-black tracking-tighter">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              <span className="font-black text-6xl md:text-7xl tracking-tighter leading-none italic">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
             </div>
           </div>
         </div>
 
-        <div id="zoro-main-layout">
+        <div id="zoro-main-layout" className="pb-24">
           {/* Main Navigator Sidebar */}
           <aside id="zoro-sidebar" className="z-[99] sidebar-container">
             <RightMenu />

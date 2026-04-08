@@ -5,16 +5,15 @@
 @tailwind utilities;
 
 :root {
-  --zoro-emerald: #00ef8e;
-  --zoro-forest: #00703c;
-  --zoro-black: #0a0a0a;
-  --zoro-steel: #e2e8f0;
-  --haki-green: rgba(0, 239, 142, 0.4);
-  --haki-purple: rgba(168, 85, 247, 0.3);
+  --neo-emerald: #00ef8e;
+  --neo-black: #000000;
+  --neo-dark: #121212;
+  --neo-surface: #1e1e1e;
+  --neo-border: #000000;
   
   color-scheme: dark;
-  font-family: "Inter", sans-serif;
-  background-color: var(--zoro-black);
+  font-family: "Space Grotesk", sans-serif;
+  background-color: var(--neo-dark);
   color: #f8fafc;
 }
 
@@ -25,41 +24,66 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--zoro-black);
-  /* Zoro Background with Dark Gradients */
+  background-color: var(--neo-dark);
+  /* Neo-Brutalist Grid Background (Optional but subtle) */
   background-image: 
-    linear-gradient(to bottom, rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.9)),
-    url('/zoro-bg.webp');
-  background-size: cover;
-  background-position: center;
+    linear-gradient(rgba(0, 239, 142, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 239, 142, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4, .font-display {
   font-family: "Space Grotesk", sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .font-zoro {
   font-family: "Cinzel", serif;
+  font-weight: 900;
 }
 
-@keyframes slash {
-  0% { transform: translateX(-100%) skewX(-45deg); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateX(200%) skewX(-45deg); opacity: 0; }
+/* Neo-Brutalist Card Utility */
+.brutalist-card {
+  background-color: var(--neo-surface);
+  border: 4px solid var(--neo-border);
+  box-shadow: 8px 8px 0px 0px var(--neo-black);
+  transition: all 0.1s ease;
 }
 
-@keyframes haki-pulse {
-  0% { box-shadow: 0 0 15px var(--haki-green); }
-  50% { box-shadow: 0 0 30px var(--haki-purple), 0 0 10px var(--haki-green); }
-  100% { box-shadow: 0 0 15px var(--haki-green); }
+.brutalist-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0px 0px var(--neo-black);
 }
 
-@keyframes green-glow {
-  0%, 100% { text-shadow: 0 0 10px var(--zoro-emerald); }
-  50% { text-shadow: 0 0 25px var(--zoro-emerald), 0 0 5px #fff; }
+.brutalist-card:active {
+  transform: translate(4px, 4px);
+  box-shadow: 2px 2px 0px 0px var(--neo-black);
+}
+
+/* Neo-Brutalist Button Utility */
+.brutalist-button {
+  background-color: var(--neo-emerald);
+  color: var(--neo-black);
+  border: 3px solid var(--neo-black);
+  box-shadow: 4px 4px 0px 0px var(--neo-black);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 8px 16px;
+  transition: all 0.1s ease;
+}
+
+.brutalist-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px 0px var(--neo-black);
+}
+
+.brutalist-button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px var(--neo-black);
 }
 
 #root {
