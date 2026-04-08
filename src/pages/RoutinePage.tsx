@@ -75,9 +75,9 @@ export const RoutinePage = () => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
         <div className="space-y-1">
           <h1 className="text-5xl font-black italic tracking-tighter text-white flex items-center gap-4">
-            ROUTINE <span className="text-[var(--neo-luffy-red)] text-xs font-black tracking-[0.4em] bg-black px-4 py-2 border-2 border-black shadow-[4px_4px_0px_0px_var(--neo-hat-yellow)]">Routine Dashboard</span>
+            ROUTINE <span className="text-[var(--neo-luffy-red)] text-xs font-black tracking-[0.4em] bg-black px-4 py-2 border-2 border-black shadow-[4px_4px_0px_0px_var(--neo-hat-yellow)]">SCHEDULE</span>
           </h1>
-          <p className="text-slate-500 text-sm font-black uppercase tracking-widest">Grand Line Class Management Dashboard</p>
+          <p className="text-slate-500 text-sm font-black uppercase tracking-widest">Digital Study Management Dashboard</p>
         </div>
 
         <div className="flex bg-black p-2 border-[4px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] self-start md:self-end">
@@ -110,11 +110,11 @@ export const RoutinePage = () => {
                 <span className="text-7xl">🍖</span>
               </div>
               <div className="space-y-4">
-                <h2 className="text-5xl font-black text-white italic tracking-tighter uppercase">No Adventure Today</h2>
-                <p className="text-slate-400 text-xl font-bold max-w-sm mx-auto uppercase">Today is a holiday ({today}). Time to eat meat and rest.</p>
+                <h2 className="text-5xl font-black text-white italic tracking-tighter uppercase">No Classes Today</h2>
+                <p className="text-slate-400 text-xl font-bold max-w-sm mx-auto uppercase">Today is a holiday ({today}). Enjoy your time off.</p>
               </div>
               <button onClick={() => setView("weekly")} className="bg-[var(--neo-luffy-red)] text-black text-sm font-black uppercase tracking-[0.3em] px-10 py-5 border-4 border-black shadow-[8px_8px_0px_0px_#000] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
-                Preview Log Pose
+                View Weekly Schedule
               </button>
             </motion.div>
           ) : (
@@ -157,7 +157,7 @@ export const RoutinePage = () => {
                         <div className={`px-6 py-2 border-4 border-black text-xs font-black uppercase tracking-[0.2em] shadow-[4px_4px_0px_0px_#000] ${isBreak ? "bg-white text-black" :
                             isCurrent ? "bg-white text-black" : "bg-black text-slate-500"
                           }`}>
-                          {isBreak ? "MEAT" : isCurrent ? "ACTIVE" : isPast ? "DONE" : "NEXT"}
+                          {isBreak ? "BREAK" : isCurrent ? "ACTIVE" : isPast ? "DONE" : "NEXT"}
                         </div>
                         <span className={`font-black text-sm md:text-base border-b-4 ${isCurrent ? "border-black text-black" : "border-[var(--neo-luffy-red)] text-[var(--neo-luffy-red)]"}`}>{formatTimeRange(frame.start, frame.end)}</span>
                       </div>
@@ -182,11 +182,11 @@ export const RoutinePage = () => {
                               {!isBreak && (
                                   <div className={`grid grid-cols-2 gap-8 pt-4 border-t-2 ${isCurrent ? "border-black/20" : "border-white/10"}`}>
                                     <div className="space-y-1">
-                                      <span className={`text-[10px] font-black tracking-widest uppercase block ${isCurrent ? "text-black/40" : "text-slate-600"}`}>Ship</span>
+                                      <span className={`text-[10px] font-black tracking-widest uppercase block ${isCurrent ? "text-black/40" : "text-slate-600"}`}>Room</span>
                                       <p className={`text-base font-black italic uppercase ${isCurrent ? "text-black" : "text-slate-300"}`}>{entry.room}</p>
                                     </div>
                                     <div className="space-y-1 text-right">
-                                      <span className={`text-[10px] font-black tracking-widest uppercase block ${isCurrent ? "text-black/40" : "text-slate-600"}`}>Captain</span>
+                                      <span className={`text-[10px] font-black tracking-widest uppercase block ${isCurrent ? "text-black/40" : "text-slate-600"}`}>Professor</span>
                                       <p className={`text-base font-black italic uppercase ${isCurrent ? "text-black" : "text-slate-300"}`}>{entry.instructor || "COMMON"}</p>
                                     </div>
                                   </div>
@@ -202,7 +202,7 @@ export const RoutinePage = () => {
                             <div key={dotIdx} className={`h-4 border-2 border-black transition-all ${dotIdx === index ? "w-12 bg-white" : "w-4 bg-black/20"}`} />
                           ))}
                         </div>
-                        <span className={`text-xs font-black uppercase tracking-widest ${isCurrent ? "text-black" : "text-slate-600"}`}>LOG_{index + 1}</span>
+                        <span className={`text-xs font-black uppercase tracking-widest ${isCurrent ? "text-black" : "text-slate-600"}`}>CLASS_{index + 1}</span>
                       </div>
                     </div>
                   </motion.div>
