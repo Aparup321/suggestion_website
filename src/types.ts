@@ -18,6 +18,9 @@ export type Subject = {
   id: string
   title: string
   code?: string
+  objective?: string
+  prerequisites?: string[]
+  outcomes?: string[]
   units: Unit[]
 }
 

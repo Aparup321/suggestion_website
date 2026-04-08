@@ -332,17 +332,64 @@ export const subjects: Subject[] = [
     id: "cs",
     title: "Cyber Security",
     code: "MCA20408B",
+    objective: "The main objective is the process of discovering possible vulnerabilities within a system, application, website. It aims to protect the system from unauthorized access and possible weaknesses within the network infrastructure and helps to improve the configuration of an application.",
+    prerequisites: ["Fundamental knowledge of computer Network", "System"],
+    outcomes: [
+      "CO1: Define and understand the information security basics, then apply them to various penetration testing methods with a focus on network scanning and enumeration.",
+      "CO2: Choose and estimate several network attacks by involving several methodologies and simulating those attack techniques to keep the focus on security measures.",
+      "CO3: Understand, and employ various types of web server attack methodology along with cloud computing concepts, and analyses these to eliminate the risks and threats related to them."
+    ],
     units: [
       {
         id: "cs-u1",
-        title: "Unit 1: Basics",
+        title: "Module 1: Information Security Basics [9H]",
         topics: [
-          {
-            id: "cs-1",
-            title: "Network Security",
-            status: "not-started",
-            priority: "medium",
-          },
+          { id: "cs-1-1", title: "Elements of information security", status: "not-started", priority: "medium" },
+          { id: "cs-1-2", title: "Security challenges", status: "not-started", priority: "medium" },
+          { id: "cs-1-3", title: "Hacking concepts", status: "not-started", priority: "medium" },
+          { id: "cs-1-4", title: "Phases of hacking", status: "not-started", priority: "medium" },
+          { id: "cs-1-5", title: "Vulnerability research", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "cs-u2",
+        title: "Module 2: Introduction to Penetration Testing [9H]",
+        topics: [
+          { id: "cs-2-1", title: "Penetration testing concepts (what, why & how we do pen test)", status: "not-started", priority: "medium" },
+          { id: "cs-2-2", title: "Penetration testing methodology", status: "not-started", priority: "medium" },
+          { id: "cs-2-3", title: "Types of penetration testing", status: "not-started", priority: "medium" },
+          { id: "cs-2-4", title: "Tools and techniques used in penetration testing", status: "not-started", priority: "medium" },
+          { id: "cs-2-5", title: "Limitations of penetration testing tools", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "cs-u3",
+        title: "Module 3: Network Scanning and Enumeration [9H]",
+        topics: [
+          { id: "cs-3-1", title: "Network scanning techniques and scanning countermeasures", status: "not-started", priority: "medium" },
+          { id: "cs-3-2", title: "Enumeration techniques and enumeration countermeasures", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "cs-u4",
+        title: "Module 4: Attacks [9H]",
+        topics: [
+          { id: "cs-4-1", title: "System hacking methodology & covering tracks", status: "not-started", priority: "medium" },
+          { id: "cs-4-2", title: "Different types of Trojans, Trojan analysis, and Trojan Countermeasures", status: "not-started", priority: "medium" },
+          { id: "cs-4-3", title: "Working of viruses, Virus analysis, computer worms, and malware analysis", status: "not-started", priority: "medium" },
+          { id: "cs-4-4", title: "Packet sniffing techniques and how to defend against sniffing", status: "not-started", priority: "medium" },
+          { id: "cs-4-5", title: "Social Engineering techniques, identity theft, and countermeasures", status: "not-started", priority: "medium" },
+          { id: "cs-4-6", title: "DoS/DDoS attack techniques, botnets, and countermeasures", status: "not-started", priority: "medium" },
+          { id: "cs-4-7", title: "Session hijacking techniques and countermeasures", status: "not-started", priority: "medium" },
+        ],
+      },
+      {
+        id: "cs-u5",
+        title: "Module 5: Web Server Attacks [9H]",
+        topics: [
+          { id: "cs-5-1", title: "Different types of web server attacks and methodology", status: "not-started", priority: "medium" },
+          { id: "cs-5-2", title: "Case studies on SQL injection attacks and detection tools", status: "not-started", priority: "medium" },
+          { id: "cs-5-3", title: "Cloud computing concepts, threats, attacks, and security techniques", status: "not-started", priority: "medium" },
         ],
       },
     ],
