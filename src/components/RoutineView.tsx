@@ -1,13 +1,8 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { routineEntries } from "../data/routine"
 import { useAppStore } from "../store/useAppStore"
 import {
-  dayLabel,
-  formatTimeRange,
-  getMinutesUntil,
   getNowDay,
-  getNowMinutes,
-  toMinutes,
 } from "../utils/time"
 
 const days = ["MON", "TUE", "WED", "THU", "FRI"] as const
@@ -23,21 +18,7 @@ export const RoutineView = () => {
     return () => clearInterval(timer)
   }, [])
 
-  const grouped = useMemo(
-    () =>
-      days.map((day) => ({
-        day,
-        entries: routineEntries.filter((entry) => entry.day === day),
-      })),
-    []
-  )
-
   const todayLabel = getNowDay(now)
-  const nowMinutes = getNowMinutes(now)
-  const nextClass = [...routineEntries]
-    .map((entry) => ({ entry, minutes: getMinutesUntil(now, entry.day, entry.start) }))
-    .filter(item => item.minutes > 0)
-    .sort((a, b) => a.minutes - b.minutes)[0]
 
   return (
     <section className="flex flex-col gap-10 w-full animate-in fade-in duration-700">

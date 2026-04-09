@@ -57,7 +57,7 @@ const CompassHatLogo = () => (
 
 function App() {
   const [now, setNow] = useState(() => new Date())
-  const [progress, setProgress] = useState(65)
+  const progress = 65
 
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000)
@@ -99,9 +99,7 @@ function App() {
                 <div className="flex justify-between items-center">
                    <div className="hud-dial-container">
                       <div className="w-6 h-6 border-2 border-[var(--hud-accent-blue)] border-t-transparent rounded-full animate-spin"></div>
-                      <span className="text-[12px] font-black tracking-[0.4em] text-white/90 uppercase ml-3">
-                        TODAY'S MISSION PROGRESS: <span className="hud-text-cyan">{progress}%</span>
-                      </span>
+
                    </div>
                    <span className="text-[10px] mono-font opacity-40 uppercase tracking-widest">LIVE_DATA_FEED</span>
                 </div>

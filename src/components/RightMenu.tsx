@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 const items = [
   { id: "routine", label: "Weekly View", icon: "🗓️", sub: "SCHEDULE_GRID" },
-  { id: "syllabus", label: "Curriculum", icon: "📜", sub: "CORE_DATA" },
+  { id: "syllabus", label: "Syllabus", icon: "📜", sub: "CORE_SYLLABUS" },
   { id: "suggestion", label: "Suggestions", icon: "📡", sub: "LIVE_FEED" },
 ] as const
 
