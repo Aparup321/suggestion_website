@@ -8,33 +8,48 @@ import { SlashOverlay } from "./components/SlashOverlay"
 import "./App.css"
 
 const CompassHatLogo = () => (
-  <div className="relative w-28 h-28 flex items-center justify-center">
-    {/* Outer Tech Ring */}
-    <div className="absolute inset-0 rounded-full border border-[var(--hud-accent-blue)] opacity-10"></div>
-    <div className="absolute inset-1 rounded-full border-2 border-[var(--hud-accent-blue)] opacity-5 animate-pulse"></div>
-    
-    {/* Main Compass Ring with Markers */}
-    <svg className="absolute inset-0 w-full h-full rotate-45" viewBox="0 0 100 100">
-      <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" className="text-[var(--hud-accent-blue)] opacity-20" strokeWidth="0.5" strokeDasharray="1 3" />
-      <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" className="text-[var(--hud-accent-blue)] opacity-30" strokeWidth="1" />
-      {/* Markers */}
-      {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => (
-        <line key={deg} x1="50" y1="8" x2="50" y2="14" transform={`rotate(${deg} 50 50)`} stroke="currentColor" className="text-[var(--hud-accent-blue)]" strokeWidth="1.5" />
+  <div className="relative w-32 h-32 flex items-center justify-center group cursor-crosshair">
+    {/* Animated Radar/Compass Background */}
+    <div className="absolute inset-0 rounded-full border border-[var(--hud-accent-blue)] opacity-10 scale-110"></div>
+    <div className="absolute inset-0 rounded-full border-2 border-[var(--hud-accent-blue)] opacity-5 animate-pulse"></div>
+
+    {/* Intricate Hub SVG */}
+    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
+      <defs>
+        <radialGradient id="ring-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="80%" stopColor="transparent" />
+          <stop offset="100%" stopColor="var(--hud-accent-blue)" stopOpacity="0.2" />
+        </radialGradient>
+      </defs>
+      {/* Outer Ring with Notches */}
+      <circle cx="50" cy="50" r="48" fill="url(#ring-grad)" stroke="currentColor" className="text-[var(--hud-accent-blue)] opacity-20" strokeWidth="0.5" />
+      {[...Array(12)].map((_, i) => (
+        <line 
+          key={i} 
+          x1="50" y1="2" x2="50" y2="8" 
+          transform={`rotate(${i * 30} 50 50)`} 
+          stroke="currentColor" 
+          className="text-[var(--hud-accent-blue)]" 
+          strokeWidth="1.5" 
+          opacity="0.4"
+        />
       ))}
+      {/* Inner Rotating Ring */}
+      <g className="animate-[spin_20s_linear_infinite]">
+        <circle cx="50" cy="50" r="35" fill="none" stroke="currentColor" className="text-[var(--hud-accent-blue)]" strokeWidth="0.5" strokeDasharray="2 6" opacity="0.4" />
+        <path d="M50 15 L53 25 L47 25 Z" fill="var(--hud-accent-yellow)" className="shadow-[0_0_10px_var(--hud-accent-yellow)]" />
+      </g>
     </svg>
 
-    {/* Rotating Inner Rings */}
-    <div className="absolute inset-4 rounded-full border border-dashed border-[var(--hud-accent-yellow)] opacity-20 animate-[spin_15s_linear_infinite]"></div>
-    <div className="absolute inset-6 rounded-full border border-[var(--hud-accent-blue)] opacity-10 animate-[spin_10s_linear_infinite_reverse]"></div>
-
-    {/* Central Straw Hat Graphic */}
-    <div className="relative z-10 flex flex-col items-center justify-center">
-       <div className="absolute -inset-8 bg-[var(--hud-accent-yellow)] opacity-10 blur-2xl rounded-full"></div>
-       <span className="text-5xl filter drop-shadow-[0_0_20px_rgba(255,204,0,0.8)] transform hover:scale-110 transition-transform cursor-pointer">
+    {/* Center Hat Container */}
+    <div className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center bg-[var(--hud-bg-base)]/80 border border-white/10 backdrop-blur-md shadow-[0_0_30px_rgba(0,242,255,0.1)]">
+       <div className="absolute inset-0 rounded-full overflow-hidden">
+          {/* Scanner Line Effect */}
+          <div className="w-full h-[1px] bg-[var(--hud-accent-blue)] shadow-[0_0_10px_var(--hud-accent-blue)] opacity-50 absolute animate-[scan_3s_linear_infinite]"></div>
+       </div>
+       <span className="text-5xl filter drop-shadow-[0_0_15px_rgba(255,204,0,0.8)] transform group-hover:scale-110 transition-transform duration-500">
          👒
        </span>
-       {/* Compass Needle */}
-       <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-[2px] h-6 bg-[var(--hud-accent-yellow)] shadow-[0_0_10px_var(--hud-accent-yellow)] z-20"></div>
     </div>
   </div>
 )
@@ -50,78 +65,89 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[var(--hud-bg-base)] text-white selection:bg-[var(--hud-accent-blue)] selection:text-[var(--hud-bg-base)]">
+    <div className="min-h-screen bg-[var(--hud-bg-base)] text-white selection:bg-[var(--hud-accent-blue)] selection:text-[var(--hud-bg-base)] overflow-x-hidden">
       <SlashOverlay />
       
       {/* HUD DECORATIVE ELEMENTS */}
-      <div className="fixed top-6 left-6 text-[10px] mono-font opacity-20 pointer-events-none z-0">
-        // SYSTEM_COORD_ACTIVE<br />
-        LAT: 24.3639° N<br />
-        LON: 88.6241° E
+      <div className="fixed top-8 left-8 text-[10px] mono-font opacity-30 pointer-events-none z-0 hidden lg:block">
+        <span className="hud-text-cyan opacity-100">// SYSTEM_READY</span><br />
+        LOC: 24.3639° N / 88.6241° E<br />
+        NET: STABLE_V4_SECURE
       </div>
-      <div className="fixed bottom-6 right-6 text-[10px] mono-font opacity-20 pointer-events-none z-0 text-right">
-        [ DATA_STREAM_STABLE ]<br />
-        V_0.2.1-STRAW_HAT
+      <div className="fixed bottom-8 right-8 text-[10px] mono-font opacity-30 pointer-events-none z-0 text-right hidden lg:block">
+        [ LOG_STRINGS_ACTIVE ]<br />
+        <span className="hud-text-gold">V_0.3.5-HUD_CORE</span>
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1700px] px-6 md:px-12 py-10">
+      <div className="relative z-10 mx-auto w-full max-w-[1700px] px-4 md:px-12 py-10">
         {/* HIGH-FIDELITY HUD TOP BAR */}
-        <header className="header-container">
+        <header className="flex flex-col xl:flex-row gap-8 mb-12">
           {/* PANEL 1: BRANDING */}
-          <div className="hud-panel p-8 flex flex-col justify-center">
-             <p className="text-[10px] tracking-[0.4em] hud-text-cyan font-bold uppercase mb-4">
-                STUDY DASHBOARD ACTIVE
+          <div className="hud-panel p-10 flex-shrink-0 xl:w-[400px]">
+             <p className="text-[12px] tracking-[0.6em] hud-text-cyan font-black uppercase mb-6 flex items-center gap-4">
+                <span className="w-2 h-2 bg-[var(--hud-accent-blue)] rounded-full animate-ping"></span>
+                STUDY_OPS_HUB
              </p>
-             <div className="flex flex-col">
-                <h1 className="text-4xl font-black tracking-tighter text-white uppercase italic leading-none">
+             <div className="space-y-1">
+                <h1 className="text-4xl font-black tracking-tight text-white uppercase italic leading-none opacity-90">
                   STRAW HAT
                 </h1>
-                <h2 className="text-5xl font-black hud-slant mt-1">DASHBOARD</h2>
+                <h2 className="text-6xl font-black hud-slant tracking-tighter italic">DASHBOARD</h2>
              </div>
-             <p className="text-[11px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-6 flex items-center gap-3">
-                <span className="w-8 h-[1px] bg-slate-700"></span>
-                MODERN STUDY TRACKER // SECTION C_V2
-             </p>
+             <div className="mt-8 flex items-center gap-6">
+                <div className="h-[2px] w-12 bg-white/20"></div>
+                <p className="text-[11px] text-slate-500 font-black uppercase tracking-[0.2em]">
+                   MODERN_STUDY_INTERFACE_V3
+                </p>
+             </div>
           </div>
 
-          {/* PANEL 2: FOCUS & STATUS */}
-          <div className="hud-panel p-8 flex items-center gap-10">
-             <div className="flex-1 space-y-6">
+          {/* PANEL 2: FOCUS (The large center part) */}
+          <div className="hud-panel p-10 flex-1 flex flex-col md:flex-row items-center gap-12">
+             <div className="flex-1 space-y-8 w-full">
                 <div className="flex justify-between items-center">
                    <div className="hud-dial-container">
-                      <div className="hud-meter"></div>
-                      <div className="hud-meter opacity-50"></div>
-                      <span className="text-[11px] font-bold tracking-[0.3em] text-white/90 uppercase ml-2">
-                        TODAY'S FOCUS & GOALS: <span className="hud-text-cyan">{progress}% Complete</span>
+                      <div className="w-6 h-6 border-2 border-[var(--hud-accent-blue)] border-t-transparent rounded-full animate-spin"></div>
+                      <span className="text-[12px] font-black tracking-[0.4em] text-white/90 uppercase ml-3">
+                        TODAY'S MISSION PROGRESS: <span className="hud-text-cyan">{progress}%</span>
                       </span>
                    </div>
+                   <span className="text-[10px] mono-font opacity-40 uppercase tracking-widest">LIVE_DATA_FEED</span>
                 </div>
-                {/* LARGE SEGMENTED PROGRESS BAR */}
-                <div className="flex gap-2 h-8">
-                   {Array.from({ length: 15 }).map((_, i) => (
+                
+                {/* HIGH-Fidelity Segmented BAR */}
+                <div className="flex gap-2.5 h-10 w-full">
+                   {Array.from({ length: 18 }).map((_, i) => (
                       <div 
                         key={i} 
-                        className={`flex-1 transition-all duration-700 ${i < (progress / 100) * 15 ? 'bg-[var(--hud-accent-blue)] shadow-[0_0_15px_var(--hud-accent-blue)]' : 'bg-white/5 opacity-20'}`}
+                        className={`flex-1 transition-all duration-1000 transform ${i < (progress / 100) * 18 
+                          ? 'bg-[var(--hud-accent-blue)] shadow-[0_0_20px_var(--hud-accent-blue)] scale-y-100' 
+                          : 'bg-white/5 opacity-10 scale-y-90'}`}
+                        style={{ transitionDelay: `${i * 50}ms` }}
                       ></div>
                    ))}
                 </div>
              </div>
 
-             <div className="shrink-0">
+             <div className="shrink-0 scale-110">
                 <CompassHatLogo />
              </div>
           </div>
 
-          {/* PANEL 3: TIME & USER */}
-          <div className="hud-panel p-8 flex flex-col items-center justify-center text-center">
-             <div className="bg-black/40 px-8 py-4 rounded-xl border border-[var(--hud-border-gold)] shadow-[inset_0_0_10px_rgba(255,204,0,0.1)]">
-                <span className="text-5xl font-black hud-title tracking-widest text-white">
+          {/* PANEL 3: TIME-CLOCK */}
+          <div className="hud-panel p-10 xl:w-[320px] flex flex-col items-center justify-center relative overflow-hidden">
+             <div className="absolute top-0 right-0 p-3 opacity-20 text-[10px] hud-text-gold">ID:882-SH</div>
+             <div className="px-10 py-5 rounded-2xl bg-black/40 border border-[var(--hud-border-gold)] shadow-[inset_0_0_25px_rgba(255,204,0,0.15)] mb-4">
+                <span className="text-5xl font-black hud-title tracking-widest text-white italic">
                   {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                 </span>
              </div>
-             <p className="text-[11px] hud-text-gold font-bold uppercase tracking-[0.3em] mt-4">
-                Welcome, User
-             </p>
+             <div className="space-y-1">
+                <p className="text-[12px] hud-text-gold font-black uppercase tracking-[0.4em] italic">
+                   AUTHORIZED_USER
+                </p>
+                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[var(--hud-accent-yellow)] to-transparent opacity-20"></div>
+             </div>
           </div>
         </header>
 
@@ -131,7 +157,7 @@ function App() {
              <RightMenu />
           </aside>
 
-          <main className="lg:col-span-9 bg-black/10 rounded-[30px] p-2">
+          <main className="lg:col-span-9 rounded-[40px] p-1 bg-gradient-to-b from-white/5 to-transparent">
             <Routes>
               <Route path="/" element={<RoutinePage />} />
               <Route path="/routine" element={<RoutinePage />} />
@@ -146,5 +172,3 @@ function App() {
 }
 
 export default App
-
-
