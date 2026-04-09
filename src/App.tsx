@@ -68,16 +68,7 @@ function App() {
     <div className="min-h-screen bg-[var(--hud-bg-base)] text-white selection:bg-[var(--hud-accent-blue)] selection:text-[var(--hud-bg-base)] overflow-x-hidden">
       <SlashOverlay />
       
-      {/* HUD DECORATIVE ELEMENTS */}
-      <div className="fixed top-8 left-8 text-[10px] mono-font opacity-30 pointer-events-none z-0 hidden lg:block">
-        <span className="hud-text-cyan opacity-100">// SYSTEM_READY</span><br />
-        LOC: 24.3639° N / 88.6241° E<br />
-        NET: STABLE_V4_SECURE
-      </div>
-      <div className="fixed bottom-8 right-8 text-[10px] mono-font opacity-30 pointer-events-none z-0 text-right hidden lg:block">
-        [ LOG_STRINGS_ACTIVE ]<br />
-        <span className="hud-text-gold">V_0.3.5-HUD_CORE</span>
-      </div>
+
 
       <div className="relative z-10 mx-auto w-full max-w-[1700px] px-4 md:px-12 py-10">
         {/* HIGH-FIDELITY HUD TOP BAR */}

@@ -97,9 +97,7 @@ export const RoutinePage = () => {
               {v === "daily" ? "Live" : "Weekly"}
             </button>
           ))}
-          <div className="px-4 py-2 text-[10px] font-bold text-[var(--hud-accent-yellow)]/60 uppercase tracking-widest border-l border-white/10 ml-2">
-             Mission_Grid
-          </div>
+
         </div>
       </div>
 
