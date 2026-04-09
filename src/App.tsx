@@ -135,7 +135,6 @@ function App() {
                 <p className="text-[12px] hud-text-gold font-black uppercase tracking-[0.4em] italic">
                    AUTHORIZED_USER
                 </p>
-                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[var(--hud-accent-yellow)] to-transparent opacity-20"></div>
              </div>
           </div>
         </header>

@@ -215,7 +215,7 @@ export const RoutinePage = () => {
                             <div key={dotIdx} className={`h-1.5 transition-all duration-300 rounded-full ${dotIdx === index ? "w-10 bg-[var(--hud-accent-blue)]" : "w-2 bg-white/10"}`} />
                           ))}
                         </div>
-                        <span className={`text-[11px] font-black uppercase tracking-[0.4em] ${isCurrent ? 'hud-text-cyan' : 'text-slate-700'}`}>FRAME_0{index + 1}</span>
+                        <span className={`text-[11px] font-black uppercase tracking-[0.4em] ${isCurrent ? 'hud-text-cyan opacity-60' : 'text-slate-800'}`}>FRAME_0{index + 1}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -235,7 +235,7 @@ export const RoutinePage = () => {
               const isToday = day === today
 
               return (
-                <div key={day} className={`relative flex flex-col gap-10 pl-16 border-l-2 ml-4 ${isToday ? 'border-[var(--hud-accent-blue)]' : 'border-white/10'}`}>
+                <div key={day} className={`relative flex flex-col gap-10 pl-16 border-l ml-4 ${isToday ? 'border-[var(--hud-accent-blue)]/30' : 'border-white/[0.03]'}`}>
                   {/* Timeline Marker */}
                   <div className={`absolute -left-[11px] top-0 w-5 h-5 rounded-full border-2 ${isToday ? 'bg-black border-[var(--hud-accent-blue)] shadow-[0_0_15px_var(--hud-accent-blue)]' : 'bg-slate-900 border-white/20'}`}>
                     {isToday && <div className="absolute inset-1 bg-[var(--hud-accent-blue)] rounded-full animate-pulse"></div>}
@@ -250,15 +250,15 @@ export const RoutinePage = () => {
                     {dayFrames.map(frame => (
                       <div key={frame.start} className="hud-panel p-8 border border-white/5 hover:border-[var(--hud-accent-blue)]/30 group transition-all">
                         <div className="flex justify-between items-center mb-6">
-                          <span className="text-[11px] font-black hud-text-gold tracking-[0.2em] uppercase">{formatTimeRange(frame.start, frame.end)}</span>
+                          <span className="text-[11px] font-bold text-slate-500 tracking-[0.1em] uppercase">{formatTimeRange(frame.start, frame.end)}</span>
                         </div>
                         <div className="space-y-6">
                           {frame.entries.map(entry => (
                             <div key={entry.id} className="flex flex-col gap-3 pt-6 border-t border-white/5 first:pt-0 first:border-0 relative">
                               <span className="text-xl font-black text-white group-hover:hud-text-cyan uppercase italic leading-tight transition-colors tracking-tighter">{entry.title}</span>
                               <div className="flex items-center justify-between">
-                                <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{entry.room}</span>
-                                {entry.group && <span className="text-[10px] hud-text-cyan font-black border border-[var(--hud-accent-blue)]/20 px-3 py-0.5 rounded-md uppercase">{entry.group}</span>}
+                                <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">{entry.room}</span>
+                                {entry.group && <span className="text-[9px] text-slate-500 font-bold border border-white/5 px-2 py-0.5 rounded uppercase">{entry.group}</span>}
                               </div>
                             </div>
                           ))}

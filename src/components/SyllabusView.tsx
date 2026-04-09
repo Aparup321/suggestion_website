@@ -57,8 +57,8 @@ export const SyllabusView = () => {
             animate={{ opacity: 1 }}
             className="space-y-10"
           >
-            <div className="flex flex-col items-start gap-6 border-l-4 border-[var(--hud-accent-blue)] pl-10 relative">
-              <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-gradient-to-b from-[var(--hud-accent-blue)] via-[var(--hud-accent-blue)] to-transparent opacity-40 blur-[2px]"></div>
+            <div className="flex flex-col items-start gap-6 border-l border-white/10 pl-10 relative">
+              <div className="absolute left-0 top-0 bottom-0 w-[1px] bg-white/5 opacity-20"></div>
               <div className="space-y-4">
                 <h3 className="text-6xl font-black text-white tracking-tighter leading-none uppercase italic">{subject.title}</h3>
                 <span className="text-sm mono-font hud-text-gold font-bold uppercase tracking-[0.4em] leading-none">SUBJECT_CODE // {subject.code || subject.id}</span>
@@ -104,15 +104,15 @@ export const SyllabusView = () => {
               {subject.units.map((unit) => (
                 <div key={unit.id} className="space-y-8 hud-panel p-10 group/unit">
                   <div className="flex items-center gap-6">
-                    <div className="h-[2px] w-16 bg-[var(--hud-accent-blue)] shadow-[0_0_15px_var(--hud-accent-blue)]"></div>
+                    <div className="h-[1px] w-8 bg-white/20"></div>
                     <p className="text-2xl uppercase tracking-[0.4em] hud-text-gold font-black italic">{unit.title}</p>
-                    <div className="h-[1px] flex-1 bg-gradient-to-r from-white/10 to-transparent"></div>
+                    <div className="h-[1px] flex-1 bg-white/5"></div>
                   </div>
 
                   <div className="grid gap-4 pl-10">
                     {unit.topics.map((topic, i) => (
-                      <div key={topic.id} className="flex items-center gap-8 py-4 border-b border-white/5 last:border-0 group/topic transition-all hover:pl-4">
-                        <div className="w-12 h-12 border border-white/10 rounded-xl flex items-center justify-center font-black hud-text-cyan text-xs group-hover/topic:border-[var(--hud-accent-blue)]/50 group-hover/topic:bg-[var(--hud-accent-blue)]/10 transition-all">
+                      <div key={topic.id} className="flex items-center gap-8 py-4 border-b border-white/[0.03] last:border-0 group/topic transition-all hover:pl-4">
+                        <div className="w-12 h-12 border border-white/5 rounded-xl flex items-center justify-center font-black hud-text-cyan text-xs transition-all">
                           {i + 1}
                         </div>
                         <p className="text-2xl font-black text-slate-100 group-hover/topic:text-white transition-colors tracking-tight uppercase italic leading-none">
