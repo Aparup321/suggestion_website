@@ -15,12 +15,12 @@ export const RightMenu = () => {
 
   return (
     <div className="w-full flex flex-col gap-6">
-      <div className="hud-card w-full p-6 border-l-4 border-l-[var(--hud-cyan)]">
-        <p className="text-[11px] uppercase tracking-[0.4em] text-[var(--hud-cyan)] font-bold mb-6 flex items-center gap-2">
-          <span className="w-2 h-2 bg-[var(--hud-cyan)] animate-pulse"></span>
+      <div className="hud-panel w-full p-8 border-l-4 border-l-[var(--hud-accent-blue)]">
+        <p className="text-[11px] uppercase tracking-[0.4em] hud-text-cyan font-bold mb-8 flex items-center gap-3">
+          <span className="w-2 h-2 bg-[var(--hud-accent-blue)] rounded-full animate-pulse shadow-[0_0_10px_var(--hud-accent-blue)]"></span>
           QUICK_MENU
         </p>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-4">
           {items.map((item, index) => {
             const isActive = mode === item.id
             return (
@@ -30,40 +30,47 @@ export const RightMenu = () => {
                   setMode(item.id)
                   navigate(item.id === "routine" ? "/" : `/${item.id}`)
                 }}
-                className={`w-full px-4 py-3 transition-all flex items-center gap-4 group/item relative border ${isActive
-                  ? "bg-[var(--hud-cyan)]/10 border-[var(--hud-cyan)] text-white shadow-[0_0_15px_rgba(0,242,255,0.2)]"
-                  : "bg-transparent border-[var(--hud-border)] text-slate-400 hover:border-[var(--hud-cyan)]/50 hover:text-white"
+                className={`w-full px-6 py-4 transition-all flex items-center gap-4 group/item relative menu-item-hud ${isActive
+                  ? "active"
+                  : "bg-white/5 border-transparent text-slate-400 hover:bg-white/10"
                   }`}
               >
-                {isActive && (
-                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--hud-cyan)] shadow-[0_0_10px_var(--hud-cyan)]"></div>
-                )}
                 <div className="flex-1 flex flex-col items-start">
-                  <span className={`text-[9px] mono-font tracking-[0.2em] uppercase mb-0.5 ${isActive ? "text-[var(--hud-cyan)]" : "text-slate-500"}`}>
+                  <span className={`text-[9px] mono-font tracking-[0.3em] uppercase mb-1 ${isActive ? "hud-text-cyan" : "text-slate-500"}`}>
                     {item.sub}
                   </span>
-                  <div className="flex items-center gap-3">
-                    <span className="text-lg opacity-80">{item.icon}</span>
-                    <span className="text-sm font-bold tracking-wider uppercase leading-none">{item.label}</span>
+                  <div className="flex items-center gap-4">
+                    <span className={`text-xl transition-all ${isActive ? "scale-110 filter drop-shadow-[0_0_8px_var(--hud-accent-blue)]" : "opacity-40"}`}>{item.icon}</span>
+                    <span className={`text-base font-bold tracking-wider uppercase leading-none ${isActive ? "text-white" : "text-slate-400"}`}>
+                      {item.label}
+                    </span>
                   </div>
                 </div>
-                {isActive && (
-                   <div className="w-1.5 h-1.5 rounded-full bg-[var(--hud-cyan)] animate-ping"></div>
-                )}
               </button>
             )
           })}
         </div>
       </div>
 
-      <div className="hud-card p-6 opacity-60 hover:opacity-100 transition-opacity">
-        <p className="text-[9px] mono-font text-[var(--hud-yellow)] uppercase tracking-widest mb-2">SYSTEM_LOGS</p>
-        <div className="space-y-1">
-          <p className="text-[10px] text-slate-500 font-mono">[01:54:27] GPS_LOCK_STABLE</p>
-          <p className="text-[10px] text-slate-500 font-mono">[01:54:28] SYNCING_CLOUD_DATA...</p>
+      <div className="hud-panel p-6 opacity-60 hover:opacity-100 transition-opacity">
+        <p className="text-[10px] mono-font hud-text-gold uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+           <span className="w-1.5 h-1.5 bg-[var(--hud-accent-yellow)] rounded-full animate-ping"></span>
+           SYSTEM_LOGS
+        </p>
+        <div className="space-y-2">
+          <p className="text-[10px] text-slate-500 font-mono flex gap-2">
+            <span className="text-[var(--hud-accent-blue)] font-bold">[ OK ]</span> GPS_LOCK_STABLE
+          </p>
+          <p className="text-[10px] text-slate-500 font-mono flex gap-2">
+            <span className="text-[var(--hud-accent-blue)] font-bold">[ OK ]</span> SYNCING_CLOUD_RESOURCES
+          </p>
+          <p className="text-[10px] text-slate-500 font-mono flex gap-2">
+            <span className="text-[var(--hud-accent-blue)] font-bold">[ OK ]</span> SECTION_C_V2_LOADED
+          </p>
         </div>
       </div>
     </div>
   )
 }
+
 

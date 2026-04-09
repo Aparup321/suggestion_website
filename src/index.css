@@ -1,24 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --hud-bg: #061e24;
-  --hud-bg-dark: #041418;
-  --hud-cyan: #00f2ff;
-  --hud-teal: #02c39a;
-  --hud-yellow: #ffcc00;
-  --hud-red: #ff3131;
-  --hud-glass: rgba(6, 30, 36, 0.7);
-  --hud-border: rgba(0, 242, 255, 0.2);
-  --hud-border-glow: rgba(0, 242, 255, 0.5);
+  --hud-bg-base: #0a2e36;
+  --hud-panel-bg: rgba(11, 61, 74, 0.6);
+  --hud-accent-blue: #00f2ff;
+  --hud-accent-yellow: #ffcc00;
+  --hud-border-gold: rgba(255, 204, 0, 0.35);
+  --hud-glow-yellow: rgba(255, 204, 0, 0.2);
+  --hud-glow-blue: rgba(0, 242, 255, 0.3);
   
   color-scheme: dark;
-  font-family: "Rajdhani", sans-serif;
-  background-color: var(--hud-bg);
-  color: #f8fafc;
+  font-family: "Space Grotesk", sans-serif;
+  background-color: var(--hud-bg-base);
+  color: #fff;
 }
 
 * {
@@ -28,133 +26,113 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--hud-bg);
-  /* Cyber HUD Background */
+  background-color: var(--hud-bg-base);
+  /* Premium HUD Background with Depth */
   background-image: 
-    radial-gradient(circle at 50% 50%, rgba(2, 195, 154, 0.05) 0%, transparent 80%),
-    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 10 H90 V90 H10 Z' fill='none' stroke='rgba(0, 242, 255, 0.03)' stroke-width='0.5'/%3E%3Ccircle cx='10' cy='10' r='1' fill='rgba(0, 242, 255, 0.1)'/%3E%3Ccircle cx='90' cy='10' r='1' fill='rgba(0, 242, 255, 0.1)'/%3E%3Ccircle cx='90' cy='90' r='1' fill='rgba(0, 242, 255, 0.1)'/%3E%3Ccircle cx='10' cy='90' r='1' fill='rgba(0, 242, 255, 0.1)'/%3E%3Cpath d='M10 50 H30 M70 50 H90 M50 10 V30 M50 70 V90' stroke='rgba(0, 242, 255, 0.03)' stroke-width='0.5'/%3E%3C/svg%3E");
-  background-size: 100% 100%, 100px 100px;
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.6) 100%),
+    url("data:image/svg+xml,%3Csvg width='1200' height='1200' viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 100 H1100 V1100 H100 Z' fill='none' stroke='white' stroke-opacity='0.03' stroke-width='1'/%3E%3Cpath d='M100 200 H300 V400 H100 Z' fill='none' stroke='white' stroke-opacity='0.03' stroke-width='1'/%3E%3Cpath d='M200 100 V300 M100 200 H300' stroke='white' stroke-opacity='0.02' stroke-width='0.5'/%3E%3Ccircle cx='100' cy='100' r='2' fill='white' fill-opacity='0.1'/%3E%3Ccircle cx='1100' cy='100' r='2' fill='white' fill-opacity='0.1'/%3E%3Ccircle cx='1100' cy='1100' r='2' fill='white' fill-opacity='0.1'/%3E%3Ccircle cx='100' cy='1100' r='2' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M500 100 V1100 M700 100 V1100 M100 500 H1100 M100 700 H1100' stroke='white' stroke-opacity='0.02' stroke-width='0.5'/%3E%3Cpath d='M50 50 L150 150 M1150 50 L1050 150 M50 1150 L150 1050 M1150 1150 L1050 1050' stroke='white' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: cover;
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
-/* Scanline Effect */
-body::before {
-  content: " ";
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-  z-index: 1000;
-  background-size: 100% 4px, 3px 100%;
-  pointer-events: none;
-  opacity: 0.3;
-}
-
-.hud-font {
-  font-family: "Orbitron", sans-serif;
-  letter-spacing: 2px;
-}
-
-.mono-font {
-  font-family: "JetBrains Mono", monospace;
-}
-
-h1, h2, h3, h4, .font-display {
-  font-family: "Orbitron", sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-/* HUD Card Style */
-.hud-card {
-  background: var(--hud-glass);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--hud-border);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0, 242, 255, 0.05);
+/* Premium Glass Panel Utility */
+.hud-panel {
+  background: var(--hud-panel-bg);
+  backdrop-filter: blur(20px);
+  border: 2px solid var(--hud-border-gold);
+  border-radius: 20px;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    0 0 15px var(--hud-glow-yellow);
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hud-card::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  width: 15px;
-  height: 15px;
-  border-top: 2px solid var(--hud-cyan);
-  border-left: 2px solid var(--hud-cyan);
+.hud-panel:hover {
+  box-shadow: 
+    0 15px 40px rgba(0, 0, 0, 0.5),
+    0 0 25px var(--hud-glow-yellow);
 }
 
-.hud-card::after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  right: -1px;
-  width: 15px;
-  height: 15px;
-  border-bottom: 2px solid var(--hud-cyan);
-  border-right: 2px solid var(--hud-cyan);
-}
-
-.hud-card:hover {
-  border-color: var(--hud-border-glow);
-  box-shadow: 0 0 30px rgba(0, 242, 255, 0.1), inset 0 0 15px rgba(0, 242, 255, 0.1);
-}
-
-/* Glowing Button */
-.hud-button {
-  background: transparent;
-  border: 1px solid var(--hud-cyan);
-  color: var(--hud-cyan);
+/* Typography Classes */
+.hud-title {
   font-family: "Orbitron", sans-serif;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
+  letter-spacing: 0.1em;
+}
+
+.hud-slant {
+  font-style: italic;
+  font-weight: 900;
   text-transform: uppercase;
-  padding: 8px 16px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  background: linear-gradient(to bottom, #fff, #888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(255, 204, 0, 0.5));
 }
 
-.hud-button:hover {
-  background: rgba(0, 242, 255, 0.1);
-  box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
-  text-shadow: 0 0 5px var(--hud-cyan);
+.hud-text-cyan {
+  color: var(--hud-accent-blue);
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.4);
 }
 
-.hud-button.active {
-  background: var(--hud-cyan);
-  color: var(--hud-bg);
-  box-shadow: 0 0 20px var(--hud-cyan);
+.hud-text-gold {
+  color: var(--hud-accent-yellow);
+  text-shadow: 0 0 10px rgba(255, 204, 0, 0.4);
 }
 
-/* Progress Segment */
-.progress-segment {
-  height: 20px;
-  background: rgba(0, 242, 255, 0.1);
-  border: 1px solid var(--hud-border);
+/* Dials and Meters */
+.hud-dial-container {
   display: flex;
-  gap: 4px;
-  padding: 3px;
+  gap: 12px;
+  align-items: center;
 }
 
-.progress-block {
-  flex: 1;
-  background: rgba(0, 242, 255, 0.1);
-  transition: all 0.5s ease;
+.hud-meter {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  position: relative;
 }
 
-.progress-block.filled {
-  background: var(--hud-cyan);
-  box-shadow: 0 0 10px var(--hud-cyan);
+.hud-meter::after {
+  content: "";
+  position: absolute;
+  top: 4px; left: 4px; right: 4px; bottom: 4px;
+  border-radius: 50%;
+  border: 2px solid var(--hud-accent-blue);
+  border-top-color: transparent;
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Header Specifics */
+.header-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+/* Right Menu HUD style */
+.menu-item-hud {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.menu-item-hud.active {
+  background: rgba(0, 242, 255, 0.05);
+  border-color: var(--hud-accent-blue);
+  box-shadow: 0 0 15px var(--hud-glow-blue);
 }
 
 #root {
   min-height: 100vh;
 }
+
 
