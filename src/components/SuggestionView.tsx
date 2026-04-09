@@ -20,23 +20,26 @@ export const SuggestionView = () => {
   const suggestions = buildSuggestions(subjects, routineEntries, now, selectedSubjectId)
 
   return (
-    <section className="flex flex-col gap-12 w-full max-w-5xl mx-auto py-10 px-4 md:px-0">
+    <section className="flex flex-col gap-12 w-full">
       {/* HEADER SECTION */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-1">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--neo-luffy-red)] font-black">STUDY_GOALS.LOG</p>
-          <h1 className="text-4xl font-black tracking-tighter text-white uppercase italic">STUDY <span className="text-[var(--neo-hat-yellow)]">PLAN</span></h1>
-          <p className="text-slate-500 text-sm font-black uppercase tracking-widest">Personalized study tasks based on urgency and priority</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-[var(--hud-cyan)] font-bold mb-2 flex items-center gap-2">
+             <span className="w-4 h-[1px] bg-[var(--hud-cyan)]"></span>
+             STUDY_GOALS.LOG
+          </p>
+          <h1 className="text-4xl font-black tracking-tighter text-white uppercase italic">STUDY <span className="text-[var(--hud-yellow)]">PLAN</span></h1>
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Personalized study tasks based on urgency and priority</p>
         </div>
       </div>
 
       {/* FILTER BUTTONS */}
-      <div className="flex flex-wrap items-center gap-3 px-6 bg-black p-6 border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mx-4">
+      <div className="hud-card p-6 flex flex-wrap items-center gap-3">
         <button
           onClick={() => setSelectedSubject(undefined)}
-          className={`px-5 py-3 border-2 font-black text-[10px] uppercase tracking-widest transition-all ${!selectedSubjectId
-              ? "bg-[var(--neo-luffy-red)] text-black border-black shadow-[4px_4px_0px_0px_#000]"
-              : "bg-white/5 text-slate-500 border-white/10 hover:border-[var(--neo-luffy-red)] hover:text-[var(--neo-luffy-red)]"
+          className={`px-5 py-2 border font-bold text-[10px] uppercase tracking-widest transition-all ${!selectedSubjectId
+              ? "bg-[var(--hud-cyan)] text-[var(--hud-bg)] shadow-[0_0_15px_var(--hud-cyan)] border-[var(--hud-cyan)]"
+              : "bg-white/5 text-slate-500 border-[var(--hud-border)] hover:border-[var(--hud-cyan)]/50 hover:text-white"
             }`}
         >
           ALL_SUBJECTS
@@ -45,9 +48,9 @@ export const SuggestionView = () => {
           <button
             key={subject.id}
             onClick={() => setSelectedSubject(subject.id)}
-            className={`px-5 py-3 border-2 font-black text-[10px] uppercase tracking-widest transition-all ${selectedSubjectId === subject.id
-                ? "bg-[var(--neo-luffy-red)] text-black border-black shadow-[4px_4px_0px_0px_#000]"
-                : "bg-white/5 text-slate-500 border-white/10 hover:border-[var(--neo-luffy-red)] hover:text-[var(--neo-luffy-red)]"
+            className={`px-5 py-2 border font-bold text-[10px] uppercase tracking-widest transition-all ${selectedSubjectId === subject.id
+                ? "bg-[var(--hud-cyan)] text-[var(--hud-bg)] shadow-[0_0_15px_var(--hud-cyan)] border-[var(--hud-cyan)]"
+                : "bg-white/5 text-slate-500 border-[var(--hud-border)] hover:border-[var(--hud-cyan)]/50 hover:text-white"
               }`}
           >
             {subject.code || subject.id}
@@ -55,13 +58,13 @@ export const SuggestionView = () => {
         ))}
       </div>
 
-      <div className="px-4 pb-20">
+      <div className="pb-20">
         <div className="flex flex-row items-center gap-4 mb-8">
-          <h3 className="text-xl font-black text-white tracking-tight leading-none uppercase italic">ACTIVE SUGGESTIONS</h3>
-          <div className="h-1 flex-1 bg-black"></div>
+          <h3 className="text-xl font-bold text-white tracking-tight leading-none uppercase italic">ACTIVE SUGGESTIONS</h3>
+          <div className="h-[1px] flex-1 bg-[var(--hud-border)]"></div>
           <Link
             to="/syllabus"
-            className="px-6 py-2 bg-black border-2 border-black text-[10px] uppercase font-black tracking-widest text-[var(--neo-hat-yellow)] shadow-[4px_4px_0px_0px_var(--neo-luffy-red)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+            className="hud-button text-[10px] py-1 px-4"
           >
             Syllabus Manager
           </Link>
@@ -72,12 +75,12 @@ export const SuggestionView = () => {
             {suggestions.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                className="brutalist-card p-20 text-center space-y-6"
+                className="hud-card p-20 text-center space-y-6"
               >
-                <div className="w-20 h-20 bg-[var(--neo-hat-yellow)] border-4 border-black flex items-center justify-center mx-auto shadow-[6px_6px_0px_0px_#000]">
-                  <span className="text-4xl">☠️</span>
+                <div className="w-20 h-20 border border-[var(--hud-yellow)]/30 flex items-center justify-center mx-auto text-4xl filter drop-shadow-[0_0_10px_var(--hud-yellow)]">
+                  ☠️
                 </div>
-                <p className="text-slate-500 text-sm font-black tracking-widest uppercase">
+                <p className="text-slate-500 text-[10px] font-bold tracking-[0.2em] uppercase">
                   [ NO DATA RECORDED ] <br className="mb-2" />
                   Update your progress in the Syllabus section to generate study tasks
                 </p>
@@ -95,29 +98,31 @@ export const SuggestionView = () => {
                     onClick={() => setSelectedSubject(item.subjectId)}
                     className="group block"
                   >
-                    <div className="brutalist-card p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-8 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                    <div className="hud-card p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-8 group-hover:border-[var(--hud-cyan)]/50 transition-all">
 
                       <div className="space-y-4 relative z-10 flex-1">
                         <div className="flex items-center gap-4 w-full">
-                          <span className="text-[10px] font-black text-black tracking-tighter uppercase px-3 py-1 bg-[var(--neo-luffy-red)] border-2 border-black shadow-[3px_3px_0px_0px_#000] whitespace-nowrap">
+                          <span className="text-[10px] font-bold text-[var(--hud-bg)] tracking-tighter uppercase px-3 py-0.5 bg-[var(--hud-cyan)] shadow-[0_0_10px_var(--hud-cyan)] whitespace-nowrap">
                             RECOM // 0{index + 1}
                           </span>
-                          <span className="text-[11px] uppercase font-black tracking-[0.2em] text-[var(--neo-hat-yellow)] border-l-4 border-black pl-4">
+                          <span className="text-[11px] uppercase font-bold tracking-[0.2em] text-[var(--hud-teal)] border-l border-[var(--hud-border)] pl-4">
                             {item.subjectTitle}
                           </span>
                         </div>
                         <div className="space-y-2">
-                          <p className="text-3xl font-black text-white group-hover:text-[var(--neo-luffy-red)] transition-colors tracking-tighter uppercase italic leading-none">
+                          <p className="text-2xl font-black text-white group-hover:text-[var(--hud-cyan)] transition-colors tracking-tighter uppercase italic leading-none">
                             {item.topicTitle}
                           </p>
-                          <p className="text-sm text-slate-400 font-black uppercase tracking-tight max-w-2xl leading-relaxed">
+                          <p className="text-xs text-slate-400 font-medium uppercase tracking-tight max-w-2xl leading-relaxed opacity-60">
                             {item.reason}
                           </p>
                         </div>
                       </div>
 
-                      <div className="w-16 h-16 border-4 border-black bg-black flex items-center justify-center shadow-[4px_4px_0px_0px_var(--neo-luffy-red)] group-hover:bg-[var(--neo-luffy-red)] transition-all">
-                        <span className="text-2xl group-hover:scale-125 transition-transform">👒</span>
+                      <div className="w-14 h-14 border border-[var(--hud-border)] flex items-center justify-center group-hover:border-[var(--hud-cyan)] transition-all relative">
+                        <span className="text-xl group-hover:scale-125 transition-transform">👒</span>
+                        <div className="absolute -top-1 -left-1 w-2 h-2 bg-[var(--hud-cyan)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-[var(--hud-cyan)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       </div>
                     </div>
                   </Link>
@@ -130,3 +135,4 @@ export const SuggestionView = () => {
     </section>
   )
 }
+

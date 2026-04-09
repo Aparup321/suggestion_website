@@ -2,9 +2,10 @@ import { useAppStore } from "../store/useAppStore"
 import { useNavigate } from "react-router-dom"
 
 const items = [
-  { id: "routine", label: "Routine", icon: "🛶" },
-  { id: "syllabus", label: "Syllabus", icon: "👒" },
-  { id: "suggestion", label: "Suggestions", icon: "☠️" },
+  { id: "routine", label: "Weekly View", icon: "🗓️", sub: "SCHEDULE_GRID" },
+  { id: "syllabus", label: "My Goals", icon: "🎯", sub: "TARGET_LOGS" },
+  { id: "syllabus", label: "Curriculum", icon: "📜", sub: "CORE_DATA" },
+  { id: "suggestion", label: "Suggestions", icon: "📡", sub: "LIVE_FEED" },
 ] as const
 
 export const RightMenu = () => {
@@ -14,37 +15,55 @@ export const RightMenu = () => {
 
   return (
     <div className="w-full flex flex-col gap-6">
-      <div className="neo-card w-full !p-4 border-[4px]">
-        <p className="text-[11px] uppercase tracking-[0.4em] text-[var(--neo-luffy-red)] font-black px-2 mb-4">QUICK_MENU</p>
-        <div className="flex flex-col gap-4">
-          {items.map((item) => {
+      <div className="hud-card w-full p-6 border-l-4 border-l-[var(--hud-cyan)]">
+        <p className="text-[11px] uppercase tracking-[0.4em] text-[var(--hud-cyan)] font-bold mb-6 flex items-center gap-2">
+          <span className="w-2 h-2 bg-[var(--hud-cyan)] animate-pulse"></span>
+          QUICK_MENU
+        </p>
+        <div className="flex flex-col gap-3">
+          {items.map((item, index) => {
             const isActive = mode === item.id
             return (
               <button
-                key={item.id}
+                key={`${item.id}-${index}`}
                 onClick={() => {
                   setMode(item.id)
                   navigate(item.id === "routine" ? "/" : `/${item.id}`)
                 }}
-                className={`w-full px-5 py-4 transition-all flex items-center gap-4 group/item relative border-[3px] shadow-[4px_4px_0px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none ${isActive
-                  ? "bg-[var(--neo-luffy-red)] border-black text-black font-black"
-                  : "bg-black/20 border-black/40 text-slate-500 hover:text-white hover:border-[var(--neo-hat-yellow)]"
+                className={`w-full px-4 py-3 transition-all flex items-center gap-4 group/item relative border ${isActive
+                  ? "bg-[var(--hud-cyan)]/10 border-[var(--hud-cyan)] text-white shadow-[0_0_15px_rgba(0,242,255,0.2)]"
+                  : "bg-transparent border-[var(--hud-border)] text-slate-400 hover:border-[var(--hud-cyan)]/50 hover:text-white"
                   }`}
               >
-                <span className={`text-2xl transition-all duration-300 ${isActive ? "text-black scale-110" : "opacity-40 group-hover/item:opacity-100"}`}>
-                  {item.icon}
-                </span>
-                <div className="flex flex-col gap-0.5 text-left">
-                  <span className={`text-[9px] tracking-[0.2em] uppercase ${isActive ? "opacity-60" : "opacity-40"}`}>
-                    {item.id === "routine" ? "DAILY_SCHEDULE" : "DATA_RESOURCES"}
+                {isActive && (
+                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--hud-cyan)] shadow-[0_0_10px_var(--hud-cyan)]"></div>
+                )}
+                <div className="flex-1 flex flex-col items-start">
+                  <span className={`text-[9px] mono-font tracking-[0.2em] uppercase mb-0.5 ${isActive ? "text-[var(--hud-cyan)]" : "text-slate-500"}`}>
+                    {item.sub}
                   </span>
-                  <span className="text-base font-black tracking-wider uppercase leading-none">{item.label}</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-lg opacity-80">{item.icon}</span>
+                    <span className="text-sm font-bold tracking-wider uppercase leading-none">{item.label}</span>
+                  </div>
                 </div>
+                {isActive && (
+                   <div className="w-1.5 h-1.5 rounded-full bg-[var(--hud-cyan)] animate-ping"></div>
+                )}
               </button>
             )
           })}
         </div>
       </div>
+
+      <div className="hud-card p-6 opacity-60 hover:opacity-100 transition-opacity">
+        <p className="text-[9px] mono-font text-[var(--hud-yellow)] uppercase tracking-widest mb-2">SYSTEM_LOGS</p>
+        <div className="space-y-1">
+          <p className="text-[10px] text-slate-500 font-mono">[01:54:27] GPS_LOCK_STABLE</p>
+          <p className="text-[10px] text-slate-500 font-mono">[01:54:28] SYNCING_CLOUD_DATA...</p>
+        </div>
+      </div>
     </div>
   )
 }
+
