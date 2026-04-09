@@ -8,7 +8,7 @@ import { SlashOverlay } from "./components/SlashOverlay"
 import "./App.css"
 
 const CompassHatLogo = () => (
-  <div className="relative w-32 h-32 flex items-center justify-center group cursor-crosshair">
+  <div className="relative w-[250px] h-[250px] flex items-center justify-center group cursor-crosshair">
     {/* Animated Radar/Compass Background */}
     <div className="absolute inset-0 rounded-full border border-[var(--hud-accent-blue)] opacity-10 scale-110"></div>
     <div className="absolute inset-0 rounded-full border-2 border-[var(--hud-accent-blue)] opacity-5 animate-pulse"></div>
@@ -42,12 +42,12 @@ const CompassHatLogo = () => (
     </svg>
 
     {/* Center Hat Container */}
-    <div className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center bg-[var(--hud-bg-base)]/80 border border-white/10 backdrop-blur-md shadow-[0_0_30px_rgba(0,242,255,0.1)]">
+    <div className="relative z-10 w-[180px] h-[180px] rounded-full flex items-center justify-center bg-[var(--hud-bg-base)]/80 border-2 border-white/20 backdrop-blur-md shadow-[0_0_60px_rgba(0,242,255,0.2)]">
        <div className="absolute inset-0 rounded-full overflow-hidden">
           {/* Scanner Line Effect */}
-          <div className="w-full h-[1px] bg-[var(--hud-accent-blue)] shadow-[0_0_10px_var(--hud-accent-blue)] opacity-50 absolute animate-[scan_3s_linear_infinite]"></div>
+          <div className="w-full h-[2px] bg-[var(--hud-accent-blue)] shadow-[0_0_15px_var(--hud-accent-blue)] opacity-50 absolute animate-[scan_3s_linear_infinite]"></div>
        </div>
-       <span className="text-5xl filter drop-shadow-[0_0_15px_rgba(255,204,0,0.8)] transform group-hover:scale-110 transition-transform duration-500">
+       <span className="text-[120px] filter drop-shadow-[0_0_30px_rgba(255,204,0,0.8)] transform group-hover:scale-110 transition-transform duration-500 leading-none select-none">
          👒
        </span>
     </div>
@@ -124,17 +124,11 @@ function App() {
           </div>
 
           {/* PANEL 3: TIME-CLOCK */}
-          <div className="hud-panel p-10 xl:w-[320px] flex flex-col items-center justify-center relative overflow-hidden">
-             <div className="absolute top-0 right-0 p-3 opacity-20 text-[10px] hud-text-gold">ID:882-SH</div>
-             <div className="px-10 py-5 rounded-2xl bg-black/40 border border-[var(--hud-border-gold)] shadow-[inset_0_0_25px_rgba(255,204,0,0.15)] mb-4">
-                <span className="text-5xl font-black hud-title tracking-widest text-white italic">
+          <div className="hud-panel p-10 xl:w-[450px] flex flex-col items-center justify-center relative overflow-hidden">
+             <div className="px-14 py-10 rounded-2xl bg-black/40 border border-[var(--hud-border-gold)] shadow-[inset_0_0_40px_rgba(255,204,0,0.15)]">
+                <span className="text-9xl font-black hud-title tracking-widest text-white italic leading-none">
                   {now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                 </span>
-             </div>
-             <div className="space-y-1">
-                <p className="text-[12px] hud-text-gold font-black uppercase tracking-[0.4em] italic">
-                   AUTHORIZED_USER
-                </p>
              </div>
           </div>
         </header>

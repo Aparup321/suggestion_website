@@ -34,11 +34,11 @@ export const SuggestionView = () => {
       </div>
 
       {/* FILTER BUTTONS - PANEL STYLE */}
-      <div className="hud-panel p-8 flex flex-wrap items-center gap-4">
+      <div className="hud-panel p-10 flex flex-wrap items-center gap-6">
         <button
           onClick={() => setSelectedSubject(undefined)}
-          className={`px-8 py-3 rounded-full font-bold text-[10px] uppercase tracking-widest transition-all ${!selectedSubjectId
-              ? "bg-[var(--hud-accent-blue)] text-black shadow-[0_0_20px_var(--hud-accent-blue)]"
+          className={`px-10 py-5 rounded-xl font-black text-[12px] uppercase tracking-[0.2em] transition-all ${!selectedSubjectId
+              ? "bg-[var(--hud-accent-blue)] text-black shadow-[0_0_25px_var(--hud-accent-blue)] scale-105"
               : "bg-white/5 text-slate-500 border border-white/10 hover:border-[var(--hud-accent-blue)]/50 hover:text-white"
             }`}
         >
@@ -48,12 +48,12 @@ export const SuggestionView = () => {
           <button
             key={subject.id}
             onClick={() => setSelectedSubject(subject.id)}
-            className={`px-8 py-3 rounded-full font-bold text-[10px] uppercase tracking-widest transition-all ${selectedSubjectId === subject.id
-                ? "bg-[var(--hud-accent-blue)] text-black shadow-[0_0_20px_var(--hud-accent-blue)]"
+            className={`px-10 py-5 rounded-xl font-black text-[12px] uppercase tracking-[0.2em] transition-all ${selectedSubjectId === subject.id
+                ? "bg-[var(--hud-accent-blue)] text-black shadow-[0_0_25px_var(--hud-accent-blue)] scale-105"
                 : "bg-white/5 text-slate-500 border border-white/10 hover:border-[var(--hud-accent-blue)]/50 hover:text-white"
               }`}
           >
-            {subject.code || subject.id}
+            {subject.title}
           </button>
         ))}
       </div>
@@ -107,12 +107,12 @@ export const SuggestionView = () => {
                           <span className="text-[10px] font-black text-black tracking-[0.2em] uppercase px-4 py-1 bg-[var(--hud-accent-blue)] shadow-[0_0_15px_var(--hud-accent-blue)] rounded-full">
                             RECOM_UNIT // 0{index + 1}
                           </span>
-                          <span className="text-xs uppercase font-black tracking-[0.3em] text-[var(--hud-accent-yellow)] border-l border-white/10 pl-6">
+                          <span className="text-lg uppercase font-black tracking-[0.4em] text-[var(--hud-accent-yellow)] border-l border-white/10 pl-6">
                             {item.subjectTitle}
                           </span>
                         </div>
-                        <div className="space-y-3">
-                          <p className="text-3xl font-black text-white group-hover:hud-text-cyan transition-colors tracking-tighter uppercase italic leading-[1.1]">
+                        <div className="space-y-4">
+                          <p className="text-5xl font-black text-white group-hover:hud-text-cyan transition-colors tracking-tighter uppercase italic leading-none">
                             {item.topicTitle}
                           </p>
                           <p className="text-sm text-slate-400 font-bold uppercase tracking-tight max-w-2xl leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity">
