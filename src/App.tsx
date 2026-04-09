@@ -8,26 +8,37 @@ import { SlashOverlay } from "./components/SlashOverlay"
 import "./App.css"
 
 const CompassHatLogo = () => (
-  <div className="relative w-24 h-24 flex items-center justify-center">
-    {/* Outer Glowing Ring */}
-    <div className="absolute inset-0 rounded-full border-2 border-[var(--hud-accent-blue)] opacity-20 animate-pulse"></div>
-    {/* Compass Ring */}
-    <div className="absolute inset-2 rounded-full border border-[var(--hud-accent-blue)] opacity-40">
-       {[0, 90, 180, 270].map(deg => (
-         <div key={deg} className="absolute inset-0 flex items-start justify-center" style={{ transform: `rotate(${deg}deg)` }}>
-            <div className="w-[1px] h-2 bg-[var(--hud-accent-blue)]"></div>
-         </div>
-       ))}
+  <div className="relative w-28 h-28 flex items-center justify-center">
+    {/* Outer Tech Ring */}
+    <div className="absolute inset-0 rounded-full border border-[var(--hud-accent-blue)] opacity-10"></div>
+    <div className="absolute inset-1 rounded-full border-2 border-[var(--hud-accent-blue)] opacity-5 animate-pulse"></div>
+    
+    {/* Main Compass Ring with Markers */}
+    <svg className="absolute inset-0 w-full h-full rotate-45" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" className="text-[var(--hud-accent-blue)] opacity-20" strokeWidth="0.5" strokeDasharray="1 3" />
+      <circle cx="50" cy="50" r="42" fill="none" stroke="currentColor" className="text-[var(--hud-accent-blue)] opacity-30" strokeWidth="1" />
+      {/* Markers */}
+      {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => (
+        <line key={deg} x1="50" y1="8" x2="50" y2="14" transform={`rotate(${deg} 50 50)`} stroke="currentColor" className="text-[var(--hud-accent-blue)]" strokeWidth="1.5" />
+      ))}
+    </svg>
+
+    {/* Rotating Inner Rings */}
+    <div className="absolute inset-4 rounded-full border border-dashed border-[var(--hud-accent-yellow)] opacity-20 animate-[spin_15s_linear_infinite]"></div>
+    <div className="absolute inset-6 rounded-full border border-[var(--hud-accent-blue)] opacity-10 animate-[spin_10s_linear_infinite_reverse]"></div>
+
+    {/* Central Straw Hat Graphic */}
+    <div className="relative z-10 flex flex-col items-center justify-center">
+       <div className="absolute -inset-8 bg-[var(--hud-accent-yellow)] opacity-10 blur-2xl rounded-full"></div>
+       <span className="text-5xl filter drop-shadow-[0_0_20px_rgba(255,204,0,0.8)] transform hover:scale-110 transition-transform cursor-pointer">
+         👒
+       </span>
+       {/* Compass Needle */}
+       <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-[2px] h-6 bg-[var(--hud-accent-yellow)] shadow-[0_0_10px_var(--hud-accent-yellow)] z-20"></div>
     </div>
-    {/* Compass Dial */}
-    <div className="absolute inset-0 animate-[spin_20s_linear_infinite]">
-       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] border border-dashed border-[var(--hud-accent-blue)]/20 rounded-full"></div>
-       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-3 bg-[var(--hud-accent-yellow)] shadow-[0_0_10px_var(--hud-accent-yellow)]"></div>
-    </div>
-    {/* The Hat */}
-    <span className="text-4xl filter drop-shadow-[0_0_15px_rgba(255,204,0,0.6)] z-10">👒</span>
   </div>
 )
+
 
 function App() {
   const [now, setNow] = useState(() => new Date())
