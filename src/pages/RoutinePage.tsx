@@ -74,11 +74,12 @@ export const RoutinePage = () => {
       {/* HEADER SECTION */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 px-4">
         <div className="space-y-1">
-           <h2 className="text-4xl font-black hud-text-cyan tracking-wider italic uppercase flex items-center gap-4">
+           <h2 className="text-5xl font-black hud-text-cyan tracking-wider italic uppercase flex items-center gap-6">
              ROUTINE <span className="text-white">SCHEDULE</span>
-             <div className="h-[2px] w-24 bg-gradient-to-r from-[var(--hud-accent-blue)] to-transparent"></div>
+             <span className="text-xl hud-text-gold opacity-60 tracking-[0.5em] font-light ml-4">// DAILY_OPS</span>
+             <div className="h-[2px] flex-1 max-w-[200px] bg-gradient-to-r from-[var(--hud-accent-blue)] to-transparent"></div>
            </h2>
-           <p className="text-[11px] mono-font text-slate-500 uppercase tracking-[0.3em]">DIGITAL MISSION DATA STREAM</p>
+
         </div>
         
         <div className="flex bg-black/40 border border-[var(--hud-border-gold)] rounded-full p-1 shadow-[0_0_15px_rgba(255,204,0,0.1)]">
@@ -89,8 +90,8 @@ export const RoutinePage = () => {
                 setView(v)
                 setIndex(0)
               }}
-              className={`px-8 py-2 text-[10px] uppercase font-bold tracking-widest rounded-full transition-all ${view === v
-                  ? "bg-[var(--hud-accent-yellow)] text-black shadow-[0_0_15px_var(--hud-accent-yellow)]"
+              className={`px-10 py-3 text-[12px] uppercase font-black tracking-[0.2em] rounded-full transition-all ${view === v
+                  ? "bg-[var(--hud-accent-yellow)] text-black shadow-[0_0_20px_var(--hud-accent-yellow)]"
                   : "text-slate-500 hover:text-white"
                 }`}
             >
@@ -111,9 +112,9 @@ export const RoutinePage = () => {
               <div className="w-32 h-32 border border-[var(--hud-accent-yellow)]/30 rounded-2xl flex items-center justify-center mx-auto text-7xl filter drop-shadow-[0_0_20px_var(--hud-accent-yellow)]">
                 ☠️
               </div>
-              <div className="space-y-2">
-                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase">No Missions Today</h2>
-                <p className="hud-text-gold text-lg font-black uppercase tracking-[0.2em]">Enjoy your shore leave.</p>
+              <div className="space-y-4">
+                <h2 className="text-6xl font-black text-white italic tracking-tighter uppercase">No Missions Today</h2>
+                <p className="hud-text-gold text-2xl font-black uppercase tracking-[0.3em]">Enjoy your shore leave.</p>
               </div>
               <button 
                 onClick={() => setView("weekly")} 
@@ -178,7 +179,7 @@ export const RoutinePage = () => {
                             <div className="flex flex-col gap-6">
                               <div className="flex items-start justify-between gap-4">
                                 <div className="space-y-3">
-                                  <h3 className={`text-4xl font-black leading-none uppercase italic tracking-tighter ${isCurrent ? 'text-white' : 'text-slate-500'}`}>
+                                  <h3 className={`text-6xl font-black leading-none uppercase italic tracking-tighter ${isCurrent ? 'text-white' : 'text-slate-500'}`}>
                                     {entry.title}
                                   </h3>
                                   <div className="flex items-center gap-4">
@@ -195,11 +196,11 @@ export const RoutinePage = () => {
                                   <div className={`grid grid-cols-2 gap-10 pt-6 border-t border-white/5`}>
                                     <div className="space-y-2">
                                       <span className={`text-[10px] font-black tracking-[0.4em] uppercase block ${isCurrent ? 'hud-text-cyan/60' : 'text-slate-700'}`}>LOCATION</span>
-                                      <p className={`text-xl font-black italic uppercase ${isCurrent ? 'text-white' : 'text-slate-500'}`}>{entry.room}</p>
+                                      <p className={`text-2xl font-black italic uppercase ${isCurrent ? 'text-white' : 'text-slate-500'}`}>{entry.room}</p>
                                     </div>
-                                    <div className="space-y-2 text-right">
-                                      <span className={`text-[10px] font-black tracking-[0.4em] uppercase block ${isCurrent ? 'hud-text-cyan/60' : 'text-slate-700'}`}>INSTRUCTOR</span>
-                                      <p className={`text-xl font-black italic uppercase ${isCurrent ? 'text-white' : 'text-slate-500'}`}>{entry.instructor || "UNIDENTIFIED"}</p>
+                                    <div className="space-y-3 text-right">
+                                      <span className={`text-[12px] font-black tracking-[0.4em] uppercase block ${isCurrent ? 'hud-text-cyan/60' : 'text-slate-700'}`}>INSTRUCTOR</span>
+                                      <p className={`text-2xl font-black italic uppercase ${isCurrent ? 'text-white' : 'text-slate-500'}`}>{entry.instructor || "UNIDENTIFIED"}</p>
                                     </div>
                                   </div>
                               )}
