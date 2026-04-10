@@ -2,7 +2,7 @@ import type { RoutineEntry } from "../types"
 
 export const routineEntries: RoutineEntry[] = [
   // MONDAY: Off Day (Holiday) - No entries here.
-
+  //ENJOY YOUR HOLIDAY
   // TUESDAY
   {
     id: "tue-8-11-ml-p",
